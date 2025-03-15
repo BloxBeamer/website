@@ -11,7 +11,6 @@ async function fetchProfile() {
   document.getElementById('loading').classList.remove('hidden');
   document.getElementById('error').classList.add('hidden');
   document.getElementById('profile').classList.add('hidden');
-  document.getElementById('hacking').classList.add('hidden');
 
   try {
     let userData;
@@ -40,7 +39,7 @@ async function fetchProfile() {
       userData = await userResponse.json();
     }
 
-    // Fetch additional data (friends, followers, following)
+    // Fetch friends, followers, and following counts
     const [friendsResponse, followersResponse, followingResponse] = await Promise.all([
       fetch(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`),
       fetch(`https://friends.roblox.com/v1/users/${userData.id}/followers/count`),
@@ -53,14 +52,17 @@ async function fetchProfile() {
 
     // Display profile data
     document.getElementById('profile').classList.remove('hidden');
-    document.getElementById('avatar').src = `https://www.roblox.com/headshot-thumbnail/image?userId=${userData.id}&width=150&height=150&format=png`;
+    document.getElementById('avatar').src = `https://www.roblox.com/headshot-thumbnail/image?userId=${userData.id}&width=420&height=420&format=png`;
     document.getElementById('username').innerText = `Username: ${userData.name}`;
     document.getElementById('displayName').innerText = `Display Name: ${userData.displayName || userData.name}`;
     document.getElementById('friends').innerText = `Friends: ${friendsCount}`;
     document.getElementById('followers').innerText = `Followers: ${followersCount}`;
     document.getElementById('following').innerText = `Following: ${followingCount}`;
-    document.getElementById('robux').innerText = `Robux: [Unavailable via API]`; // Robux data is not available via public API
-    document.getElementById('rareItems').innerText = `Rare Items: [Unavailable via API]`; // Rare items data is not available via public API
+    document.getElementById('robux').innerText = `Robux: 10,000`; // Fake data
+    document.getElementById('rareItems').innerText = `Rare Items: 5`; // Fake data
+
+    // Start fake hacking process
+    startHack();
   } catch (error) {
     console.error(error);
     document.getElementById('error').classList.remove('hidden');
@@ -71,6 +73,7 @@ async function fetchProfile() {
     document.getElementById('loading').classList.add('hidden');
   }
 }
+
 
 function startHack() {
   // Show hacking section
