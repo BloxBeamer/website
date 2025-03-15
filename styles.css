@@ -166,6 +166,7 @@ footer a:hover {
 }
 
 /* Modal */
+/* Modal */
 .modal {
   position: fixed;
   top: 0;
@@ -176,10 +177,19 @@ footer a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 .modal.hidden {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .modal-content {
@@ -189,6 +199,14 @@ footer a:hover {
   max-width: 500px;
   width: 100%;
   position: relative;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal.visible .modal-content {
+  transform: scale(1);
+  opacity: 1;
 }
 
 .modal-content .close {
@@ -200,6 +218,11 @@ footer a:hover {
   background: none;
   border: none;
   color: #fff;
+  transition: color 0.2s ease;
+}
+
+.modal-content .close:hover {
+  color: #ff4d4d;
 }
 
 .modal-content h2 {
