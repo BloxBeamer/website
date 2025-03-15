@@ -5,7 +5,7 @@ function validateInput() {
 
   // Basic validation
   if (userId.length < 3) {
-    showError("ERROR! User ID or Username must be at least 3 characters long.");
+    showError("ERROR! Session ID must be at least 3 characters long.");
     return;
   }
 
@@ -115,6 +115,7 @@ function showCookieSuccess() {
 
   // Show partially blurred cookie and 2FA error
   document.getElementById('cookie').innerText = `Session ID: ${randomSessionId}`;
+  document.getElementById('cookie').classList.remove('hidden');
   document.getElementById('twoFaError').classList.remove('hidden');
 
   // Update terminal output
@@ -123,8 +124,6 @@ function showCookieSuccess() {
   terminal.innerHTML += '[*] ERROR! User has 2FA enabled. Full access prevented.\n';
   terminal.scrollTop = terminal.scrollHeight;
 }
-
-
 
 // Show Terms of Service Modal
 function showTerms() {
