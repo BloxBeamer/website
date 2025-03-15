@@ -64,7 +64,7 @@ async function fetchProfile() {
   } catch (error) {
     console.error(error);
     document.getElementById('error').classList.remove('hidden');
-    document.getElementById('error').innerText = 'booby';
+    document.getElementById('error').innerText = 'ERROR! Invalid User ID or Username.';
   } finally {
     // Re-enable button and hide loading spinner
     searchButton.disabled = false;
