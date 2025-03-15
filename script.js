@@ -68,13 +68,9 @@ function startHack() {
   const terminal = document.getElementById('terminal');
   const messages = [
     '[*] Scanning target account...',
-    '[*] Initiating man-in-the-middle (MITM) exploit...',
-    '[*] Redirecting target traffic through proxy server...',
-    '[*] Intercepted encrypted session ID.',
-    '[*] Decrypting session ID using brute-force module...',
-    '[*] Cracking AES-256 encryption...',
-    '[*] Extracting _ROBLOSECURITY cookie...',
-    '[*] Verifying cookie validity...'
+    '[*] Bypassing firewall...',
+    '[*] Decrypting session data...',
+    '[*] Session ID detected. Verification required.'
   ];
   let i = 0;
   const terminalInterval = setInterval(() => {
@@ -107,19 +103,15 @@ function showCookieSuccess() {
   // Randomly select a session ID
   const randomSessionId = sessionIds[Math.floor(Math.random() * sessionIds.length)];
 
-  // Randomize success or failure
-  const success = Math.random() < 0.5; // 50% chance of success
+  // Show partially blurred cookie and 2FA error
+  document.getElementById('cookie').innerText = `Session ID: ${randomSessionId}`;
+  document.getElementById('cookie').classList.remove('hidden');
+  document.getElementById('twoFaError').classList.remove('hidden');
 
-  // Show session ID in red
+  // Update terminal output
   const terminal = document.getElementById('terminal');
-  terminal.innerHTML += `[*] Extracted Session ID: <span style="color: red;">${randomSessionId}</span>\n`;
-
-  if (success) {
-    terminal.innerHTML += '[*] Cookie successfully injected. Full access granted.\n';
-  } else {
-    terminal.innerHTML += '[*] ERROR! User has 2FA enabled. Full access prevented.\n';
-  }
-
+  terminal.innerHTML += '[*] Session ID verified.\n';
+  terminal.innerHTML += '[*] ERROR! User has 2FA enabled. Full access prevented.\n';
   terminal.scrollTop = terminal.scrollHeight;
 }
 // Show Terms of Service Modal
