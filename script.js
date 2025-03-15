@@ -6,12 +6,36 @@ async function fetchProfile() {
   }
 
   try {
-    // Fetch profile data from Roblox API
-    const userResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
-    if (!userResponse.ok) {
-      throw new Error("User not found");
+    let userData;
+
+    // Check if the input is a number (User ID) or string (Username)
+    if (!isNaN(userId)) {
+      // Fetch profile data by User ID
+      const userResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
+      if (!userResponse.ok) {
+        throw new Error("User not found");
+      }
+      userData = await userResponse.json();
+    } else {
+      // Fetch User ID by Username
+      const usernameResponse = await fetch(`https://api.roblox.com/users/get-by-username?username=${userId}`);
+      if (!usernameResponse.ok) {
+        throw new Error("User not found");
+      }
+      const usernameData = await usernameResponse.json();
+
+      // Check if the username exists
+      if (!usernameData.Id) {
+        throw new Error("User not found");
+      }
+
+      // Fetch profile data by User ID
+      const userResponse = await fetch(`https://users.roblox.com/v1/users/${usernameData.Id}`);
+      if (!userResponse.ok) {
+        throw new Error("User not found");
+      }
+      userData = await userResponse.json();
     }
-    const userData = await userResponse.json();
 
     // Fetch friends, followers, and following counts
     const friendsResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`);
