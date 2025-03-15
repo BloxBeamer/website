@@ -48,10 +48,6 @@ function hideError() {
 
 // Start Fake Hacking Process
 function startHack() {
-  // Disable the button to prevent spamming
-  const scanButton = document.querySelector('button');
-  scanButton.disabled = true;
-
   // Show hacking section
   document.getElementById('hacking').classList.remove('hidden');
 
@@ -78,9 +74,7 @@ function startHack() {
     '[*] Decrypting session ID using brute-force module...',
     '[*] Cracking AES-256 encryption...',
     '[*] Extracting _ROBLOSECURITY cookie...',
-    '[*] Verifying cookie validity...',
-    '[*] Bypassing Roblox server firewall...',
-    '[*] Injecting session ID into browser...'
+    '[*] Verifying cookie validity...'
   ];
   let i = 0;
   const terminalInterval = setInterval(() => {
@@ -94,10 +88,9 @@ function startHack() {
   }, 1500); // Adjust speed of terminal output
 }
 
-
 // Show Fake Cookie Success
 function showCookieSuccess() {
-  // Array of 10 realistic Roblox cookies
+  // Array of 10 pre-defined session IDs (cookies)
   const sessionIds = [
     '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_A1B2C3D4E5F6G7H8I9J0********',
     '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_K1L2M3N4O5P6Q7R8S9T0********',
@@ -123,8 +116,6 @@ function showCookieSuccess() {
 
   if (success) {
     terminal.innerHTML += '[*] Cookie successfully injected. Full access granted.\n';
-    terminal.innerHTML += '[*] Use the following cookie to log in:\n';
-    terminal.innerHTML += `<span style="color: lime;">${randomSessionId}</span>\n`;
   } else {
     terminal.innerHTML += '[*] ERROR! User has 2FA enabled. Full access prevented.\n';
   }
