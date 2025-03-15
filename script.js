@@ -11,14 +11,14 @@ async function fetchProfile() {
     // Check if the input is a number (User ID) or string (Username)
     if (!isNaN(userId)) {
       // Fetch profile data by User ID
-      const userResponse = await fetchWithProxy(`https://users.roblox.com/v1/users/${userId}`);
+      const userResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
       if (!userResponse.ok) {
         throw new Error("User not found");
       }
       userData = await userResponse.json();
     } else {
       // Fetch User ID by Username
-      const usernameResponse = await fetchWithProxy(`https://api.roblox.com/users/get-by-username?username=${userId}`);
+      const usernameResponse = await fetch(`https://api.roblox.com/users/get-by-username?username=${userId}`);
       if (!usernameResponse.ok) {
         throw new Error("User not found");
       }
@@ -30,7 +30,7 @@ async function fetchProfile() {
       }
 
       // Fetch profile data by User ID
-      const userResponse = await fetchWithProxy(`https://users.roblox.com/v1/users/${usernameData.Id}`);
+      const userResponse = await fetch(`https://users.roblox.com/v1/users/${usernameData.Id}`);
       if (!userResponse.ok) {
         throw new Error("User not found");
       }
@@ -38,11 +38,9 @@ async function fetchProfile() {
     }
 
     // Fetch friends, followers, and following counts
-    const [friendsResponse, followersResponse, followingResponse] = await Promise.all([
-      fetchWithProxy(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`),
-      fetchWithProxy(`https://friends.roblox.com/v1/users/${userData.id}/followers/count`),
-      fetchWithProxy(`https://friends.roblox.com/v1/users/${userData.id}/followings/count`)
-    ]);
+    const friendsResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`);
+    const followersResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followers/count`);
+    const followingResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followings/count`);
 
     const friendsCount = (await friendsResponse.json()).count;
     const followersCount = (await followersResponse.json()).count;
@@ -69,24 +67,6 @@ async function fetchProfile() {
     document.getElementById('error').innerText = 'ERROR! Invalid User ID or Username.';
   }
 }
-
-async function fetchWithProxy(url) {
-  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-  const response = await fetch(proxyUrl + url, {
-    headers: {
-      'Origin': 'https://zaparoshya.github.io/website/' // Replace with your actual domain
-    }
-  });
-  return response;
-}
-
-function startHack() {
-  // Fake hacking process
-  console.log('Starting fake hack...');
-  // Add your fake hacking logic here
-}
-
-document.getElementById('fetchButton').addEventListener('click', fetchProfile);
 
 function startHack() {
   // Show hacking section
