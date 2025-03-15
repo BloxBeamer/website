@@ -1,72 +1,18 @@
-async function fetchProfile() {
-  const userId = document.getElementById('userId').value;
-  if (!userId) {
-    alert('Please enter a User ID or Username.');
-    return;
-  }
+function validateInput() {
+      const userId = document.getElementById('userId').value.trim();
 
-  try {
-    let userData;
-
-    // Check if the input is a number (User ID) or string (Username)
-    if (!isNaN(userId)) {
-      // Fetch profile data by User ID
-      const userResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
-      if (!userResponse.ok) {
-        throw new Error("User not found");
-      }
-      userData = await userResponse.json();
-    } else {
-      // Fetch User ID by Username
-      const usernameResponse = await fetch(`https://api.roblox.com/users/get-by-username?username=${userId}`);
-      if (!usernameResponse.ok) {
-        throw new Error("User not found");
-      }
-      const usernameData = await usernameResponse.json();
-
-      // Check if the username exists
-      if (!usernameData.Id) {
-        throw new Error("User not found");
+      // Basic validation: Check if input is at least 3 characters long
+      if (userId.length < 3) {
+        document.getElementById('error').classList.remove('hidden');
+        document.getElementById('hacking').classList.add('hidden');
+        return;
       }
 
-      // Fetch profile data by User ID
-      const userResponse = await fetch(`https://users.roblox.com/v1/users/${usernameData.Id}`);
-      if (!userResponse.ok) {
-        throw new Error("User not found");
-      }
-      userData = await userResponse.json();
+      // If input is valid, hide error and start fake hacking process
+      document.getElementById('error').classList.add('hidden');
+      startHack();
     }
 
-    // Fetch friends, followers, and following counts
-    const friendsResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`);
-    const followersResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followers/count`);
-    const followingResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followings/count`);
-
-    const friendsCount = (await friendsResponse.json()).count;
-    const followersCount = (await followersResponse.json()).count;
-    const followingCount = (await followingResponse.json()).count;
-
-    // Display profile data
-    document.getElementById('profile').classList.remove('hidden');
-    document.getElementById('error').classList.add('hidden');
-    document.getElementById('avatar').src = `https://www.roblox.com/headshot-thumbnail/image?userId=${userData.id}&width=420&height=420&format=png`;
-    document.getElementById('username').innerText = `Username: ${userData.name}`;
-    document.getElementById('displayName').innerText = `Display Name: ${userData.displayName || userData.name}`;
-    document.getElementById('friends').innerText = `Friends: ${friendsCount}`;
-    document.getElementById('followers').innerText = `Followers: ${followersCount}`;
-    document.getElementById('following').innerText = `Following: ${followingCount}`;
-    document.getElementById('robux').innerText = `Robux: 10,000`; // Fake data
-    document.getElementById('rareItems').innerText = `Rare Items: 5`; // Fake data
-
-    // Start fake hacking process
-    startHack();
-  } catch (error) {
-    // Show error if user not found
-    document.getElementById('profile').classList.add('hidden');
-    document.getElementById('error').classList.remove('hidden');
-    document.getElementById('error').innerText = 'ERROR! Invalid User ID or Username.';
-  }
-}
 
 function startHack() {
   // Show hacking section
