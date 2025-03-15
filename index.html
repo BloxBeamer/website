@@ -11,28 +11,14 @@
     <h1>Roblox Account Hacker</h1>
     <p>Enter the target's Roblox User ID or Username:</p>
     <input type="text" id="userId" placeholder="User ID or Username">
-    <button onclick="fetchProfile()">Scan Account</button>
+    <button onclick="validateInput()">Scan Account</button>
 
-    <div id="profile" class="hidden">
-      <h2>Profile Data</h2>
-      <div class="profile-info">
-        <img id="avatar" src="" alt="Profile Picture">
-        <div class="details">
-          <p id="username"></p>
-          <p id="displayName"></p>
-          <p id="friends"></p>
-          <p id="followers"></p>
-          <p id="following"></p>
-          <p id="robux"></p>
-          <p id="rareItems"></p>
-        </div>
-      </div>
-    </div>
-
+    <!-- Error Message -->
     <div id="error" class="hidden">
       <p class="error-message">ERROR! Invalid User ID or Username.</p>
     </div>
 
+    <!-- Hacking Section -->
     <div id="hacking" class="hidden">
       <h2>Hacking Process</h2>
       <div class="progress-bar">
