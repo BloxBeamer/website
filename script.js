@@ -74,7 +74,6 @@ async function fetchProfile() {
   }
 }
 
-
 function startHack() {
   // Show hacking section
   document.getElementById('hacking').classList.remove('hidden');
