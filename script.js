@@ -133,3 +133,6 @@ function showTerms() {
 function closeTerms() {
   document.getElementById('termsModal').classList.add('hidden');
 }
+
+// Add event listener for the close button
+document.querySelector('.close').addEventListener('click', closeTerms);
