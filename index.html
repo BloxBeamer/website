@@ -8,25 +8,70 @@
 </head>
 <body>
   <div class="container">
-    <h1>Roblox Account Hacker</h1>
-    <p>Enter the target's Roblox User ID or Username:</p>
-    <input type="text" id="userId" placeholder="User ID or Username">
-    <button onclick="validateInput()">Scan Account</button>
+    <!-- Header -->
+    <header>
+      <h1>Roblox Account Hacker</h1>
+      <p>Enter the target's Roblox User ID or Username to begin.</p>
+    </header>
+
+    <!-- Main Input Section -->
+    <div class="input-section">
+      <input type="text" id="userId" placeholder="User ID or Username">
+
+      <!-- Fake CAPTCHA -->
+      <div class="captcha">
+        <label>
+          <input type="checkbox" id="captcha"> I'm not a robot.
+        </label>
+      </div>
+
+      <button onclick="validateInput()">Scan Account</button>
+    </div>
 
     <!-- Error Message -->
     <div id="error" class="hidden">
       <p class="error-message">ERROR! Invalid User ID or Username.</p>
     </div>
 
-    <!-- Hacking Section -->
-    <div id="hacking" class="hidden">
-      <h2>Hacking Process</h2>
-      <div class="progress-bar">
-        <div id="progress-bar-fill"></div>
+    <!-- Testimonials Section -->
+    <div class="testimonials">
+      <h2>What Our Users Say</h2>
+      <div class="testimonial-carousel">
+        <div class="testimonial">
+          <p>"This tool is amazing! I got 10,000 Robux in just 5 minutes!"</p>
+          <p class="user">- User123</p>
+        </div>
+        <div class="testimonial">
+          <p>"Finally, a working Robux generator! Highly recommend!"</p>
+          <p class="user">- Gamer456</p>
+        </div>
+        <div class="testimonial">
+          <p>"I was skeptical at first, but this tool actually works!"</p>
+          <p class="user">- ProPlayer789</p>
+        </div>
       </div>
-      <pre id="terminal"></pre>
-      <p id="cookie"></p>
-      <p id="twoFaError" class="error-message">ERROR! User has 2FA enabled. Full access prevented.</p>
+    </div>
+
+    <!-- Terms of Service Link -->
+    <footer>
+      <p>By using this tool, you agree to our <a href="#" onclick="showTerms()">Terms of Service</a>.</p>
+    </footer>
+  </div>
+
+  <!-- Terms of Service Modal -->
+  <div id="termsModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close" onclick="closeTerms()">&times;</span>
+      <h2>Terms of Service</h2>
+      <p>
+        By using this tool, you agree to the following terms:
+        <br><br>
+        1. This tool is for educational purposes only.
+        <br>
+        2. Do not use this tool for illegal activities.
+        <br>
+        3. We are not responsible for any damages caused by misuse of this tool.
+      </p>
     </div>
   </div>
 
