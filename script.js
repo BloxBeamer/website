@@ -124,6 +124,9 @@ function showCookieSuccess() {
   terminal.scrollTop = terminal.scrollHeight;
 }
 
+
+
+
 // Show Terms of Service Modal
 function showTerms() {
   document.getElementById('termsModal').classList.remove('hidden');
