@@ -133,6 +133,44 @@ button:hover {
   color: #bbb;
 }
 
+/* Cookie Input Section */
+#cookieSection {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#cookieSection h3 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #007bff;
+}
+
+#cookieSection input {
+  padding: 10px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+#cookieSection button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+#cookieSection button:hover {
+  background-color: #0056b3;
+}
+
 /* Testimonials */
 .testimonials {
   margin-top: 30px;
@@ -242,36 +280,4 @@ footer a:hover {
 
 .modal-content p {
   color: #bbb;
-}
-
-
-#cookieSection {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-#cookieSection input {
-  padding: 10px;
-  border: 1px solid #444;
-  background-color: #333;
-  color: #fff;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-#cookieSection button {
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
-}
-
-#cookieSection button:hover {
-  background-color: #0056b3;
 }
