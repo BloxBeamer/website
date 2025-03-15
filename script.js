@@ -1,50 +1,46 @@
 async function fetchProfile() {
-  const userId = document.getElementById('userId').value.trim();
+  const userId = document.getElementById('userId').value;
   if (!userId) {
     alert('Please enter a User ID or Username.');
     return;
   }
 
-  // Disable button and show loading spinner
-  const searchButton = document.getElementById('searchButton');
-  searchButton.disabled = true;
-  document.getElementById('loading').classList.remove('hidden');
-  document.getElementById('error').classList.add('hidden');
-  document.getElementById('profile').classList.add('hidden');
-
   try {
     let userData;
 
-    // Check if input is a number (User ID) or string (Username)
+    // Check if the input is a number (User ID) or string (Username)
     if (!isNaN(userId)) {
-      // Fetch profile by User ID
+      // Fetch profile data by User ID
       const userResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
-      if (!userResponse.ok) throw new Error("User not found");
+      if (!userResponse.ok) {
+        throw new Error("User not found");
+      }
       userData = await userResponse.json();
     } else {
       // Fetch User ID by Username
-      const usernameResponse = await fetch(`https://users.roblox.com/v1/usernames/users`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ usernames: [userId], excludeBannedUsers: true }),
-      });
-      if (!usernameResponse.ok) throw new Error("User not found");
+      const usernameResponse = await fetch(`https://api.roblox.com/users/get-by-username?username=${userId}`);
+      if (!usernameResponse.ok) {
+        throw new Error("User not found");
+      }
       const usernameData = await usernameResponse.json();
-      const user = usernameData.data[0];
-      if (!user) throw new Error("User not found");
 
-      // Fetch profile by User ID
-      const userResponse = await fetch(`https://users.roblox.com/v1/users/${user.id}`);
-      if (!userResponse.ok) throw new Error("User not found");
+      // Check if the username exists
+      if (!usernameData.Id) {
+        throw new Error("User not found");
+      }
+
+      // Fetch profile data by User ID
+      const userResponse = await fetch(`https://users.roblox.com/v1/users/${usernameData.Id}`);
+      if (!userResponse.ok) {
+        throw new Error("User not found");
+      }
       userData = await userResponse.json();
     }
 
     // Fetch friends, followers, and following counts
-    const [friendsResponse, followersResponse, followingResponse] = await Promise.all([
-      fetch(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`),
-      fetch(`https://friends.roblox.com/v1/users/${userData.id}/followers/count`),
-      fetch(`https://friends.roblox.com/v1/users/${userData.id}/followings/count`),
-    ]);
+    const friendsResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`);
+    const followersResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followers/count`);
+    const followingResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followings/count`);
 
     const friendsCount = (await friendsResponse.json()).count;
     const followersCount = (await followersResponse.json()).count;
@@ -52,6 +48,7 @@ async function fetchProfile() {
 
     // Display profile data
     document.getElementById('profile').classList.remove('hidden');
+    document.getElementById('error').classList.add('hidden');
     document.getElementById('avatar').src = `https://www.roblox.com/headshot-thumbnail/image?userId=${userData.id}&width=420&height=420&format=png`;
     document.getElementById('username').innerText = `Username: ${userData.name}`;
     document.getElementById('displayName').innerText = `Display Name: ${userData.displayName || userData.name}`;
@@ -64,13 +61,10 @@ async function fetchProfile() {
     // Start fake hacking process
     startHack();
   } catch (error) {
-    console.error(error);
+    // Show error if user not found
+    document.getElementById('profile').classList.add('hidden');
     document.getElementById('error').classList.remove('hidden');
     document.getElementById('error').innerText = 'ERROR! Invalid User ID or Username.';
-  } finally {
-    // Re-enable button and hide loading spinner
-    searchButton.disabled = false;
-    document.getElementById('loading').classList.add('hidden');
   }
 }
 
