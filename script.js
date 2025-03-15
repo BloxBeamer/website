@@ -59,6 +59,7 @@ async function fetchProfile() {
   }
 }
 
+// Fetch user data by User ID
 async function fetchUserData(userId) {
   const response = await fetch(`https://users.roblox.com/v1/users/${userId}`);
   if (!response.ok) {
@@ -67,6 +68,7 @@ async function fetchUserData(userId) {
   return response.json();
 }
 
+// Fetch User ID by Username
 async function fetchUsernameData(username) {
   const response = await fetch(`https://users.roblox.com/v1/usernames/users`, {
     method: 'POST',
@@ -85,6 +87,7 @@ async function fetchUsernameData(username) {
   return data.data[0];
 }
 
+// Fetch count data (friends, followers, following)
 async function fetchCount(url) {
   const response = await fetch(url);
   if (!response.ok) {
@@ -93,6 +96,7 @@ async function fetchCount(url) {
   const data = await response.json();
   return data.count;
 }
+
 
 function startHack() {
   // Show hacking section
