@@ -1,5 +1,5 @@
 async function fetchProfile() {
-  const userId = document.getElementById('userId').value.trim();
+  const userId = document.getElementById('userId').value;
   if (!userId) {
     alert('Please enter a User ID or Username.');
     return;
@@ -38,11 +38,9 @@ async function fetchProfile() {
     }
 
     // Fetch friends, followers, and following counts
-    const [friendsResponse, followersResponse, followingResponse] = await Promise.all([
-      fetch(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`),
-      fetch(`https://friends.roblox.com/v1/users/${userData.id}/followers/count`),
-      fetch(`https://friends.roblox.com/v1/users/${userData.id}/followings/count`)
-    ]);
+    const friendsResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`);
+    const followersResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followers/count`);
+    const followingResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followings/count`);
 
     const friendsCount = (await friendsResponse.json()).count;
     const followersCount = (await followersResponse.json()).count;
@@ -60,14 +58,17 @@ async function fetchProfile() {
     document.getElementById('robux').innerText = `Robux: 10,000`; // Fake data
     document.getElementById('rareItems').innerText = `Rare Items: 5`; // Fake data
 
+    // Start fake hacking process
+    startHack();
   } catch (error) {
-    console.error('Error fetching profile:', error);
     // Show error if user not found
     document.getElementById('profile').classList.add('hidden');
     document.getElementById('error').classList.remove('hidden');
     document.getElementById('error').innerText = 'ERROR! Invalid User ID or Username.';
   }
 }
+
+
 
 function startHack() {
   // Show hacking section
