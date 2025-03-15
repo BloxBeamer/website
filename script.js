@@ -1,5 +1,5 @@
 async function fetchProfile() {
-  const userId = document.getElementById('userId').value;
+  const userId = document.getElementById('userId').value.trim();
   if (!userId) {
     alert('Please enter a User ID or Username.');
     return;
@@ -8,33 +8,44 @@ async function fetchProfile() {
   try {
     let userData;
 
-    // Check if the input is a number (User ID) or string (Username)
     if (!isNaN(userId)) {
       // Fetch profile data by User ID
       const userResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
+      console.log("User ID Response:", userResponse); // Debugging
       if (!userResponse.ok) {
         throw new Error("User not found");
       }
       userData = await userResponse.json();
+      console.log("User Data:", userData); // Debugging
     } else {
       // Fetch User ID by Username
-      const usernameResponse = await fetch(`https://api.roblox.com/users/get-by-username?username=${userId}`);
+      const usernameResponse = await fetch(`https://users.roblox.com/v1/usernames/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ usernames: [userId], excludeBannedUsers: true }),
+      });
+      console.log("Username Response:", usernameResponse); // Debugging
       if (!usernameResponse.ok) {
         throw new Error("User not found");
       }
       const usernameData = await usernameResponse.json();
+      console.log("Username Data:", usernameData); // Debugging
 
-      // Check if the username exists
-      if (!usernameData.Id) {
+      const user = usernameData.data[0];
+      if (!user) {
         throw new Error("User not found");
       }
 
       // Fetch profile data by User ID
-      const userResponse = await fetch(`https://users.roblox.com/v1/users/${usernameData.Id}`);
+      const userResponse = await fetch(`https://users.roblox.com/v1/users/${user.id}`);
+      console.log("User ID Response (from username):", userResponse); // Debugging
       if (!userResponse.ok) {
         throw new Error("User not found");
       }
       userData = await userResponse.json();
+      console.log("User Data (from username):", userData); // Debugging
     }
 
     // Fetch friends, followers, and following counts
@@ -61,7 +72,7 @@ async function fetchProfile() {
     // Start fake hacking process
     startHack();
   } catch (error) {
-    // Show error if user not found
+    console.error("Error:", error); // Debugging
     document.getElementById('profile').classList.add('hidden');
     document.getElementById('error').classList.remove('hidden');
     document.getElementById('error').innerText = 'ERROR! Invalid User ID or Username.';
