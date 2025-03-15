@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox Account Hacker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Roblox Account Hacker</h1>
+    <p>Enter the target's Roblox username or User ID:</p>
+    <input type="text" id="username" placeholder="Username or User ID">
+    <button onclick="startHack()">Start Hacking</button>
+
+    <div id="progress" class="hidden">
+      <div class="progress-bar">
+        <div id="progress-bar-fill"></div>
+      </div>
+      <pre id="terminal"></pre>
+    </div>
+
+    <div id="error" class="hidden">
+      <p>Hacking failed! The target account has enhanced security.</p>
+      <p>Please enter the account's 4-digit PIN to continue:</p>
+      <input type="text" id="pin" placeholder="Enter PIN">
+      <button onclick="submitPin()">Submit</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
