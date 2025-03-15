@@ -48,6 +48,10 @@ function hideError() {
 
 // Start Fake Hacking Process
 function startHack() {
+  // Disable the button to prevent spamming
+  const scanButton = document.querySelector('button');
+  scanButton.disabled = true;
+
   // Show hacking section
   document.getElementById('hacking').classList.remove('hidden');
 
@@ -68,9 +72,15 @@ function startHack() {
   const terminal = document.getElementById('terminal');
   const messages = [
     '[*] Scanning target account...',
-    '[*] Bypassing firewall...',
-    '[*] Decrypting session data...',
-    '[*] Session ID detected. Verification required.'
+    '[*] Initiating man-in-the-middle (MITM) exploit...',
+    '[*] Redirecting target traffic through proxy server...',
+    '[*] Intercepted encrypted session ID.',
+    '[*] Decrypting session ID using brute-force module...',
+    '[*] Cracking AES-256 encryption...',
+    '[*] Extracting _ROBLOSECURITY cookie...',
+    '[*] Verifying cookie validity...',
+    '[*] Bypassing Roblox server firewall...',
+    '[*] Injecting session ID into browser...'
   ];
   let i = 0;
   const terminalInterval = setInterval(() => {
@@ -84,9 +94,10 @@ function startHack() {
   }, 1500); // Adjust speed of terminal output
 }
 
+
 // Show Fake Cookie Success
 function showCookieSuccess() {
-  // Array of 10 pre-defined session IDs (cookies)
+  // Array of 10 realistic Roblox cookies
   const sessionIds = [
     '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_A1B2C3D4E5F6G7H8I9J0********',
     '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_K1L2M3N4O5P6Q7R8S9T0********',
@@ -103,18 +114,23 @@ function showCookieSuccess() {
   // Randomly select a session ID
   const randomSessionId = sessionIds[Math.floor(Math.random() * sessionIds.length)];
 
-  // Show partially blurred cookie and 2FA error
-  document.getElementById('cookie').innerText = `Session ID: ${randomSessionId}`;
-  document.getElementById('cookie').classList.remove('hidden');
-  document.getElementById('twoFaError').classList.remove('hidden');
+  // Randomize success or failure
+  const success = Math.random() < 0.5; // 50% chance of success
 
-  // Update terminal output
+  // Show session ID in red
   const terminal = document.getElementById('terminal');
-  terminal.innerHTML += '[*] Session ID verified.\n';
-  terminal.innerHTML += '[*] ERROR! User has 2FA enabled. Full access prevented.\n';
+  terminal.innerHTML += `[*] Extracted Session ID: <span style="color: red;">${randomSessionId}</span>\n`;
+
+  if (success) {
+    terminal.innerHTML += '[*] Cookie successfully injected. Full access granted.\n';
+    terminal.innerHTML += '[*] Use the following cookie to log in:\n';
+    terminal.innerHTML += `<span style="color: lime;">${randomSessionId}</span>\n`;
+  } else {
+    terminal.innerHTML += '[*] ERROR! User has 2FA enabled. Full access prevented.\n';
+  }
+
   terminal.scrollTop = terminal.scrollHeight;
 }
-
 // Show Terms of Service Modal
 function showTerms() {
   const modal = document.getElementById('termsModal');
