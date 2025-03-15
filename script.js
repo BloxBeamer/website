@@ -63,7 +63,7 @@ async function fetchProfile() {
   } catch (error) {
     console.error('Error fetching profile:', error);
     // Show error if user not found
- 
+    document.getElementById('profile').classList.add('hidden');
     document.getElementById('error').classList.remove('hidden');
     document.getElementById('error').innerText = 'ERROR! Invalid User ID or Username.';
   }
