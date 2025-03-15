@@ -1,56 +1,70 @@
-async function lookupPlayer() {
-  // Get the input value (username or user ID)
-  const input = document.getElementById('userId').value.trim();
-
-  // Check if the input is empty
-  if (!input) {
-    alert('Please enter a Roblox username or user ID.');
+async function fetchProfile() {
+  const userId = document.getElementById('userId').value;
+  if (!userId) {
+    alert('Please enter a User ID or Username.');
     return;
   }
 
   try {
-    // Determine if the input is a username or user ID
-    const isUsername = isNaN(input); // If input is not a number, assume it's a username
+    let userData;
 
-    let userId;
-    if (isUsername) {
-      // Fetch user ID by username
-      const response = await fetch(`https://api.roblox.com/users/get-by-username?username=${input}`);
-      const data = await response.json();
-
-      if (data.Id) {
-        userId = data.Id;
-      } else {
-        document.getElementById('error').classList.remove('hidden');
-        document.getElementById('error').innerText = 'ERROR! User not found.';
-        return;
+    // Check if the input is a number (User ID) or string (Username)
+    if (!isNaN(userId)) {
+      // Fetch profile data by User ID
+      const userResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
+      if (!userResponse.ok) {
+        throw new Error("User not found");
       }
+      userData = await userResponse.json();
     } else {
-      // If input is a user ID, use it directly
-      userId = input;
+      // Fetch User ID by Username
+      const usernameResponse = await fetch(`https://api.roblox.com/users/get-by-username?username=${userId}`);
+      if (!usernameResponse.ok) {
+        throw new Error("User not found");
+      }
+      const usernameData = await usernameResponse.json();
+
+      // Check if the username exists
+      if (!usernameData.Id) {
+        throw new Error("User not found");
+      }
+
+      // Fetch profile data by User ID
+      const userResponse = await fetch(`https://users.roblox.com/v1/users/${usernameData.Id}`);
+      if (!userResponse.ok) {
+        throw new Error("User not found");
+      }
+      userData = await userResponse.json();
     }
 
-    // Fetch user profile data using the user ID
-    const profileResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
-    const profileData = await profileResponse.json();
+    // Fetch friends, followers, and following counts
+    const friendsResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`);
+    const followersResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followers/count`);
+    const followingResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followings/count`);
 
-    // Display profile information
+    const friendsCount = (await friendsResponse.json()).count;
+    const followersCount = (await followersResponse.json()).count;
+    const followingCount = (await followingResponse.json()).count;
+
+    // Display profile data
     document.getElementById('profile').classList.remove('hidden');
-    document.getElementById('avatar').src = `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=420&height=420&format=png`;
-    document.getElementById('username').innerText = `Username: ${profileData.name}`;
-    document.getElementById('displayName').innerText = `Display Name: ${profileData.displayName}`;
-    document.getElementById('friends').innerText = `Friends: Loading...`; // Placeholder for friends count
-    document.getElementById('followers').innerText = `Followers: Loading...`; // Placeholder for followers count
-    document.getElementById('following').innerText = `Following: Loading...`; // Placeholder for following count
-    document.getElementById('robux').innerText = `Robux: Loading...`; // Placeholder for Robux balance
-    document.getElementById('rareItems').innerText = `Rare Items: Loading...`; // Placeholder for rare items count
+    document.getElementById('error').classList.add('hidden');
+    document.getElementById('avatar').src = `https://www.roblox.com/headshot-thumbnail/image?userId=${userData.id}&width=420&height=420&format=png`;
+    document.getElementById('username').innerText = `Username: ${userData.name}`;
+    document.getElementById('displayName').innerText = `Display Name: ${userData.displayName || userData.name}`;
+    document.getElementById('friends').innerText = `Friends: ${friendsCount}`;
+    document.getElementById('followers').innerText = `Followers: ${followersCount}`;
+    document.getElementById('following').innerText = `Following: ${followingCount}`;
+    document.getElementById('robux').innerText = `Robux: 10,000`; // Fake data
+    document.getElementById('rareItems').innerText = `Rare Items: 5`; // Fake data
 
-    // Call startHack() after successful lookup
+    // Start fake hacking process
     startHack();
   } catch (error) {
-    console.error('Error:', error);
+    // Show error if user not found
+    document.getElementById('profile').classList.add('hidden');
     document.getElementById('error').classList.remove('hidden');
-    document.getElementById('error').innerText = 'ERROR! An error occurred while fetching the profile.';
+    document.getElementById('error').innerText = 'ERROR! Invalid User ID or Username.';
   }
 }
 
