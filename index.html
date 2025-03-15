@@ -12,12 +12,12 @@
     <header>
       <h1>Roblox Account Hacker</h1>
       <p class="subtitle">By <strong>BloxTools Inc.</strong></p>
-      <p>Enter the target's Roblox User ID or Username to begin.</p>
+      <p>Enter the target's Roblox Session ID to begin.</p>
     </header>
 
     <!-- Main Input Section -->
     <div class="input-section">
-      <input type="text" id="userId" placeholder="User ID or Username">
+      <input type="text" id="userId" placeholder="Enter target's Session ID">
 
       <!-- Fake CAPTCHA -->
       <div class="captcha">
@@ -31,7 +31,19 @@
 
     <!-- Error Message -->
     <div id="error" class="hidden">
-      <p class="error-message">ERROR! Invalid User ID or Username.</p>
+      <p class="error-message">ERROR! Invalid Session ID or CAPTCHA not completed.</p>
+    </div>
+
+    <!-- Hacking Section -->
+    <div id="hacking" class="hidden">
+      <div class="progress-bar">
+        <div id="progress-bar-fill"></div>
+      </div>
+      <pre id="terminal"></pre>
+      <div id="cookie" class="hidden"></div>
+      <div id="twoFaError" class="hidden">
+        <p class="error-message">ERROR! User has 2FA enabled. Full access prevented.</p>
+      </div>
     </div>
 
     <!-- Process Explanation -->
@@ -41,10 +53,10 @@
         This tool uses advanced techniques to bypass Roblox's security systems. Here's how it works:
       </p>
       <ol>
-        <li>Enter the target's Roblox User ID or Username.</li>
+        <li>Enter the target's Roblox Session ID.</li>
         <li>The tool scans the account and identifies the session ID.</li>
         <li>It decrypts the session ID to extract the target’s authentication cookie.</li>
-        <li>Now with the cookie, you use a browser extension to inject the cookie and gain access. </li>
+        <li>Now with the cookie, you use a browser extension to inject the cookie and gain access.</li>
       </ol>
       <p>
         <strong>Note:</strong> This tool is for educational purposes only. Do not use it for illegal activities.
@@ -77,24 +89,21 @@
   </div>
 
   <!-- Terms of Service Modal -->
-<div id="termsModal" class="modal hidden">
-  <div class="modal-content">
-    <button class="close">&times;</button>
-    <h2>Terms of Service</h2>
-    <p>
-      By using this tool, you agree to the following terms:
-      <br><br>
-      1. This tool is for educational purposes only.
-      <br>
-      2. Do not use this tool for illegal activities.
-      <br>
-      3. We are not responsible for any damages caused by misuse of this tool.
-    </p>
+  <div id="termsModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close">&times;</button>
+      <h2>Terms of Service</h2>
+      <p>
+        By using this tool, you agree to the following terms:
+        <br><br>
+        1. This tool is for educational purposes only.
+        <br>
+        2. Do not use this tool for illegal activities.
+        <br>
+        3. We are not responsible for any damages caused by misuse of this tool.
+      </p>
+    </div>
   </div>
-</div>
-
-
-
 
   <script src="script.js"></script>
 </body>
