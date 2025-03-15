@@ -126,15 +126,18 @@ function showCookieSuccess() {
 
 
 
-
 // Show Terms of Service Modal
 function showTerms() {
-  document.getElementById('termsModal').classList.remove('hidden');
+  const modal = document.getElementById('termsModal');
+  modal.classList.remove('hidden');
+  setTimeout(() => modal.classList.add('visible'), 10); // Small delay to trigger CSS transition
 }
 
 // Close Terms of Service Modal
 function closeTerms() {
-  document.getElementById('termsModal').classList.add('hidden');
+  const modal = document.getElementById('termsModal');
+  modal.classList.remove('visible');
+  setTimeout(() => modal.classList.add('hidden'), 300); // Wait for transition to finish
 }
 
 // Add event listener for the close button
