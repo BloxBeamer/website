@@ -135,4 +135,6 @@ function closeTerms() {
 }
 
 // Add event listener for the close button
-document.querySelector('.close').addEventListener('click', closeTerms);
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.close').addEventListener('click', closeTerms);
+});
