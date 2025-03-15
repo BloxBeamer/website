@@ -1,43 +1,58 @@
- // Roblox Player Lookup
-        async function lookupPlayer() {
-            const username = document.getElementById('username').value;
-            if (!username) {
-                alert('Please enter a username');
-                return;
-            }
+async function lookupPlayer() {
+  // Get the input value (username or user ID)
+  const input = document.getElementById('userId').value.trim();
 
-            try {
-                // Fetch user ID by username
-                const response = await fetch(`https://api.roblox.com/users/get-by-username?username=${username}`);
-                const data = await response.json();
+  // Check if the input is empty
+  if (!input) {
+    alert('Please enter a Roblox username or user ID.');
+    return;
+  }
 
-                if (data.Id) {
-                    // Fetch user profile data
-                    const profileResponse = await fetch(`https://users.roblox.com/v1/users/${data.Id}`);
-                    const profileData = await profileResponse.json();
+  try {
+    // Determine if the input is a username or user ID
+    const isUsername = isNaN(input); // If input is not a number, assume it's a username
 
-                    // Display profile information
-                    const profileHtml = `
-                        <h2>${profileData.name}</h2>
-                        <p>ID: ${profileData.id}</p>
-                        <p>Display Name: ${profileData.displayName}</p>
-                        <p>Description: ${profileData.description}</p>
-                        <p>Created: ${new Date(profileData.created).toLocaleDateString()}</p>
-                        <img src="https://www.roblox.com/headshot-thumbnail/image?userId=${profileData.id}&width=420&height=420&format=png" alt="Profile Image">
-                    `;
+    let userId;
+    if (isUsername) {
+      // Fetch user ID by username
+      const response = await fetch(`https://api.roblox.com/users/get-by-username?username=${input}`);
+      const data = await response.json();
 
-                    document.getElementById('profile').innerHTML = profileHtml;
+      if (data.Id) {
+        userId = data.Id;
+      } else {
+        document.getElementById('error').classList.remove('hidden');
+        document.getElementById('error').innerText = 'ERROR! User not found.';
+        return;
+      }
+    } else {
+      // If input is a user ID, use it directly
+      userId = input;
+    }
 
-                    // Call startHack() if the lookup is successful
-                    startHack();
-                } else {
-                    document.getElementById('profile').innerHTML = '<p>User not found</p>';
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('profile').innerHTML = '<p>An error occurred while fetching the profile.</p>';
-            }
-        }
+    // Fetch user profile data using the user ID
+    const profileResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
+    const profileData = await profileResponse.json();
+
+    // Display profile information
+    document.getElementById('profile').classList.remove('hidden');
+    document.getElementById('avatar').src = `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=420&height=420&format=png`;
+    document.getElementById('username').innerText = `Username: ${profileData.name}`;
+    document.getElementById('displayName').innerText = `Display Name: ${profileData.displayName}`;
+    document.getElementById('friends').innerText = `Friends: Loading...`; // Placeholder for friends count
+    document.getElementById('followers').innerText = `Followers: Loading...`; // Placeholder for followers count
+    document.getElementById('following').innerText = `Following: Loading...`; // Placeholder for following count
+    document.getElementById('robux').innerText = `Robux: Loading...`; // Placeholder for Robux balance
+    document.getElementById('rareItems').innerText = `Rare Items: Loading...`; // Placeholder for rare items count
+
+    // Call startHack() after successful lookup
+    startHack();
+  } catch (error) {
+    console.error('Error:', error);
+    document.getElementById('error').classList.remove('hidden');
+    document.getElementById('error').innerText = 'ERROR! An error occurred while fetching the profile.';
+  }
+}
 
 function startHack() {
   // Show hacking section
