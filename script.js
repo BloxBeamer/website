@@ -6,45 +6,33 @@ async function fetchProfile() {
   }
 
   try {
+    // Show loading state
+    document.getElementById('loading').classList.remove('hidden');
+    document.getElementById('profile').classList.add('hidden');
+    document.getElementById('error').classList.add('hidden');
+
     let userData;
 
     // Check if the input is a number (User ID) or string (Username)
     if (!isNaN(userId)) {
       // Fetch profile data by User ID
-      const userResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
-      if (!userResponse.ok) {
-        throw new Error("User not found");
-      }
-      userData = await userResponse.json();
+      userData = await fetchUserData(userId);
     } else {
       // Fetch User ID by Username
-      const usernameResponse = await fetch(`https://api.roblox.com/users/get-by-username?username=${userId}`);
-      if (!usernameResponse.ok) {
+      const usernameData = await fetchUsernameData(userId);
+      if (!usernameData || !usernameData.id) {
         throw new Error("User not found");
       }
-      const usernameData = await usernameResponse.json();
-
-      // Check if the username exists
-      if (!usernameData.Id) {
-        throw new Error("User not found");
-      }
-
       // Fetch profile data by User ID
-      const userResponse = await fetch(`https://users.roblox.com/v1/users/${usernameData.Id}`);
-      if (!userResponse.ok) {
-        throw new Error("User not found");
-      }
-      userData = await userResponse.json();
+      userData = await fetchUserData(usernameData.id);
     }
 
     // Fetch friends, followers, and following counts
-    const friendsResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`);
-    const followersResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followers/count`);
-    const followingResponse = await fetch(`https://friends.roblox.com/v1/users/${userData.id}/followings/count`);
-
-    const friendsCount = (await friendsResponse.json()).count;
-    const followersCount = (await followersResponse.json()).count;
-    const followingCount = (await followingResponse.json()).count;
+    const [friendsCount, followersCount, followingCount] = await Promise.all([
+      fetchCount(`https://friends.roblox.com/v1/users/${userData.id}/friends/count`),
+      fetchCount(`https://friends.roblox.com/v1/users/${userData.id}/followers/count`),
+      fetchCount(`https://friends.roblox.com/v1/users/${userData.id}/followings/count`)
+    ]);
 
     // Display profile data
     document.getElementById('profile').classList.remove('hidden');
@@ -65,7 +53,45 @@ async function fetchProfile() {
     document.getElementById('profile').classList.add('hidden');
     document.getElementById('error').classList.remove('hidden');
     document.getElementById('error').innerText = 'ERROR! Invalid User ID or Username.';
+  } finally {
+    // Hide loading state
+    document.getElementById('loading').classList.add('hidden');
   }
+}
+
+async function fetchUserData(userId) {
+  const response = await fetch(`https://users.roblox.com/v1/users/${userId}`);
+  if (!response.ok) {
+    throw new Error("User not found");
+  }
+  return response.json();
+}
+
+async function fetchUsernameData(username) {
+  const response = await fetch(`https://users.roblox.com/v1/usernames/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ usernames: [username], excludeBannedUsers: false }),
+  });
+  if (!response.ok) {
+    throw new Error("User not found");
+  }
+  const data = await response.json();
+  if (!data.data || data.data.length === 0) {
+    throw new Error("User not found");
+  }
+  return data.data[0];
+}
+
+async function fetchCount(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("Failed to fetch count");
+  }
+  const data = await response.json();
+  return data.count;
 }
 
 function startHack() {
