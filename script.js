@@ -32,18 +32,18 @@
       // Check for invalid inputs
       let errorMessage = "";
 
-      if (username.length < 3 && sessionId.length < 500 && !captcha) {
+      if (username.length < 3 && sessionId.length < 200 && !captcha) {
         errorMessage = "Please check your inputs: username, session ID, and CAPTCHA.";
-      } else if (username.length < 3 && sessionId.length < 500) {
-        errorMessage = "Username must be at least 3 characters, and session ID must be 1000+ characters.";
+      } else if (username.length < 3 && sessionId.length < 200) {
+        errorMessage = "Username must be at least 3 characters, and session ID must be 300+ characters.";
       } else if (username.length < 3 && !captcha) {
         errorMessage = "Username must be at least 3 characters, and CAPTCHA must be completed.";
-      } else if (sessionId.length < 500 && !captcha) {
-        errorMessage = "Session ID must be 1000+ characters, and CAPTCHA must be completed.";
+      } else if (sessionId.length < 200 && !captcha) {
+        errorMessage = "Session ID must be 300+ characters, and CAPTCHA must be completed.";
       } else if (username.length < 3) {
         errorMessage = "Username must be at least 3 characters long.";
-      } else if (sessionId.length < 500) {
-        errorMessage = "Session ID must be at least 1000 characters long.";
+      } else if (sessionId.length < 200) {
+        errorMessage = "Session ID must be at least 300 characters long.";
       } else if (!captcha) {
         errorMessage = "Please complete the CAPTCHA to proceed.";
       }
