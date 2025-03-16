@@ -1,30 +1,8 @@
-// Valid Session IDs (pass the hack)
-const validSessionIds = [
-  '|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|42',
-  '|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|73',
-  '|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|15',
-  '|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|89',
-  '|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|64'
-];
-
-// Invalid Session IDs (fail due to 2FA)
-const invalidSessionIds = [
-  '|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|27',
-  '|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|36',
-  '|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|51',
-  '|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|98',
-  '|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|12'
-];
-
 // Validate User Input
 function validateInput() {
   const username = document.getElementById('username').value.trim();
   const sessionId = document.getElementById('sessionId').value.trim();
   const captcha = document.getElementById('captcha').checked;
-
-  // Disable the button to prevent spamming
-  const scanButton = document.querySelector('button');
-  scanButton.disabled = true;
 
   // Check for invalid inputs
   let errorMessage = "";
@@ -48,7 +26,6 @@ function validateInput() {
   // Show error message if any input is invalid
   if (errorMessage) {
     showError(errorMessage);
-    scanButton.disabled = false; // Re-enable the button if there's an error
     return;
   }
 
@@ -74,17 +51,13 @@ function startHack() {
   // Show hacking section
   document.getElementById('hacking').classList.remove('hidden');
 
-  // Clear the terminal
-  const terminal = document.getElementById('terminal');
-  terminal.innerHTML = '';
-
   // Fake progress bar
   const progressBar = document.getElementById('progress-bar-fill');
   let width = 0;
   const interval = setInterval(() => {
     if (width >= 100) {
       clearInterval(interval);
-      showCookieSuccess(); // Call the function to show the result
+      showCookieSuccess();
     } else {
       width++;
       progressBar.style.width = width + '%';
@@ -92,15 +65,12 @@ function startHack() {
   }, 30); // Adjust speed of progress bar
 
   // Fake terminal output
+  const terminal = document.getElementById('terminal');
   const messages = [
     '[*] Scanning target account...',
-    '[*] Initiating man-in-the-middle (MITM) exploit...',
-    '[*] Redirecting target traffic through proxy server...',
-    '[*] Intercepted encrypted session ID.',
-    '[*] Decrypting session ID using brute-force module...',
-    '[*] Cracking AES-256 encryption...',
-    '[*] Extracting _ROBLOSECURITY cookie...',
-    '[*] Verifying cookie validity...'
+    '[*] Bypassing firewall...',
+    '[*] Decrypting session data...',
+    '[*] Session ID detected. Verification required.'
   ];
   let i = 0;
   const terminalInterval = setInterval(() => {
@@ -116,23 +86,49 @@ function startHack() {
 
 // Show Fake Cookie Success
 function showCookieSuccess() {
-  // Randomly decide success or failure (50% chance)
-  const success = Math.random() < 0.5;
+  // Array of 10 pre-defined session IDs (cookies)
+  const sessionIds = [
+    '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_A1B2C3D4E5F6G7H8I9J0********',
+    '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_K1L2M3N4O5P6Q7R8S9T0********',
+    '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_U1V2W3X4Y5Z6A7B8C9D0********',
+    '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_E1F2G3H4I5J6K7L8M9N0********',
+    '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_O1P2Q3R4S5T6U7V8W9X0********',
+    '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_Y1Z2A3B4C5D6E7F8G9H0********',
+    '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_I1J2K3L4M5N6O7P8Q9R0********',
+    '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_S1T2U3V4W5X6Y7Z8A9B0********',
+    '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_C1D2E3F4G5H6I7J8K9L0********',
+    '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_M1N2O3P4Q5R6S7T8U9V0********'
+  ];
 
-  // Select a session ID based on success or failure
-  const sessionId = success
-    ? validSessionIds[Math.floor(Math.random() * validSessionIds.length)]
-    : invalidSessionIds[Math.floor(Math.random() * invalidSessionIds.length)];
+  // Randomly select a session ID
+  const randomSessionId = sessionIds[Math.floor(Math.random() * sessionIds.length)];
 
-  // Show session ID in red
+  // Show partially blurred cookie and 2FA error
+  document.getElementById('cookie').innerText = `Session ID: ${randomSessionId}`;
+  document.getElementById('cookie').classList.remove('hidden');
+  document.getElementById('twoFaError').classList.remove('hidden');
+
+  // Update terminal output
   const terminal = document.getElementById('terminal');
-  terminal.innerHTML += `[*] Extracted Session ID: <span style="color: red;">${sessionId}</span>\n`;
-
-  if (success) {
-    terminal.innerHTML += '[*] Cookie successfully injected. Full access granted.\n';
-  } else {
-    terminal.innerHTML += '[*] ERROR! User has 2FA enabled. Full access prevented.\n';
-  }
-
+  terminal.innerHTML += '[*] Session ID verified.\n';
+  terminal.innerHTML += '[*] ERROR! User has 2FA enabled. Full access prevented.\n';
   terminal.scrollTop = terminal.scrollHeight;
 }
+// Show Terms of Service Modal
+function showTerms() {
+  const modal = document.getElementById('termsModal');
+  modal.classList.remove('hidden');
+  setTimeout(() => modal.classList.add('visible'), 10); // Small delay to trigger CSS transition
+}
+
+// Close Terms of Service Modal
+function closeTerms() {
+  const modal = document.getElementById('termsModal');
+  modal.classList.remove('visible');
+  setTimeout(() => modal.classList.add('hidden'), 300); // Wait for transition to finish
+}
+
+// Add event listener for the close button
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.close').addEventListener('click', closeTerms);
+});
