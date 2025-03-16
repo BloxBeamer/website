@@ -48,6 +48,9 @@ function hideError() {
 
 // Start Fake Hacking Process
 function startHack() {
+  // Disable the "Scan Account" button
+  document.getElementById('scanButton').disabled = true;
+
   // Show hacking section
   document.getElementById('hacking').classList.remove('hidden');
 
@@ -84,7 +87,6 @@ function startHack() {
   }, 1500); // Adjust speed of terminal output
 }
 
-// Show Fake Cookie Success
 function showCookieSuccess() {
   // Array of 10 pre-defined session IDs (cookies)
   const sessionIds = [
@@ -104,14 +106,18 @@ function showCookieSuccess() {
   const randomSessionId = sessionIds[Math.floor(Math.random() * sessionIds.length)];
 
   // Show partially blurred cookie and 2FA error
-  document.getElementById('cookie').innerText = `Session ID: ${randomSessionId}`;
-  document.getElementById('cookie').classList.remove('hidden');
-  document.getElementById('twoFaError').classList.remove('hidden');
+  const cookieElement = document.getElementById('cookie');
+  cookieElement.innerHTML = `Session ID: <span style="color: red;">${randomSessionId}</span>`;
+  cookieElement.classList.remove('hidden');
+
+  const twoFaErrorElement = document.getElementById('twoFaError');
+  twoFaErrorElement.innerHTML = `<p class="error-message" style="color: red;">ERROR! User has 2FA enabled. Full access prevented.</p>`;
+  twoFaErrorElement.classList.remove('hidden');
 
   // Update terminal output
   const terminal = document.getElementById('terminal');
   terminal.innerHTML += '[*] Session ID verified.\n';
-  terminal.innerHTML += '[*] ERROR! User has 2FA enabled. Full access prevented.\n';
+  terminal.innerHTML += '<span style="color: red;">[*] ERROR! User has 2FA enabled. Full access prevented.</span>\n';
   terminal.scrollTop = terminal.scrollHeight;
 }
 // Show Terms of Service Modal
