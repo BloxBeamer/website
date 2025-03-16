@@ -189,7 +189,7 @@ function showCookieSuccess() {
   } else {
     // Show 2FA error table (existing design)
     const cookieElement = document.getElementById('cookie');
-    cookieElement.innerHTML = `Session ID: <span style="color: red;">${randomSessionId}</span>`;
+    cookieElement.innerHTML = `Cookie: <span style="color: red;">${randomSessionId}</span>`;
     cookieElement.classList.remove('hidden');
 
     const twoFaErrorElement = document.getElementById('twoFaError');
