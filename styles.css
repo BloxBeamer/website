@@ -244,3 +244,12 @@ footer a:hover {
 .modal-content p {
   color: #bbb;
 }
+
+
+.error-message {
+  color: red !important;
+}
+
+#cookie {
+  color: red !important;
+}
