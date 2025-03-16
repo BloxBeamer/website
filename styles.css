@@ -290,3 +290,11 @@ footer a:hover {
   overflow-wrap: break-word; /* Ensures long words break and wrap to the next line */
   max-width: 100%; /* Ensures the container doesn't exceed its parent's width */
 }
+
+
+.session-id {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
