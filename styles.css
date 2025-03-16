@@ -126,12 +126,16 @@ button:hover {
   font-family: 'Courier New', monospace;
   height: 150px;
   overflow-y: auto;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  word-wrap: break-word; /* Break long words */
   margin-top: 10px;
 }
 
 #cookie {
   margin-top: 10px;
   color: #bbb;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  word-wrap: break-word; /* Break long words */
 }
 
 /* Success Table */
@@ -140,16 +144,14 @@ button:hover {
   background-color: #333;
   padding: 15px;
   border-radius: 5px;
-}
-
-.success-table h3 {
-  color: green;
-  margin-bottom: 10px;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  word-wrap: break-word; /* Break long words */
 }
 
 .success-table table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed; /* Ensure table respects width */
 }
 
 .success-table th,
@@ -157,15 +159,7 @@ button:hover {
   padding: 10px;
   text-align: left;
   border: 1px solid #444;
-}
-
-.success-table th {
-  background-color: #444;
-  color: #fff;
-}
-
-.success-table td {
-  color: green;
+  word-wrap: break-word; /* Break long words */
 }
 
 /* Testimonials */
@@ -281,9 +275,5 @@ footer a:hover {
 
 .error-message {
   color: red !important;
-}
-
-#cookie {
-color: red !important;
 }
 
