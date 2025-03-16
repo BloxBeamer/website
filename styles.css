@@ -134,6 +134,40 @@ button:hover {
   color: #bbb;
 }
 
+/* Success Table */
+.success-table {
+  margin-top: 20px;
+  background-color: #333;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.success-table h3 {
+  color: green;
+  margin-bottom: 10px;
+}
+
+.success-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.success-table th,
+.success-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #444;
+}
+
+.success-table th {
+  background-color: #444;
+  color: #fff;
+}
+
+.success-table td {
+  color: green;
+}
+
 /* Testimonials */
 .testimonials {
   margin-top: 30px;
@@ -244,7 +278,6 @@ footer a:hover {
 .modal-content p {
   color: #bbb;
 }
-
 
 .error-message {
   color: red !important;
