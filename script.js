@@ -93,7 +93,7 @@
           width++;
           progressBar.style.width = width + '%';
         }
-      }, 30); // Adjust speed of progress bar
+      }, 25000); // Adjust speed of progress bar
 
       // Fake terminal output
       const terminal = document.getElementById('terminal');
