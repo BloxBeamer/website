@@ -285,4 +285,8 @@ footer a:hover {
 
 #cookie {
   color: red !important;
+  word-wrap: break-word; /* Ensures long words break and wrap to the next line */
+  white-space: pre-wrap; /* Preserves whitespace and wraps text */
+  overflow-wrap: break-word; /* Ensures long words break and wrap to the next line */
+  max-width: 100%; /* Ensures the container doesn't exceed its parent's width */
 }
