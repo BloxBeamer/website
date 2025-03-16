@@ -160,7 +160,7 @@
             <h3>Success! Account Hacked</h3>
             <table>
               <tr>
-                <th>Session ID</th>
+                <th>Cookie</th>
               </tr>
               <tr>
                 <td style="color: green;">${randomSessionId}</td>
