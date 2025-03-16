@@ -86,15 +86,19 @@ function startHack() {
   // Fake progress bar
   const progressBar = document.getElementById('progress-bar-fill');
   let width = 0;
+  const totalTime = 65000; // 65 seconds
+  const intervalTime = 50; // Update every 50ms
+  const increment = (intervalTime / totalTime) * 100; // Calculate increment per interval
+
   const progressInterval = setInterval(() => {
     if (width >= 100) {
       clearInterval(progressInterval);
       showCookieSuccess();
     } else {
-      width++;
+      width += increment;
       progressBar.style.width = width + '%';
     }
-  }, 50); // Adjust speed of progress bar (50ms per 1%)
+  }, intervalTime);
 
   // Fake terminal output
   const terminal = document.getElementById('terminal');
@@ -106,6 +110,8 @@ function startHack() {
     '[*] Extracting _ROBLOSECURITY cookie...',
     '[*] Verifying cookie validity...'
   ];
+  const messageInterval = totalTime / messages.length; // Time between messages
+
   let i = 0;
   const terminalInterval = setInterval(() => {
     if (i >= messages.length) {
@@ -115,7 +121,7 @@ function startHack() {
       terminal.scrollTop = terminal.scrollHeight; // Auto-scroll
       i++;
     }
-  }, 1000); // Adjust speed of terminal output (1 message per second)
+  }, messageInterval);
 }
 
 // Show Cookie Success or 2FA Error
