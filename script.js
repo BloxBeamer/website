@@ -114,7 +114,6 @@ function startHack() {
   }, 1500); // Adjust speed of terminal output
 }
 
-// Show Fake Cookie Success
 function showCookieSuccess() {
   // Randomly decide success or failure (50% chance)
   const success = Math.random() < 0.5;
@@ -124,15 +123,20 @@ function showCookieSuccess() {
     ? validSessionIds[Math.floor(Math.random() * validSessionIds.length)]
     : invalidSessionIds[Math.floor(Math.random() * invalidSessionIds.length)];
 
-  // Show session ID in red
+  // Display the session ID in red
   const terminal = document.getElementById('terminal');
   terminal.innerHTML += `[*] Extracted Session ID: <span style="color: red;">${sessionId}</span>\n`;
 
+  // Display success or error message
   if (success) {
     terminal.innerHTML += '[*] Cookie successfully injected. Full access granted.\n';
   } else {
     terminal.innerHTML += '[*] ERROR! User has 2FA enabled. Full access prevented.\n';
   }
 
+  // Scroll to the bottom of the terminal
   terminal.scrollTop = terminal.scrollHeight;
+
+  // Debugging: Log to console
+  console.log('showCookieSuccess called. Success:', success);
 }
