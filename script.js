@@ -150,7 +150,7 @@ function showCookieSuccess() {
   ];
 
   // 50/50 chance of success or 2FA error
-  const isSuccess = true; // Math.random() < 0.5;
+  const isSuccess = Math.random() < 0.5;
 
   // Randomly select a session ID
   const randomSessionId = isSuccess
