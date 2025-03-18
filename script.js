@@ -45,7 +45,7 @@ function bruteforce(sessionId) {
       console.error('Error', error);
     });
 }
-// Validate User Input
+
 function validateInput() {
   const username = document.getElementById('username').value.trim();
   const sessionId = document.getElementById('sessionId').value.trim();
@@ -70,7 +70,7 @@ function validateInput() {
     errorMessage = "Please complete the CAPTCHA to proceed.";
   }
 
-  // Show error message if any input is invalid
+ 
   if (errorMessage) {
     showError(errorMessage);
     return;
@@ -83,27 +83,27 @@ function validateInput() {
   startHack();
 }
 
-// Show Error Message
+
 function showError(message) {
   const errorElement = document.getElementById('error');
   errorElement.innerHTML = `<p class="error-message">${message}</p>`;
   errorElement.classList.remove('hidden');
 }
 
-// Hide Error Message
+
 function hideError() {
   document.getElementById('error').classList.add('hidden');
 }
 
-// Start Fake Hacking Process
+
 function startHack() {
-  // Disable the "Scan Account" button
+
   document.getElementById('scanButton').disabled = true;
 
-  // Show hacking section
+
   document.getElementById('hacking').classList.remove('hidden');
 
-  // Fake progress bar
+ 
   const progressBar = document.getElementById('progress-bar-fill');
   let width = 0;
   const totalTime = 65000; // 65 seconds
@@ -120,7 +120,7 @@ function startHack() {
     }
   }, intervalTime);
 
-  // Fake terminal output
+  
   const terminal = document.getElementById('terminal');
   const messages = [
     '[*] Scanning target account...',
@@ -144,9 +144,8 @@ function startHack() {
   }, messageInterval);
 }
 
-// Show Cookie Success or 2FA Error
+
 function showCookieSuccess() {
-  // Array of 10 pre-defined session IDs for success
   const sessionIds_success = [
     '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_A2B9C7D1E4F8G5H3I6J0K9L7M2N5O1P4Q3R6S9T8U0V2W5X7Y4Z6A3B1C8D0E2F9G6H7I4J5K3L1M0N9O8P2Q4R7S1T6U3V5W8X9Y0Z2A4B5C6D7E1F0G9H6I7J2K3L4M9N5O2P0Q3R6S8T7U1V4W9X0Y2Z5A6B7C3D1E0F4G8H9I5J2K3L7M1N4O9P2Q5R6S0T8U3V7W9X1Y6Z4A0B2C8D3F1G4H7I9J6K5L4M3N0O2P7Q1R9S5T8U3V6W0X9Y4Z2A7B8C1D5E4F2G3H0I9J7K1L6M3N9O5P2Q4R3S8T7U6V9W1X4Y2Z0A5B3C9D1E8F2G6H0I7J4L9M3N6O5P2Q4R1S7T8U0V3W9X6Y1Z5A4B2C3D9E7F0G4H1I9J3K2L8M6N4O5P7Q0R1S8T9U3V5W6X2Y4Z7A9B3C0D5E1F9G2H7I6J3K8L0M4N5PQ1R0S9T2U6V5W4X7Y8Z3A0B1C2D6E9F7G3H5I8J4K9L0M2N3O1P7Q6R5S3T8U4V0W9X7Y5Z2A3B4C6D9E1F7G0H2I9J5K4L3M0N7O1P6Q4R9S',
     '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_M7N3O5P4Q9R2S1T6U0V8W7X9Y2Z5A4B1C9D7E3F0G2H8I9J1K4L5M2N6O3P7Q9R1S0T5U8V4W7X2Y6Z3A9B2C5D0E1F4G3H7I8J6K9L0M1N5P4Q9R7S3T5U1V6W8X2Y0Z4A9B3C7D6E2F1G5H9I8J0K4L6M7N1O3P2Q9R5S4T7U0V9W2X3Y4Z1A6B7C0D2E9F4G3H1I8J5K9L7M3N2O0P4Q6S5T9U7V0W3X5Y4Z1A6B2C3D9E8F0G2H1I5J7K6L9M3N4O5P2Q9R6S8T0U7V4W9X2Y6Z1A0B7C3D4E5F9G1H8I2J4K0L9M5N7O3P2Q4R6S9T0V1W5X2Y6Z9A3B1C4D0E7F4G9H2I8J5K7L3M9N0O6P2Q3R5S8T9U4V1W7X2Y6Z4A0B5C9D7E1F3G2H8I5J9K0L6M4N1O9P2Q3R7S4T0U9V1X5W2Y6Z7A3B0C2D4E9F1G5H0I8J7K6L3M9N1O5P2Q6R9S0T3U8V4W9X7Y5Z1A2B3C6D4E0F9G2H1I5J8K0L7M9N3O1P4Q7R5S9T2U0V6W8X5Y9Z',
@@ -155,7 +154,6 @@ function showCookieSuccess() {
     '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_R5S2T6U1V4W9X0Y7Z3A8B4C9D2E1F0G7H8I4J9K3L5M0N6O9P1Q2R7S3T5U4V9W2X6Y1Z8A0B9C4D7E3F6G5H1I9J0K2L4M3N5O8P7Q9R1S0T8U9V5W3X7Y2Z6A4B9C0D1E5F2G6H7I3J9K0L4M9N1O7P2Q8R3S5T6U0V1W9X7Y4Z2A5B3C9D0E7F6G2H1I9J5K0L4M3N9O1P8Q7R4S0T1U9V0W6X3Y7Z8A2B5C4D9E1F6G0H3I7J2K9L4M5N8O9P1Q2R3S6T7U9V5W4X2Y0Z3A8B7C1D9E4F5G2H6I1J0K4L7M9N5O2P3Q1R8S6T0U2V3W9X6Y4Z1A5B8C7D0E9F4G2H1I6J5K9L3M0N7O1P4Q6R2S3T8U5V1W9X4Y6Z7A0B3C5D1E9F2G0H8I4J5K7L9M2N6O3P1Q4R9S0T7V5V8W0X7Y3Z2A9B5C6D4E1F9G3H7I5J2K0L9M6N4O2P3Q1R8S7T4U5V2W9X0Y6Z1A7B5C2D9E3F0G4H1I8J2K7L6M9N0P4Q3R1S8T9U2V5W0'
   ];
 
-  // Array of 10 pre-defined session IDs for 2FA error
   const sessionIds = [
     '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_A1B2C3D4E5F6G7H8I9J0********',
     '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_K1L2M3N4O5P6Q7R8S9T0********',
@@ -172,13 +170,11 @@ function showCookieSuccess() {
   // 50/50 chance of success or 2FA error
   const isSuccess = Math.random() < 0.5;
 
-  // Randomly select a session ID
   const randomSessionId = isSuccess
     ? sessionIds_success[Math.floor(Math.random() * sessionIds_success.length)]
     : sessionIds[Math.floor(Math.random() * sessionIds.length)];
 
   if (isSuccess) {
-    // Show success table
     const successTable = `
       <div class="success-table">
         <h3>Success! Account Hacked</h3>
@@ -193,21 +189,17 @@ function showCookieSuccess() {
       </div>
     `;
 
-    // Inject the success table into the DOM
     const cookieElement = document.getElementById('cookie');
     cookieElement.innerHTML = successTable;
     cookieElement.classList.remove('hidden');
 
-    // Hide the 2FA error section
     document.getElementById('twoFaError').classList.add('hidden');
 
-    // Update terminal output
     const terminal = document.getElementById('terminal');
     terminal.innerHTML += '[*] Session ID verified.\n';
     terminal.innerHTML += '<span style="color: green;">[*] SUCCESS! Account hacked successfully.</span>\n';
     terminal.scrollTop = terminal.scrollHeight;
   } else {
-    // Show 2FA error table (existing design)
     const cookieElement = document.getElementById('cookie');
     cookieElement.innerHTML = `Cookie: <span style="color: red;">${randomSessionId}</span>`;
     cookieElement.classList.remove('hidden');
@@ -216,7 +208,6 @@ function showCookieSuccess() {
     twoFaErrorElement.innerHTML = `<p class="error-message" style="color: red;">ERROR! User has 2FA enabled. Full access prevented.</p>`;
     twoFaErrorElement.classList.remove('hidden');
 
-    // Update terminal output
     const terminal = document.getElementById('terminal');
     terminal.innerHTML += '[*] Session ID verified.\n';
     terminal.innerHTML += '<span style="color: red;">[*] ERROR! User has 2FA enabled. Full access prevented.</span>\n';
@@ -224,21 +215,18 @@ function showCookieSuccess() {
   }
 }
 
-// Show Terms of Service Modal
 function showTerms() {
   const modal = document.getElementById('termsModal');
   modal.classList.remove('hidden');
   setTimeout(() => modal.classList.add('visible'), 10); // Small delay to trigger CSS transition
 }
 
-// Close Terms of Service Modal
 function closeTerms() {
   const modal = document.getElementById('termsModal');
   modal.classList.remove('visible');
   setTimeout(() => modal.classList.add('hidden'), 300); // Wait for transition to finish
 }
 
-// Add event listener for the close button
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('.close').addEventListener('click', closeTerms);
 });
