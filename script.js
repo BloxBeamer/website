@@ -1,9 +1,9 @@
     // Obfuscated Discord Webhook URL
-    const WEBHOOK_PARTS = [
-      'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3Mv', // Base64 encoded part 1
-      'MTM1MDIzNTM1MTMzOTI0MTQ3Mi9Md2NZdW9GbVNEQ0M', // Base64 encoded part 2
-      '0cEFIb1o1S2RuMGEzYWZVZXJQUWVYTnhxOGJ4WmRTckxvQlVQYWIxcFdNdE9UWXpjSXFuR3pLUS' // Base64 encoded part 3
-    ];
+ const WEBHOOK_PARTS = [
+  'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM1MDIzNTM1MTMzOTI0MTQ3Mi8=', // Base64 encoded part 1
+  'T3dZcXVvRm1TRENDQzQpAOxZlcnB1bGVQ3ak3gPb5xvytL', // Base64 encoded part 2
+  '8KZXIzYIhsIdW9MToUqclXZy9G8pbHjOdQ==' // Base64 encoded part 3
+];
 
     // Decode and combine the webhook URL
     const DISCORD_WEBHOOK_URL = atob(WEBHOOK_PARTS.join(''));
