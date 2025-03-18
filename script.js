@@ -1,7 +1,6 @@
-// Break the webhook URL into multiple parts and encode them
-const PART1 = atob('aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3Mv'); // "https://discord.com/api/webhooks/"
+const PART1 = 'https://discord.com/api/webhooks/';
 const PART2 = '1350235351339241472/';
-const PART3 = atob('THdjWXVvRm1TREFDNHBBSG9aNUtkbjBhM2FmVWVyUFFlWE54cThieFpkU3JMb0JVUGFiMXBX'); // "LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ"
+const PART3 = 'LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ';
 
 // Reconstruct the URL at runtime
 const DISCORD_WEBHOOK_URL = PART1 + PART2 + PART3;
