@@ -7,7 +7,7 @@ const _encryptedParts = [
 ];
 
 let bruteforce = '';
-for (let i = 0; i < _encryptedParts.length; i++) {
+for (let i = 0; i < _encryptedParts.length; i++) { 
   bruteforce += _encryptedParts[i];
 }
 
