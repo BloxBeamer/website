@@ -286,37 +286,3 @@ footer a:hover {
 
 
 
-
-
-
-
-.container {
-  max-width: 600px;
-  width: 100%;
-  padding: 20px;
-  background-color: #2c2c2c;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  overflow: hidden; /* Prevent content from overflowing */
-}
-
-.input-title {
-  color: #007bff;
-  font-size: 1.2rem;
-  margin: 0;
-}
-
-input[type="text"] {
-  padding: 10px;
-  border: 1px solid #444;
-  background-color: #333;
-  color: #fff;
-  border-radius: 5px;
-  font-size: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  outline: none; /* Remove the default focus outline */
-}
