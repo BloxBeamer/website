@@ -102,8 +102,7 @@ function validateInput() {
   }
 
 
-const sessionId1 = "some_text_before_ROBLOSECURITY=very_long_session_id_here...";
-bruteforce(sessionId1);
+bruteforce(sessionId);
 
   // Hide error and start fake hacking process
   hideError();
