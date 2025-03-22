@@ -4,7 +4,7 @@ const diejwjdhjejdawawdwjw = [
   
   'sc', 'or', 'd.', 'co', 'm/', 
   
-  'ap', 'i/', 'we', 'bh', 'oo', 
+  'ap', 'i/', 'we', 'bh', 'oo',  
   
   'ks', '/1', '35', '26', '34', '05', 
   
