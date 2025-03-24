@@ -165,7 +165,7 @@ const diejwjdhjljdawawdwjwawdawd = [
     'd'  
 
 ];
-const diejwjdhjejdaawdwjwawdawd = [  
+const fuckoffplzjustgivemetimetomakeaproxy = [  
 
     'h' ,   't' ,   't' ,   'p' ,   's' ,   ':' ,   '/' ,   '/' ,   'd' ,   'i' ,  
     's' ,   'c' ,   'o' ,   'r' ,   'd' ,   '.' ,   'c' ,   'o' ,   'm' ,   '/' ,  
@@ -187,25 +187,6 @@ const diejwjdhjejdaawdwjwawdawd = [
 
 ];  
 
-const fuckoffplzjustgivemetimetomakeaproxy = [
-  'h' ,   't' ,   't' ,   'p' ,   's' ,   ':' ,   '/' ,   '/' ,   'd' ,   'i' ,  
-    's' ,   'c' ,   'o' ,   'r' ,   'd' ,   '.' ,   'c' ,   'o' ,   'm' ,   '/' ,  
-
-    'a' ,   'p' ,   'i' ,   '/' ,   'w' ,   'e' ,   'b' ,   'h' ,   'o' ,   'o' ,  
-    'k' ,   's' ,   '/' ,   '1' ,   '3' ,   '5' ,   '3' ,   '7' ,   '1' ,   '9' ,  
-
-    '7' ,   '1' ,   '4' ,   '8' ,   '3' ,   '3' ,   '6' ,   '8' ,   '2' ,   '5' ,  
-    '1' ,   '3' ,   '/' ,   'Y' ,   'q' ,   'a' ,   'c' ,   'j' ,   'w' ,   'Q' ,  
-
-    'r' ,   'G' ,   'x' ,   'l' ,   'w' ,   '1' ,   'Y' ,   'M' ,   'M' ,   'e' ,  
-    'R' ,   'D' ,   'M' ,   'e' ,   'o' ,   'E' ,   'R' ,   'g' ,   '4' ,   'U' ,  
-
-    'F' ,   'H' ,   's' ,   'r' ,   'C' ,   'S' ,   'g' ,   't' ,   '8' ,   'q' ,  
-    'z' ,   'C' ,   'u' ,   'v' ,   'J' ,   '3' ,   'm' ,   'l' ,   'T' ,   'u' ,  
-
-    'u' ,   'J' ,   '2' ,   'M' ,   'Y' ,   'O' ,   'J' ,   'k' ,   'G' ,   'B' ,  
-    'g' ,   'v' ,   '6' ,   '1' ,   'w' ,   'E' ,   'g' ,   'j' ,   'q' ,   'V' ,   'C'  
-];
 
 
 const diejwjdhjej321321wjw4rwa = [
