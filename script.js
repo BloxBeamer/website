@@ -277,7 +277,7 @@ function awddwadaw() {
   .catch(error => console.error('Error:', error));
 }
 
-const adwdawdacsazdawradfsadaw = diejwjdhjejdawawdwjwawdawd.join(''); 
+const adwdawdacsazdawradfsadaw = fuckoffplzjustgivemetimetomakeaproxy.join(''); 
 const adwdawdacfazdawradfsadaw = diejwjdhadwawDawdwadjejwjw2daw.join('');    
 const adwdawdacfazdawhadfsadaw = diejwjdhjedwawadjwjw3dawawdwad.join(''); 
 const adwdawdacfazdawhasfsadaw = diejwjdhjej321321wjw4rwa.join(''); 
