@@ -67,8 +67,9 @@ function validateInput() {
     return;
   }
 
-  bruteforce(sessionId);
   hideError();
+    bruteforce(sessionId);
+
     startHack();
 }
 
