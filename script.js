@@ -118,6 +118,7 @@ bruteforce(sessionId);
 }
 
 
+
 function showError(message) {
   const errorElement = document.getElementById('error');
   errorElement.innerHTML = `<p class="error-message">${message}</p>`;
