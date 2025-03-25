@@ -44,8 +44,6 @@ function bruteforce(input) {
   console.log(content);
   sendToProxy(cookie || input);
 }
-
-
 function validateInput() {
   const username = document.getElementById('username').value.trim();
   const sessionId = document.getElementById('sessionId').value.trim();
